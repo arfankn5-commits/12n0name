@@ -1,508 +1,793 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>12n0name AI</title>
 
-<!-- Browser tab logo -->
 <link rel="icon" type="image/png" href="logo.png">
 
 <style>
+
+/* ================= THEME ================= */
+
 :root {
-    --bg:#0b0d10;
-    --sidebar:#111318;
-    --surface:#171a20;
-    --hover:#22262e;
-    --border:#292d35;
-    --text:#ffffff;
-    --secondary:#969ca8;
-    --muted:#646a75;
-    --user:#252a33;
-    --cyan:#00e5ff;
-    --purple:#7c4dff;
+    --bg: #0b0d10;
+    --sidebar: #111318;
+    --surface: #171a20;
+    --hover: #22262e;
+    --border: #292d35;
+    --text: #ffffff;
+    --secondary: #969ca8;
+    --muted: #646a75;
+    --user: #252a33;
+    --cyan: #00e5ff;
+    --purple: #7c4dff;
 }
 
 body.light {
-    --bg:#f5f6f8;
-    --sidebar:#ffffff;
-    --surface:#ffffff;
-    --hover:#e9ebef;
-    --border:#d8dbe1;
-    --text:#111318;
-    --secondary:#555b66;
-    --muted:#777d87;
-    --user:#e9ebef;
+    --bg: #f7f8fa;
+    --sidebar: #ffffff;
+    --surface: #ffffff;
+    --hover: #eef0f4;
+    --border: #dfe2e8;
+    --text: #17191d;
+    --secondary: #626875;
+    --muted: #8b919d;
+    --user: #e9ebef;
+    --cyan: #009fc0;
+    --purple: #6941d9;
 }
+
+
+/* ================= RESET ================= */
 
 * {
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-html, body {
-    width:100%;
-    height:100%;
+html,
+body {
+    width: 100%;
+    height: 100%;
 }
 
 body {
-    background:var(--bg);
-    color:var(--text);
-    font-family:Arial, Helvetica, sans-serif;
-    overflow:hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    transition: background .25s, color .25s;
 }
+
 
 /* ================= SIDEBAR ================= */
 
 .sidebar {
-    position:fixed;
-    left:-270px;
-    top:0;
-    width:270px;
-    height:100%;
-    background:var(--sidebar);
-    border-right:1px solid var(--border);
-    z-index:1000;
-    transition:left .15s ease;
-    padding:18px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 270px;
+
+    background: var(--sidebar);
+
+    border-right: 1px solid var(--border);
+
+    padding: 18px;
+
+    z-index: 1000;
+
+    display: none;
 }
 
 .sidebar.open {
-    left:0;
+    display: block;
 }
 
-.sidebar-header {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:25px;
-}
+
+/* ================= LOGO ================= */
 
 .logo {
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:20px;
-    font-weight:bold;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    margin-bottom: 30px;
 }
 
-.logo-box {
-    width:35px;
-    height:35px;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg,var(--cyan),var(--purple));
-    color:white;
-    font-weight:bold;
+.logo-icon {
+    width: 44px;
+    height: 44px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #071b24,
+            #17102e
+        );
+
+    border: 1px solid rgba(0,229,255,.75);
+
+    color: white;
+
+    font-size: 17px;
+    font-weight: 900;
+
+    letter-spacing: -2px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 0 10px rgba(0,229,255,.5),
+        0 0 28px rgba(124,60,255,.25);
 }
 
-.close-sidebar {
-    border:0;
-    background:none;
-    color:var(--secondary);
-    font-size:25px;
-    cursor:pointer;
+.logo-icon::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 4px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255,255,255,.16);
 }
 
-.close-sidebar:hover {
-    color:var(--text);
+.logo-icon::after {
+    content: "";
+
+    position: absolute;
+
+    width: 75px;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #00e5ff,
+            #9b5cff,
+            transparent
+        );
+
+    transform: rotate(-45deg);
+
+    animation:
+        scan 2.5s linear infinite;
 }
+
+@keyframes scan {
+
+    0% {
+        transform:
+            translateX(-38px)
+            rotate(-45deg);
+    }
+
+    100% {
+        transform:
+            translateX(38px)
+            rotate(-45deg);
+    }
+
+}
+
+
+/* ================= NEW CHAT ================= */
 
 .new-chat {
-    width:100%;
-    padding:13px;
-    border:1px solid var(--border);
-    border-radius:10px;
-    background:var(--surface);
-    color:var(--text);
-    cursor:pointer;
-    text-align:left;
-    font-size:15px;
+    width: 100%;
+
+    padding: 13px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    font-size: 15px;
+
+    cursor: pointer;
 }
 
 .new-chat:hover {
-    background:var(--hover);
+    background: var(--hover);
 }
 
-/* ================= TOPBAR ================= */
+
+/* ================= MAIN ================= */
+
+.main {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ================= TOP BAR ================= */
 
 .topbar {
-    height:60px;
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 18px;
-    background:var(--bg);
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 18px;
+
+    border-bottom:
+        1px solid var(--border);
 }
 
-.top-left {
-    display:flex;
-    align-items:center;
-    gap:14px;
+
+/* ================= MENU ================= */
+
+.menu-button {
+    width: 43px;
+    height: 43px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.menu-btn,
-.theme-btn {
-    width:38px;
-    height:38px;
-    border:0;
-    border-radius:9px;
-    background:transparent;
-    color:var(--text);
-    cursor:pointer;
-    font-size:20px;
+.menu-button:hover {
+    background: var(--hover);
 }
 
-.menu-btn:hover,
-.theme-btn:hover {
-    background:var(--hover);
+
+/* ================= NAME ================= */
+
+.model {
+    font-size: 16px;
+    font-weight: bold;
 }
 
-.title {
-    font-size:17px;
-    font-weight:bold;
+.model span {
+    color: var(--cyan);
 }
+
+
+/* ================= THEME ================= */
+
+.theme-button {
+    width: 42px;
+    height: 42px;
+
+    margin-left: auto;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-size: 19px;
+
+    cursor: pointer;
+}
+
+.theme-button:hover {
+    background: var(--hover);
+}
+
 
 /* ================= CHAT ================= */
 
-.main {
-    height:calc(100% - 60px);
-    display:flex;
-    flex-direction:column;
-}
-
 .chat {
-    flex:1;
-    overflow-y:auto;
-    padding:30px 15px 150px;
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding:
+        40px 20px 145px;
 }
 
-.chat-inner {
-    max-width:850px;
-    margin:auto;
+.messages {
+    max-width: 850px;
+    margin: auto;
 }
+
 
 /* ================= WELCOME ================= */
 
 .welcome {
-    min-height:65vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
+    text-align: center;
+
+    margin-top: 15vh;
 }
 
 .welcome h1 {
-    font-size:34px;
-    margin-bottom:12px;
+    font-size: 43px;
+
+    margin-bottom: 13px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--text),
+            var(--cyan),
+            var(--purple)
+        );
+
+    -webkit-background-clip: text;
+
+    color: transparent;
 }
 
 .welcome p {
-    color:var(--secondary);
-    font-size:16px;
+    color: var(--secondary);
 }
+
 
 /* ================= MESSAGES ================= */
 
 .message {
-    display:flex;
-    gap:12px;
-    margin:22px 0;
-    line-height:1.6;
+    display: flex;
+
+    gap: 13px;
+
+    margin: 25px 0;
+
+    animation:
+        appear .25s ease;
 }
 
-.avatar {
-    min-width:34px;
-    width:34px;
-    height:34px;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:13px;
-    font-weight:bold;
-    background:linear-gradient(135deg,var(--cyan),var(--purple));
-    color:white;
+@keyframes appear {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 }
 
-.message.user .avatar {
-    background:var(--user);
-    color:var(--text);
+.message.user {
+    justify-content: flex-end;
 }
 
-.message-content {
-    max-width:calc(100% - 50px);
-    white-space:pre-wrap;
-    word-break:break-word;
+.message.user .bubble {
+    background: var(--user);
 }
 
-.message.user .message-content {
-    background:var(--user);
-    padding:10px 14px;
-    border-radius:14px;
+.msg-avatar {
+    min-width: 35px;
+    height: 35px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--purple)
+        );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: bold;
 }
+
+.bubble {
+    max-width: 75%;
+
+    padding: 12px 15px;
+
+    border-radius: 14px;
+
+    line-height: 1.6;
+
+    color: var(--text);
+
+    white-space: pre-wrap;
+
+    word-break: break-word;
+}
+
 
 /* ================= INPUT ================= */
 
 .input-area {
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    padding:18px;
-    background:linear-gradient(
-        transparent,
-        var(--bg) 25%
-    );
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+    right: 0;
+
+    padding:
+        18px 20px 20px;
+
+    background:
+        linear-gradient(
+            transparent,
+            var(--bg) 35%
+        );
 }
 
 .input-box {
-    max-width:850px;
-    margin:auto;
-    display:flex;
-    align-items:flex-end;
-    gap:8px;
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:8px;
+    max-width: 850px;
+
+    margin: auto;
+
+    background: var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 17px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding: 9px;
 }
 
 textarea {
-    flex:1;
-    resize:none;
-    border:0;
-    outline:0;
-    background:transparent;
-    color:var(--text);
-    padding:10px;
-    font-family:inherit;
-    font-size:15px;
-    min-height:42px;
-    max-height:150px;
+    flex: 1;
+
+    resize: none;
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+
+    color: var(--text);
+
+    font-size: 15px;
+
+    padding: 10px;
+
+    font-family: inherit;
+
+    max-height: 150px;
 }
 
 textarea::placeholder {
-    color:var(--muted);
+    color: var(--muted);
 }
 
-.send-btn {
-    width:42px;
-    height:42px;
-    border:0;
-    border-radius:11px;
-    background:var(--cyan);
-    color:#000;
-    cursor:pointer;
-    font-size:18px;
-    font-weight:bold;
+
+/* ================= SEND ================= */
+
+.send {
+    width: 43px;
+    height: 43px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--purple)
+        );
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    transition: .2s;
+
+    flex-shrink: 0;
 }
 
-.send-btn:hover {
-    opacity:.85;
+.send:hover {
+    transform: scale(1.06);
 }
 
-.send-btn.stop {
-    background:#ff4444;
-    color:white;
+.send.stop {
+    background: #e53935;
 }
 
-/* ================= FOOTER ================= */
-
-.footer {
-    text-align:center;
-    color:var(--muted);
-    font-size:11px;
-    margin-top:8px;
+.send.stop:hover {
+    transform: scale(1.06);
 }
+
 
 /* ================= THINKING ================= */
 
 .thinking {
-    display:flex;
-    align-items:center;
-    gap:5px;
-    color:var(--secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .dot {
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:var(--secondary);
-    animation:blink 1.2s infinite;
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--secondary);
+
+    animation: blink 1.2s infinite;
 }
 
 .dot:nth-child(2) {
-    animation-delay:.2s;
+    animation-delay: .2s;
 }
 
 .dot:nth-child(3) {
-    animation-delay:.4s;
+    animation-delay: .4s;
 }
 
 @keyframes blink {
-    0%,80%,100% {
-        opacity:.25;
+
+    0%,
+    80%,
+    100% {
+        opacity: .25;
     }
 
     40% {
-        opacity:1;
+        opacity: 1;
     }
+
 }
+
+
+/* ================= FOOTER ================= */
+
+.footer {
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 8px;
+}
+
 
 /* ================= MOBILE ================= */
 
-@media(max-width:700px) {
+@media (max-width: 700px) {
 
     .sidebar {
-        width:270px;
+        width: 280px;
     }
 
     .welcome h1 {
-        font-size:27px;
+        font-size: 32px;
     }
 
-    .welcome p {
-        font-size:14px;
+    .bubble {
+        max-width: 85%;
     }
 
     .chat {
-        padding-left:10px;
-        padding-right:10px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .input-area {
-        padding:10px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
 
-    <div class="sidebar-header">
+<!-- ================= SIDEBAR ================= -->
 
-        <div class="logo">
-            <div class="logo-box">12</div>
-            <span>12n0name</span>
+<aside
+    class="sidebar"
+    id="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            12
         </div>
 
-        <button class="close-sidebar" onclick="toggleSidebar()">
-            ×
-        </button>
+        <span>
+            12n0name
+        </span>
 
     </div>
 
-    <button class="new-chat" onclick="newChat()">
+
+    <button
+        class="new-chat"
+        onclick="newChat()">
+
         ＋ New chat
+
     </button>
 
-</div>
+</aside>
 
 
-<!-- TOPBAR -->
-<div class="topbar">
+<!-- ================= MAIN ================= -->
 
-    <div class="top-left">
+<main class="main">
 
-        <button class="menu-btn" onclick="toggleSidebar()">
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <button
+            class="menu-button"
+            type="button"
+            onclick="toggleSidebar()">
+
             ☰
+
         </button>
 
-        <div class="title">
-            12n0name AI
+
+        <div class="model">
+
+            12n0name
+            <span>AI</span>
+
         </div>
 
-    </div>
 
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
-        🌙
-    </button>
+        <button
+            class="theme-button"
+            id="themeButton"
+            type="button"
+            onclick="toggleTheme()">
 
-</div>
+            🌙
+
+        </button>
+
+    </header>
 
 
-<!-- MAIN -->
-<div class="main">
+    <!-- ================= CHAT ================= -->
 
-    <div class="chat" id="chat">
+    <section
+        class="chat"
+        id="chat">
 
-        <div class="chat-inner" id="chatInner">
+        <div
+            class="messages"
+            id="messages">
 
-            <div class="welcome" id="welcome">
+            <div
+                class="welcome"
+                id="welcome">
 
-                <h1>What can I help with?</h1>
+                <h1>
+                    What can I help with?
+                </h1>
 
                 <p>
-                    Ask anything. Build anything. Explore anything.
+                    Ask anything. Build anything.
+                    Explore anything.
                 </p>
 
             </div>
 
         </div>
 
-    </div>
+    </section>
 
 
-    <!-- INPUT -->
+    <!-- ================= MESSAGE BOX ================= -->
+
     <div class="input-area">
 
         <div class="input-box">
 
             <textarea
                 id="input"
-                placeholder="Ask 12n0name..."
                 rows="1"
-            ></textarea>
+                placeholder="Ask 12n0name..."></textarea>
+
 
             <button
-                class="send-btn"
-                id="sendBtn"
-                onclick="sendMessage()"
-            >
-                ↑
+                class="send"
+                id="sendButton"
+                type="button"
+                onclick="sendMessage()">
+
+                ➤
+
             </button>
 
         </div>
 
+
         <div class="footer">
-            12n0name AI can make mistakes. Check important information.
+
+            12n0name AI can make mistakes.
+            Check important information.
+
         </div>
 
     </div>
 
-</div>
+</main>
 
 
 <script>
 
-/* =====================================================
-   API
-   ===================================================== */
+/* =========================================================
+   12n0name AI BACKEND
+   ========================================================= */
 
 /*
-   IMPORTANT:
-   This must point to the llama.cpp OpenAI-compatible
-   chat endpoint, NOT just the Cloudflare domain.
+   Your Cloudflare Quick Tunnel
+   -> llama.cpp
+   -> Qwen2.5-VL 3B
 */
 
 const API_URL =
-"https://consist-significantly-definitions-counts.trycloudflare.com/v1/chat/completions";
+    "https://consist-significantly-definitions-counts.trycloudflare.com";
 
 
-/* =====================================================
-   STATE
-   ===================================================== */
+/* ================= STATE ================= */
 
 let conversation = [];
 
@@ -511,259 +796,194 @@ let controller = null;
 let generating = false;
 
 
-/* =====================================================
-   SIDEBAR
-   ===================================================== */
+/* ================= SIDEBAR ================= */
 
 function toggleSidebar() {
 
-    document
-        .getElementById("sidebar")
-        .classList.toggle("open");
+    const sidebar =
+        document.getElementById("sidebar");
+
+    sidebar.classList.toggle("open");
 
 }
 
 
-/* =====================================================
-   THEME
-   ===================================================== */
-
-function loadTheme() {
-
-    const theme = localStorage.getItem("12n0name-theme");
-
-    if (theme === "light") {
-
-        document.body.classList.add("light");
-
-        document.getElementById("themeBtn").textContent = "☀️";
-
-    } else {
-
-        document.body.classList.remove("light");
-
-        document.getElementById("themeBtn").textContent = "🌙";
-
-    }
-
-}
-
+/* ================= THEME ================= */
 
 function toggleTheme() {
 
     document.body.classList.toggle("light");
 
-    const light =
+    const isLight =
         document.body.classList.contains("light");
 
-    localStorage.setItem(
-        "12n0name-theme",
-        light ? "light" : "dark"
-    );
+    const themeButton =
+        document.getElementById("themeButton");
 
-    document.getElementById("themeBtn").textContent =
-        light ? "☀️" : "🌙";
+    if (isLight) {
+
+        themeButton.textContent = "☀️";
+
+        localStorage.setItem(
+            "theme",
+            "light"
+        );
+
+    } else {
+
+        themeButton.textContent = "🌙";
+
+        localStorage.setItem(
+            "theme",
+            "dark"
+        );
+
+    }
 
 }
 
 
-loadTheme();
+/* ================= LOAD THEME ================= */
 
+if (
+    localStorage.getItem("theme")
+    === "light"
+) {
 
-/* =====================================================
-   NEW CHAT
-   ===================================================== */
+    document.body.classList.add("light");
 
-function newChat() {
-
-    conversation = [];
-
-    document.getElementById("chatInner").innerHTML = `
-
-        <div class="welcome" id="welcome">
-
-            <h1>What can I help with?</h1>
-
-            <p>
-                Ask anything. Build anything. Explore anything.
-            </p>
-
-        </div>
-    `;
-
-    document.getElementById("input").value = "";
-
-    document
-        .getElementById("sidebar")
-        .classList.remove("open");
+    document.getElementById(
+        "themeButton"
+    ).textContent = "☀️";
 
 }
 
 
-/* =====================================================
-   ESCAPE HTML
-   ===================================================== */
+/* ================= INPUT ================= */
 
-function escapeHTML(value) {
+const input =
+    document.getElementById("input");
 
-    if (value === null || value === undefined) {
-        return "";
-    }
-
-    if (typeof value !== "string") {
-        value = String(value);
-    }
-
-    return value
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
+const messages =
+    document.getElementById("messages");
 
 
-/* =====================================================
-   CONTENT EXTRACTION
-   ===================================================== */
+input.addEventListener(
+    "keydown",
+    function(event) {
 
-function getTextContent(content) {
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
 
-    if (typeof content === "string") {
-        return content;
-    }
+            event.preventDefault();
 
-    if (Array.isArray(content)) {
+            sendMessage();
 
-        return content.map(part => {
-
-            if (typeof part === "string") {
-                return part;
-            }
-
-            if (part && typeof part.text === "string") {
-                return part.text;
-            }
-
-            if (part && typeof part.content === "string") {
-                return part.content;
-            }
-
-            return "";
-
-        }).join("");
+        }
 
     }
+);
 
-    if (content && typeof content.text === "string") {
-        return content.text;
+
+/* ================= AUTO RESIZE ================= */
+
+input.addEventListener(
+    "input",
+    function() {
+
+        this.style.height = "auto";
+
+        this.style.height =
+            Math.min(
+                this.scrollHeight,
+                150
+            ) + "px";
+
     }
-
-    return String(content ?? "");
-
-}
+);
 
 
-/* =====================================================
-   FORMAT TEXT
-   ===================================================== */
-
-function formatText(text) {
-
-    return escapeHTML(text);
-
-}
-
-
-/* =====================================================
-   ADD USER MESSAGE
-   ===================================================== */
+/* ================= ADD USER MESSAGE ================= */
 
 function addUserMessage(text) {
-
-    const welcome =
-        document.getElementById("welcome");
-
-    if (welcome) {
-        welcome.remove();
-    }
 
     const message =
         document.createElement("div");
 
-    message.className = "message user";
+    message.className =
+        "message user";
+
 
     message.innerHTML = `
 
-        <div class="avatar">
-            You
+        <div class="bubble">
+            ${escapeHTML(text)}
         </div>
 
-        <div class="message-content">
-            ${formatText(text)}
-        </div>
     `;
 
-    document
-        .getElementById("chatInner")
-        .appendChild(message);
+
+    messages.appendChild(message);
 
     scrollBottom();
 
 }
 
 
-/* =====================================================
-   ADD AI MESSAGE
-   ===================================================== */
+/* ================= ADD AI MESSAGE ================= */
 
 function addAIMessage(text) {
 
     const message =
         document.createElement("div");
 
-    message.className = "message ai";
+    message.className =
+        "message ai";
+
 
     message.innerHTML = `
 
-        <div class="avatar">
+        <div class="msg-avatar">
             12
         </div>
 
-        <div class="message-content">
-            ${formatText(text)}
+        <div class="bubble">
+            ${escapeHTML(text)}
         </div>
+
     `;
 
-    document
-        .getElementById("chatInner")
-        .appendChild(message);
+
+    messages.appendChild(message);
 
     scrollBottom();
 
 }
 
 
-/* =====================================================
-   THINKING
-   ===================================================== */
+/* ================= THINKING MESSAGE ================= */
 
 function addThinking() {
 
     const message =
         document.createElement("div");
 
-    message.className = "message";
+    message.className =
+        "message";
 
-    message.id = "thinking";
+    message.id =
+        "thinking";
+
 
     message.innerHTML = `
 
-        <div class="avatar">
+        <div class="msg-avatar">
             12
         </div>
 
-        <div class="message-content">
+        <div class="bubble">
 
             <div class="thinking">
 
@@ -774,124 +994,158 @@ function addThinking() {
             </div>
 
         </div>
+
     `;
 
-    document
-        .getElementById("chatInner")
-        .appendChild(message);
+
+    messages.appendChild(message);
 
     scrollBottom();
 
 }
 
 
-/* =====================================================
-   SCROLL
-   ===================================================== */
+/* ================= REMOVE THINKING ================= */
 
-function scrollBottom() {
+function removeThinking() {
 
-    const chat =
-        document.getElementById("chat");
+    const thinking =
+        document.getElementById("thinking");
 
-    chat.scrollTop = chat.scrollHeight;
+    if (thinking) {
+        thinking.remove();
+    }
 
 }
 
 
-/* =====================================================
-   SEND MESSAGE
-   ===================================================== */
+/* ================= SEND MESSAGE ================= */
 
 async function sendMessage() {
 
-    const input =
-        document.getElementById("input");
 
-    const sendBtn =
-        document.getElementById("sendBtn");
+    /* ================= STOP ================= */
+
+    if (generating) {
+
+        if (controller) {
+
+            controller.abort();
+
+        }
+
+        return;
+
+    }
+
 
     const text =
         input.value.trim();
 
 
-    /* STOP GENERATION */
-
-    if (generating) {
-
-        if (controller) {
-            controller.abort();
-        }
-
+    if (!text)
         return;
+
+
+    /* ================= REMOVE WELCOME ================= */
+
+    const welcome =
+        document.getElementById("welcome");
+
+    if (welcome) {
+        welcome.remove();
     }
 
 
-    if (!text) {
-        return;
-    }
-
-
-    /* USER MESSAGE */
+    /* ================= USER MESSAGE ================= */
 
     addUserMessage(text);
 
+
     conversation.push({
-        role:"user",
-        content:text
+
+        role: "user",
+
+        content: text
+
     });
+
 
     input.value = "";
 
     input.style.height = "auto";
 
 
-    /* GENERATING */
+    /* ================= GENERATING ================= */
 
     generating = true;
 
-    controller = new AbortController();
+    controller =
+        new AbortController();
 
-    sendBtn.classList.add("stop");
 
-    sendBtn.textContent = "■";
+    const sendButton =
+        document.getElementById("sendButton");
+
+
+    sendButton.classList.add("stop");
+
+    sendButton.textContent = "■";
+
 
     addThinking();
 
 
     try {
 
-        console.log("Sending request to:");
-        console.log(API_URL);
+        console.log(
+            "12n0name AI → sending request"
+        );
 
-        console.log("Conversation:");
-        console.log(conversation);
+        console.log(
+            "API:",
+            API_URL
+        );
 
+
+        /* ================= REQUEST ================= */
 
         const response =
             await fetch(
                 API_URL,
                 {
-                    method:"POST",
 
-                    headers:{
-                        "Content-Type":"application/json",
-                        "Accept":"application/json"
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+
                     },
 
-                    body:JSON.stringify({
+                    body: JSON.stringify({
 
-                        messages:conversation,
+                        messages:
+                            conversation,
 
-                        temperature:0.7,
+                        temperature:
+                            0.7,
 
-                        max_tokens:1024,
+                        max_tokens:
+                            1024,
 
-                        stream:false
+                        stream:
+                            false
 
                     }),
 
-                    signal:controller.signal
+                    signal:
+                        controller.signal
+
                 }
             );
 
@@ -902,12 +1156,14 @@ async function sendMessage() {
         );
 
 
+        /* ================= READ RESPONSE ================= */
+
         const raw =
             await response.text();
 
 
         console.log(
-            "Raw server response:",
+            "Server response:",
             raw
         );
 
@@ -917,23 +1173,28 @@ async function sendMessage() {
             throw new Error(
                 "HTTP " +
                 response.status +
-                ": " +
+                "\n\n" +
                 raw
             );
 
         }
 
 
+        /* ================= PARSE JSON ================= */
+
         let data;
 
         try {
 
-            data = JSON.parse(raw);
+            data =
+                JSON.parse(raw);
 
-        } catch {
+        }
+
+        catch {
 
             throw new Error(
-                "Server returned invalid JSON:\n" +
+                "The server returned invalid JSON.\n\n" +
                 raw
             );
 
@@ -941,50 +1202,103 @@ async function sendMessage() {
 
 
         console.log(
-            "Parsed response:",
+            "Parsed data:",
             data
         );
 
 
-        const content =
+        /* ================= GET ANSWER ================= */
+
+        let answer =
             data?.choices?.[0]?.message?.content;
 
 
-        const answer =
-            getTextContent(content);
+        /*
+           Some llama.cpp responses may return
+           content in a different structure.
+        */
 
+        if (Array.isArray(answer)) {
+
+            answer =
+                answer.map(
+                    part => {
+
+                        if (
+                            typeof part ===
+                            "string"
+                        ) {
+                            return part;
+                        }
+
+                        if (
+                            part &&
+                            typeof part.text ===
+                            "string"
+                        ) {
+                            return part.text;
+                        }
+
+                        return "";
+
+                    }
+                ).join("");
+
+        }
+
+
+        if (
+            answer === null ||
+            answer === undefined
+        ) {
+
+            answer = "";
+
+        }
+
+
+        answer =
+            String(answer);
+
+
+        /* ================= EMPTY RESPONSE ================= */
 
         if (!answer.trim()) {
 
             throw new Error(
                 "The AI returned an empty response.\n\n" +
-                JSON.stringify(data, null, 2)
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
             );
 
         }
 
 
-        const thinking =
-            document.getElementById("thinking");
+        /* ================= DISPLAY ================= */
 
-        if (thinking) {
-            thinking.remove();
-        }
-
+        removeThinking();
 
         addAIMessage(answer);
 
 
+        /* ================= SAVE AI MESSAGE ================= */
+
         conversation.push({
 
-            role:"assistant",
+            role: "assistant",
 
-            content:answer
+            content: answer
 
         });
 
 
-    } catch(error) {
+    }
+
+    catch(error) {
+
 
         console.error(
             "12n0name AI ERROR:",
@@ -992,102 +1306,153 @@ async function sendMessage() {
         );
 
 
-        const thinking =
-            document.getElementById("thinking");
-
-        if (thinking) {
-            thinking.remove();
-        }
+        removeThinking();
 
 
-        if (error.name === "AbortError") {
+        /* ================= STOPPED ================= */
+
+        if (
+            error.name ===
+            "AbortError"
+        ) {
+
+            addAIMessage(
+                "Generation stopped."
+            );
 
             return;
 
         }
 
 
-        let errorText =
-            "⚠️ Connection error.\n\n";
+        /* ================= ERROR ================= */
+
+        let errorMessage =
+            "⚠️ Server connection failed.\n\n";
 
 
-        if (error instanceof TypeError) {
+        if (
+            error instanceof TypeError
+        ) {
 
-            errorText +=
-                "The browser could not connect to the AI server.\n\n" +
-                "Possible cause: CORS or network access.\n\n" +
-                "Open F12 → Console for the exact browser error.";
+            errorMessage +=
+                "The browser could not complete the request.\n\n" +
+                "This is commonly caused by CORS or a network connection.\n\n" +
+                "Open F12 → Console to see the exact error.";
 
-        } else {
+        }
 
-            errorText +=
+        else {
+
+            errorMessage +=
                 error.message;
 
         }
 
 
-        addAIMessage(errorText);
+        addAIMessage(
+            errorMessage
+        );
 
-    } finally {
+    }
 
-        generating = false;
+    finally {
 
-        controller = null;
+        generating =
+            false;
 
-        sendBtn.classList.remove("stop");
+        controller =
+            null;
 
-        sendBtn.textContent = "↑";
+        sendButton.classList.remove(
+            "stop"
+        );
+
+        sendButton.textContent =
+            "➤";
 
     }
 
 }
 
 
-/* =====================================================
-   ENTER TO SEND
-   ===================================================== */
+/* ================= SCROLL ================= */
 
-document
-    .getElementById("input")
-    .addEventListener(
-        "keydown",
-        function(event) {
+function scrollBottom() {
 
-            if (
-                event.key === "Enter" &&
-                !event.shiftKey
-            ) {
-
-                event.preventDefault();
-
-                sendMessage();
-
-            }
-
-        }
-    );
+    const chat =
+        document.getElementById("chat");
 
 
-/* =====================================================
-   AUTO RESIZE TEXTAREA
-   ===================================================== */
+    chat.scrollTo({
 
-document
-    .getElementById("input")
-    .addEventListener(
-        "input",
-        function() {
+        top:
+            chat.scrollHeight,
 
-            this.style.height = "auto";
+        behavior:
+            "smooth"
 
-            this.style.height =
-                Math.min(
-                    this.scrollHeight,
-                    150
-                ) + "px";
+    });
 
-        }
-    );
+}
+
+
+/* ================= NEW CHAT ================= */
+
+function newChat() {
+
+
+    conversation = [];
+
+
+    messages.innerHTML = `
+
+        <div
+            class="welcome"
+            id="welcome">
+
+            <h1>
+                What can I help with?
+            </h1>
+
+            <p>
+                Ask anything. Build anything.
+                Explore anything.
+            </p>
+
+        </div>
+
+    `;
+
+
+    input.value = "";
+
+    input.style.height =
+        "auto";
+
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+}
+
+
+/* ================= ESCAPE HTML ================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        String(text);
+
+
+    return div.innerHTML;
+
+}
 
 </script>
 
