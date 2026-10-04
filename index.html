@@ -514,7 +514,7 @@ body {
     right: 0;
 
     padding:
-        18px 20px 20px;
+        12px 16px 16px;
 
     background:
         linear-gradient(
@@ -533,13 +533,13 @@ body {
     border:
         1px solid var(--border);
 
-    border-radius: 17px;
+    border-radius: 24px;
 
     display: flex;
 
-    align-items: flex-end;
+    align-items: center;
 
-    padding: 9px;
+    padding: 6px 6px 6px 12px;
 }
 
 textarea {
@@ -557,9 +557,12 @@ textarea {
 
     font-size: 15px;
 
-    padding: 10px;
+    padding: 6px 8px;
 
     font-family: inherit;
+
+    height: 24px;
+    max-height: 150px;
 }
 
 textarea::placeholder {
@@ -570,12 +573,13 @@ textarea::placeholder {
 /* ================= SEND ================= */
 
 .send {
-    width: 43px;
-    height: 43px;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
 
     border: none;
 
-    border-radius: 12px;
+    border-radius: 50%;
 
     background:
         linear-gradient(
@@ -588,25 +592,30 @@ textarea::placeholder {
 
     cursor: pointer;
 
-    font-size: 18px;
+    font-size: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     transition: .2s;
 }
 
 .send:hover {
-    transform: scale(1.06);
+    transform: scale(1.05);
 }
 
 
 /* ================= STOP ================= */
 
 .stop {
-    width: 43px;
-    height: 43px;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
 
     border: none;
 
-    border-radius: 12px;
+    border-radius: 50%;
 
     background: #ef4444;
 
@@ -614,9 +623,11 @@ textarea::placeholder {
 
     cursor: pointer;
 
-    font-size: 17px;
+    font-size: 14px;
 
     display: none;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -930,11 +941,11 @@ function setGenerating(state) {
 
         sendButton.style.display = "none";
 
-        stopButton.style.display = "block";
+        stopButton.style.display = "flex";
 
     } else {
 
-        sendButton.style.display = "block";
+        sendButton.style.display = "flex";
 
         stopButton.style.display = "none";
 
