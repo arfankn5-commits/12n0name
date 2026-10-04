@@ -1,9 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>12n0name AI</title>
+
+<!-- FAVICON -->
+
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="shortcut icon" type="image/png" href="logo.png">
 
 <style>
 :root {
@@ -122,8 +128,13 @@ body {
 }
 
 @keyframes scan {
-    0% { top:-4px; }
-    100% { top:42px; }
+    0% {
+        top:-4px;
+    }
+
+    100% {
+        top:42px;
+    }
 }
 
 .close-sidebar {
@@ -267,6 +278,8 @@ body {
     line-height:1.55;
     font-size:15px;
     word-wrap:break-word;
+    overflow-wrap:anywhere;
+    white-space:normal;
 }
 
 .user .bubble {
@@ -284,6 +297,7 @@ body {
     display:flex;
     gap:12px;
     align-items:flex-start;
+    max-width:100%;
 }
 
 .ai-avatar {
@@ -300,6 +314,25 @@ body {
     font-weight:bold;
     color:var(--cyan);
     box-shadow:0 0 10px rgba(0,229,255,.12);
+}
+
+/* CODE */
+
+.bubble pre {
+    margin:10px 0;
+    padding:12px;
+    border-radius:10px;
+    background:#0c1016;
+    border:1px solid var(--border);
+    overflow-x:auto;
+    white-space:pre-wrap;
+    word-break:break-word;
+    font-family:Consolas, "Courier New", monospace;
+    font-size:13px;
+}
+
+.bubble code {
+    font-family:Consolas, "Courier New", monospace;
 }
 
 /* INPUT */
@@ -404,6 +437,7 @@ textarea::placeholder {
     }
 }
 </style>
+
 </head>
 
 <body>
@@ -412,105 +446,135 @@ textarea::placeholder {
 
 <div class="sidebar" id="sidebar">
 
-    <div class="sidebar-top">
+```
+<div class="sidebar-top">
 
-        <div class="logo">
-            <div class="logo-box">
-                <div class="logo-number">12</div>
-            </div>
+    <div class="logo">
 
-            <div class="logo-text">
-                12n0name
-            </div>
+        <div class="logo-box">
+            <div class="logo-number">12</div>
         </div>
 
-        <button class="close-sidebar" onclick="toggleSidebar()">×</button>
+        <div class="logo-text">
+            12n0name
+        </div>
 
     </div>
 
-    <button class="new-chat" onclick="newChat()">
-        ＋ New chat
+    <button
+        class="close-sidebar"
+        onclick="toggleSidebar()"
+    >
+        ×
     </button>
 
 </div>
 
+<button
+    class="new-chat"
+    onclick="newChat()"
+>
+    ＋ New chat
+</button>
+```
+
+</div>
 
 <!-- MAIN -->
 
 <div class="main">
 
-    <!-- TOPBAR -->
+```
+<!-- TOPBAR -->
 
-    <div class="topbar">
+<div class="topbar">
 
-        <div class="top-left">
+    <div class="top-left">
 
-            <button class="menu" onclick="toggleSidebar()">
-                ☰
-            </button>
+        <button
+            class="menu"
+            onclick="toggleSidebar()"
+        >
+            ☰
+        </button>
 
-            <div class="title">
-                12n0name AI
-            </div>
-
+        <div class="title">
+            12n0name AI
         </div>
 
-        <button class="theme" onclick="toggleTheme()" id="themeButton">
-            🌙
+    </div>
+
+    <button
+        class="theme"
+        onclick="toggleTheme()"
+        id="themeButton"
+    >
+        🌙
+    </button>
+
+</div>
+
+
+<!-- CHAT -->
+
+<div
+    class="chat"
+    id="chat"
+>
+
+    <div
+        class="welcome"
+        id="welcome"
+    >
+
+        <h1>
+            What can I help with?
+        </h1>
+
+        <p>
+            Ask anything. Build anything. Explore anything.
+        </p>
+
+    </div>
+
+    <div
+        class="messages"
+        id="messages"
+    ></div>
+
+</div>
+
+
+<!-- INPUT -->
+
+<div class="input-area">
+
+    <div class="input-wrap">
+
+        <textarea
+            id="input"
+            placeholder="Ask 12n0name..."
+            rows="1"
+        ></textarea>
+
+        <button
+            class="send"
+            id="sendButton"
+            onclick="sendMessage()"
+        >
+            ↑
         </button>
 
     </div>
 
-
-    <!-- CHAT -->
-
-    <div class="chat" id="chat">
-
-        <div class="welcome" id="welcome">
-
-            <h1>What can I help with?</h1>
-
-            <p>
-                Ask anything. Build anything. Explore anything.
-            </p>
-
-        </div>
-
-        <div class="messages" id="messages"></div>
-
-    </div>
-
-
-    <!-- INPUT -->
-
-    <div class="input-area">
-
-        <div class="input-wrap">
-
-            <textarea
-                id="input"
-                placeholder="Ask 12n0name..."
-                rows="1"
-            ></textarea>
-
-            <button
-                class="send"
-                id="sendButton"
-                onclick="sendMessage()"
-            >
-                ↑
-            </button>
-
-        </div>
-
-        <div class="footer">
-            12n0name AI can make mistakes. Check important information.
-        </div>
-
+    <div class="footer">
+        12n0name AI can make mistakes. Check important information.
     </div>
 
 </div>
+```
 
+</div>
 
 <script>
 
@@ -518,12 +582,18 @@ textarea::placeholder {
    LLAMA.CPP API
    ===================================================== */
 
+/* IMPORTANT:
+   The /v1/chat/completions part is required.
+*/
+
 const API_URL =
     "https://consist-significantly-definitions-counts.trycloudflare.com";
+
 
 let conversation = [];
 
 let controller = null;
+
 let generating = false;
 
 
@@ -533,10 +603,10 @@ let generating = false;
 
 function toggleSidebar() {
 
-    const sidebar = document.getElementById("sidebar");
+    const sidebar =
+        document.getElementById("sidebar");
 
     sidebar.classList.toggle("open");
-
 }
 
 
@@ -556,7 +626,9 @@ function toggleTheme() {
         light ? "light" : "dark"
     );
 
-    document.getElementById("themeButton").textContent =
+    document.getElementById(
+        "themeButton"
+    ).textContent =
         light ? "☀️" : "🌙";
 }
 
@@ -568,8 +640,9 @@ if (
 
     document.body.classList.add("light");
 
-    document.getElementById("themeButton").textContent =
-        "☀️";
+    document.getElementById(
+        "themeButton"
+    ).textContent = "☀️";
 }
 
 
@@ -580,45 +653,130 @@ if (
 const input =
     document.getElementById("input");
 
-input.addEventListener("input", function() {
 
-    this.style.height = "auto";
+input.addEventListener(
+    "input",
+    function() {
 
-    this.style.height =
-        Math.min(this.scrollHeight, 160) + "px";
+        this.style.height = "auto";
 
-});
-
-
-input.addEventListener("keydown", function(event) {
-
-    if (
-        event.key === "Enter" &&
-        !event.shiftKey
-    ) {
-
-        event.preventDefault();
-
-        sendMessage();
-
+        this.style.height =
+            Math.min(
+                this.scrollHeight,
+                160
+            ) + "px";
     }
+);
 
-});
+
+input.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendMessage();
+        }
+    }
+);
 
 
 /* =====================================================
-   ESCAPE HTML
+   SAFE TEXT
    ===================================================== */
 
 function escapeHTML(text) {
 
-    return text
+    return String(text)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
 
+
+/* =====================================================
+   RESPONSE TEXT HANDLER
+   ===================================================== */
+
+function getTextContent(content) {
+
+    if (
+        typeof content === "string"
+    ) {
+        return content;
+    }
+
+    if (
+        Array.isArray(content)
+    ) {
+
+        return content
+            .map(function(item) {
+
+                if (
+                    typeof item === "string"
+                ) {
+                    return item;
+                }
+
+                if (
+                    item &&
+                    typeof item.text === "string"
+                ) {
+                    return item.text;
+                }
+
+                if (
+                    item &&
+                    typeof item.content === "string"
+                ) {
+                    return item.content;
+                }
+
+                return "";
+            })
+            .join("");
+    }
+
+    if (
+        content &&
+        typeof content.text === "string"
+    ) {
+        return content.text;
+    }
+
+    if (
+        content &&
+        typeof content.content === "string"
+    ) {
+        return content.content;
+    }
+
+    return String(
+        content ?? ""
+    );
+}
+
+
+/* =====================================================
+   FORMAT TEXT
+   ===================================================== */
+
+function formatText(text) {
+
+    return escapeHTML(
+        getTextContent(text)
+    )
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n")
+    .replace(/\n/g, "<br>");
 }
 
 
@@ -628,27 +786,38 @@ function escapeHTML(text) {
 
 function addUserMessage(text) {
 
-    document.getElementById("welcome").style.display =
-        "none";
+    document.getElementById(
+        "welcome"
+    ).style.display = "none";
+
 
     const message =
         document.createElement("div");
 
-    message.className = "message user";
+    message.className =
+        "message user";
+
 
     const bubble =
         document.createElement("div");
 
-    bubble.className = "bubble";
+    bubble.className =
+        "bubble";
+
 
     bubble.innerHTML =
-        escapeHTML(text).replace(/\n/g, "<br>");
+        formatText(text);
+
 
     message.appendChild(bubble);
 
-    document.getElementById("messages")
-        .appendChild(message);
 
+    document.getElementById(
+        "messages"
+    ).appendChild(message);
+
+
+    scrollToBottom();
 }
 
 
@@ -661,27 +830,51 @@ function addAIMessage(text) {
     const message =
         document.createElement("div");
 
-    message.className = "message ai";
+    message.className =
+        "message ai";
 
-    message.innerHTML = `
-        <div class="ai-content">
 
-            <div class="ai-avatar">
-                12
-            </div>
+    const content =
+        document.createElement("div");
 
-            <div class="bubble">
-                ${escapeHTML(text).replace(/\n/g, "<br>")}
-            </div>
+    content.className =
+        "ai-content";
 
-        </div>
-    `;
 
-    document.getElementById("messages")
-        .appendChild(message);
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "ai-avatar";
+
+    avatar.textContent =
+        "12";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+
+    bubble.innerHTML =
+        formatText(text);
+
+
+    content.appendChild(avatar);
+
+    content.appendChild(bubble);
+
+    message.appendChild(content);
+
+
+    document.getElementById(
+        "messages"
+    ).appendChild(message);
+
 
     scrollToBottom();
-
 }
 
 
@@ -694,29 +887,53 @@ function createThinkingMessage() {
     const message =
         document.createElement("div");
 
-    message.className = "message ai";
+    message.className =
+        "message ai";
 
-    message.id = "thinking";
+    message.id =
+        "thinking";
 
-    message.innerHTML = `
-        <div class="ai-content">
 
-            <div class="ai-avatar">
-                12
-            </div>
+    const content =
+        document.createElement("div");
 
-            <div class="bubble">
-                Thinking...
-            </div>
+    content.className =
+        "ai-content";
 
-        </div>
-    `;
 
-    document.getElementById("messages")
-        .appendChild(message);
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "ai-avatar";
+
+    avatar.textContent =
+        "12";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+    bubble.textContent =
+        "Thinking...";
+
+
+    content.appendChild(avatar);
+
+    content.appendChild(bubble);
+
+    message.appendChild(content);
+
+
+    document.getElementById(
+        "messages"
+    ).appendChild(message);
+
 
     scrollToBottom();
-
 }
 
 
@@ -727,27 +944,38 @@ function createThinkingMessage() {
 async function sendMessage() {
 
     if (generating) {
+
         stopGeneration();
+
         return;
     }
+
 
     const text =
         input.value.trim();
 
-    if (!text) return;
+
+    if (!text) {
+        return;
+    }
 
 
     addUserMessage(text);
 
+
     conversation.push({
-        role: "user",
-        content: text
+
+        role:"user",
+
+        content:text
+
     });
 
 
     input.value = "";
 
-    input.style.height = "42px";
+    input.style.height =
+        "42px";
 
 
     createThinkingMessage();
@@ -760,48 +988,80 @@ async function sendMessage() {
 
 
     const sendButton =
-        document.getElementById("sendButton");
+        document.getElementById(
+            "sendButton"
+        );
 
-    sendButton.classList.add("stop");
 
-    sendButton.textContent = "■";
+    sendButton.classList.add(
+        "stop"
+    );
+
+    sendButton.textContent =
+        "■";
 
 
     try {
 
         const response =
-            await fetch(API_URL, {
+            await fetch(
+                API_URL,
+                {
 
-                method: "POST",
+                    method:"POST",
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+                    headers:{
+                        "Content-Type":
+                            "application/json",
 
-                body: JSON.stringify({
+                        "Accept":
+                            "application/json"
+                    },
 
-                    messages: conversation,
+                    body:JSON.stringify({
 
-                    temperature: 0.7,
+                        /*
+                         * llama.cpp accepts
+                         * OpenAI-compatible requests.
+                         */
 
-                    max_tokens: 1024,
+                        model:
+                            "qwen2.5-vl-3b-instruct-q4_k_m.gguf",
 
-                    stream: false
+                        messages:
+                            conversation,
 
-                }),
+                        temperature:
+                            0.7,
 
-                signal: controller.signal
+                        max_tokens:
+                            1024,
 
-            });
+                        stream:false
+
+                    }),
+
+                    signal:
+                        controller.signal
+
+                }
+            );
 
 
         if (!response.ok) {
 
-            throw new Error(
-                "HTTP " + response.status
+            const errorText =
+                await response.text();
+
+            console.error(
+                "Server response:",
+                errorText
             );
 
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
         }
 
 
@@ -809,35 +1069,51 @@ async function sendMessage() {
             await response.json();
 
 
-        const answer =
+        console.log(
+            "llama.cpp response:",
+            data
+        );
+
+
+        const rawAnswer =
             data?.choices?.[0]?.message?.content;
+
+
+        const answer =
+            getTextContent(
+                rawAnswer
+            ).trim();
 
 
         if (!answer) {
 
             throw new Error(
-                "No response from model"
+                "Empty response from model"
             );
-
         }
 
 
         const thinking =
-            document.getElementById("thinking");
+            document.getElementById(
+                "thinking"
+            );
+
 
         if (thinking) {
             thinking.remove();
         }
 
 
-        addAIMessage(answer);
+        addAIMessage(
+            answer
+        );
 
 
         conversation.push({
 
-            role: "assistant",
+            role:"assistant",
 
-            content: answer
+            content:answer
 
         });
 
@@ -847,7 +1123,10 @@ async function sendMessage() {
     catch (error) {
 
         const thinking =
-            document.getElementById("thinking");
+            document.getElementById(
+                "thinking"
+            );
+
 
         if (thinking) {
             thinking.remove();
@@ -859,15 +1138,18 @@ async function sendMessage() {
             "AbortError"
         ) {
 
+            console.error(
+                "12n0name AI error:",
+                error
+            );
+
+
             addAIMessage(
                 "⚠️ Server is down.\n\nPlease try again later."
             );
-
-            console.error(error);
-
         }
-
     }
+
 
     finally {
 
@@ -875,12 +1157,14 @@ async function sendMessage() {
 
         controller = null;
 
-        sendButton.classList.remove("stop");
 
-        sendButton.textContent = "↑";
+        sendButton.classList.remove(
+            "stop"
+        );
 
+        sendButton.textContent =
+            "↑";
     }
-
 }
 
 
@@ -895,25 +1179,36 @@ function stopGeneration() {
         controller.abort();
 
         controller = null;
-
     }
 
+
     const thinking =
-        document.getElementById("thinking");
+        document.getElementById(
+            "thinking"
+        );
+
 
     if (thinking) {
         thinking.remove();
     }
 
-    generating = false;
+
+    generating =
+        false;
+
 
     const sendButton =
-        document.getElementById("sendButton");
+        document.getElementById(
+            "sendButton"
+        );
 
-    sendButton.classList.remove("stop");
 
-    sendButton.textContent = "↑";
+    sendButton.classList.remove(
+        "stop"
+    );
 
+    sendButton.textContent =
+        "↑";
 }
 
 
@@ -925,21 +1220,31 @@ function newChat() {
 
     stopGeneration();
 
+
     conversation = [];
 
-    document.getElementById("messages")
-        .innerHTML = "";
 
-    document.getElementById("welcome")
-        .style.display = "flex";
+    document.getElementById(
+        "messages"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "welcome"
+    ).style.display = "flex";
+
 
     input.value = "";
 
-    input.style.height = "42px";
+    input.style.height =
+        "42px";
 
-    document.getElementById("sidebar")
-        .classList.remove("open");
 
+    document.getElementById(
+        "sidebar"
+    ).classList.remove(
+        "open"
+    );
 }
 
 
@@ -950,11 +1255,13 @@ function newChat() {
 function scrollToBottom() {
 
     const chat =
-        document.getElementById("chat");
+        document.getElementById(
+            "chat"
+        );
+
 
     chat.scrollTop =
         chat.scrollHeight;
-
 }
 
 </script>
