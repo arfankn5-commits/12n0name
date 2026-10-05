@@ -1,4 +1,3 @@
-````html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +39,7 @@ body.light {
     --user: #e9ebef;
     --cyan: #009fc0;
     --purple: #6941d9;
-    --code: #f1f3f5;
+    --code: #f0f1f4;
 }
 
 
@@ -71,7 +70,6 @@ body {
 
 .sidebar {
     position: fixed;
-
     left: 0;
     top: 0;
     bottom: 0;
@@ -79,7 +77,6 @@ body {
     width: 270px;
 
     background: var(--sidebar);
-
     border-right: 1px solid var(--border);
 
     padding: 18px;
@@ -287,6 +284,30 @@ body {
 }
 
 
+/* ================= STATUS ================= */
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: var(--secondary);
+
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #42d392;
+
+    box-shadow: 0 0 8px #42d392;
+}
+
+
 /* ================= THEME ================= */
 
 .theme-button {
@@ -436,142 +457,43 @@ body {
 }
 
 
-/* ================= RESPONSE FORMATTING ================= */
+/* ================= AI MARKDOWN ================= */
 
-.ai-content {
-    width: 100%;
-}
-
-
-/* HEADINGS */
-
-.ai-content h1,
-.ai-content h2,
-.ai-content h3,
-.ai-content h4 {
-    margin-top: 18px;
-    margin-bottom: 9px;
-    line-height: 1.3;
-}
-
-.ai-content h1 {
-    font-size: 24px;
-}
-
-.ai-content h2 {
-    font-size: 21px;
-}
-
-.ai-content h3 {
-    font-size: 18px;
-}
-
-.ai-content h4 {
-    font-size: 16px;
-}
-
-
-/* PARAGRAPHS */
-
-.ai-content p {
-    margin: 7px 0;
-}
-
-
-/* BOLD */
-
-.ai-content strong {
+.bubble strong {
     font-weight: 700;
 }
 
-
-/* ITALIC */
-
-.ai-content em {
+.bubble em {
     font-style: italic;
 }
 
-
-/* INLINE CODE */
-
-.inline-code {
+.bubble code.inline-code {
     background: var(--code);
 
     border: 1px solid var(--border);
 
     border-radius: 5px;
 
-    padding: 2px 6px;
+    padding: 2px 5px;
 
     font-family:
         Consolas,
         "Courier New",
         monospace;
 
-    font-size: .9em;
-
-    color: var(--cyan);
+    font-size: 13px;
 }
 
-
-/* CODE BLOCK */
-
-.code-wrapper {
-    margin: 14px 0;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 10px;
-
-    overflow: hidden;
-
-    background: var(--code);
-}
-
-.code-header {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 7px 10px;
-
-    background: var(--surface);
-
-    border-bottom:
-        1px solid var(--border);
-
-    color: var(--secondary);
-
-    font-size: 11px;
-}
-
-.copy-code {
-    border: 1px solid var(--border);
-
-    background: transparent;
-
-    color: var(--secondary);
-
-    border-radius: 6px;
-
-    padding: 4px 8px;
-
-    cursor: pointer;
-
-    font-size: 11px;
-}
-
-.copy-code:hover {
-    background: var(--hover);
-    color: var(--text);
-}
-
-.code-wrapper pre {
-    margin: 0;
+.code-block {
+    margin: 12px 0;
 
     padding: 14px;
+
+    background: var(--code);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
 
     overflow-x: auto;
 
@@ -585,80 +507,18 @@ body {
     font-size: 13px;
 
     line-height: 1.55;
-
-    color: var(--text);
 }
 
-.code-wrapper code {
-    font-family: inherit;
-}
-
-
-/* BULLET LIST */
-
-.ai-content ul {
-    margin: 9px 0 9px 22px;
-
-    padding-left: 16px;
-}
-
-.ai-content ul li {
-    margin: 5px 0;
-
-    padding-left: 3px;
-}
-
-
-/* NUMBERED LIST */
-
-.ai-content ol {
-    margin: 9px 0 9px 22px;
-
-    padding-left: 16px;
-}
-
-.ai-content ol li {
-    margin: 5px 0;
-
-    padding-left: 3px;
-}
-
-
-/* LINKS */
-
-.ai-content a {
-    color: var(--cyan);
-
-    text-decoration: underline;
-}
-
-
-/* BLOCKQUOTE */
-
-.ai-content blockquote {
-    margin: 12px 0;
-
-    padding: 8px 13px;
-
-    border-left:
-        3px solid var(--cyan);
-
-    background:
-        rgba(0,229,255,.05);
+.code-language {
+    display: block;
 
     color: var(--secondary);
-}
 
+    font-size: 11px;
 
-/* HORIZONTAL LINE */
+    margin-bottom: 8px;
 
-.ai-content hr {
-    border: none;
-
-    border-top:
-        1px solid var(--border);
-
-    margin: 16px 0;
+    text-transform: uppercase;
 }
 
 
@@ -719,6 +579,8 @@ textarea {
     padding: 10px;
 
     font-family: inherit;
+
+    max-height: 180px;
 }
 
 textarea::placeholder {
@@ -756,6 +618,41 @@ textarea::placeholder {
     transform: scale(1.06);
 }
 
+.send:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* ================= STOP ================= */
+
+.stop {
+    display: none;
+
+    width: 43px;
+    height: 43px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #333842;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+
+/* ================= ERROR ================= */
+
+.error {
+    color: #ff6b6b;
+}
+
 
 /* ================= FOOTER ================= */
 
@@ -786,8 +683,8 @@ textarea::placeholder {
         max-width: 85%;
     }
 
-    .code-wrapper pre {
-        font-size: 12px;
+    .status {
+        display: none;
     }
 
 }
@@ -835,7 +732,7 @@ textarea::placeholder {
 <main class="main">
 
 
-    <!-- TOP BAR -->
+    <!-- ================= TOP BAR ================= -->
 
     <header class="topbar">
 
@@ -853,6 +750,15 @@ textarea::placeholder {
 
             12n0name
             <span>AI</span>
+
+        </div>
+
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            Online
 
         </div>
 
@@ -914,10 +820,22 @@ textarea::placeholder {
 
             <button
                 class="send"
+                id="sendButton"
                 type="button"
                 onclick="sendMessage()">
 
                 ➤
+
+            </button>
+
+
+            <button
+                class="stop"
+                id="stopButton"
+                type="button"
+                onclick="stopGeneration()">
+
+                ■
 
             </button>
 
@@ -938,7 +856,45 @@ textarea::placeholder {
 
 <script>
 
-/* ================= SIDEBAR ================= */
+/* =========================================================
+   API
+   ========================================================= */
+
+const API_URL =
+    "https://desktop-3fdvn7b.tail77d397.ts.net/v1/chat/completions";
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let conversation = [];
+
+let controller = null;
+
+let generating = false;
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const input =
+    document.getElementById("input");
+
+const messages =
+    document.getElementById("messages");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const stopButton =
+    document.getElementById("stopButton");
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
 
 function toggleSidebar() {
 
@@ -950,7 +906,9 @@ function toggleSidebar() {
 }
 
 
-/* ================= THEME ================= */
+/* =========================================================
+   THEME
+   ========================================================= */
 
 function toggleTheme() {
 
@@ -985,7 +943,9 @@ function toggleTheme() {
 }
 
 
-/* ================= LOAD THEME ================= */
+/* =========================================================
+   LOAD THEME
+   ========================================================= */
 
 if (
     localStorage.getItem("theme")
@@ -1001,14 +961,9 @@ if (
 }
 
 
-/* ================= INPUT ================= */
-
-const input =
-    document.getElementById("input");
-
-const messages =
-    document.getElementById("messages");
-
+/* =========================================================
+   INPUT
+   ========================================================= */
 
 input.addEventListener(
     "keydown",
@@ -1029,9 +984,35 @@ input.addEventListener(
 );
 
 
-/* ================= SEND MESSAGE ================= */
+/* =========================================================
+   AUTO RESIZE
+   ========================================================= */
 
-function sendMessage() {
+input.addEventListener(
+    "input",
+    function() {
+
+        this.style.height = "auto";
+
+        this.style.height =
+            Math.min(
+                this.scrollHeight,
+                180
+            ) + "px";
+
+    }
+);
+
+
+/* =========================================================
+   SEND MESSAGE
+   ========================================================= */
+
+async function sendMessage() {
+
+    if (generating)
+        return;
+
 
     const text =
         input.value.trim();
@@ -1053,50 +1034,258 @@ function sendMessage() {
     );
 
 
+    conversation.push({
+        role: "user",
+        content: text
+    });
+
+
     input.value = "";
 
+    input.style.height = "auto";
 
-    /*
-       Demo response.
 
-       Replace this section with your
-       llama.cpp API request later.
-    */
+    setGenerating(true);
 
-    setTimeout(function() {
 
-        addMessage(
+    const aiMessage =
+        createAIMessage();
 
-            "Hello! 👋 I'm **12n0name AI**.\n\n" +
 
-            "I can now display:\n\n" +
+    controller =
+        new AbortController();
 
-            "- Bullet points\n" +
-            "- Numbered lists\n" +
-            "- **Bold text**\n" +
-            "- *Italic text*\n" +
-            "- `inline code`\n\n" +
 
-            "Example:\n\n" +
+    try {
 
-            "```python\n" +
-            "print(\"Hello, world!\")\n" +
-            "```\n\n" +
+        const response =
+            await fetch(
+                API_URL,
+                {
+                    method: "POST",
 
-            "The interface keeps the same design.",
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            "ai"
+                    body: JSON.stringify({
 
+                        messages:
+                            conversation,
+
+                        temperature:
+                            0.7,
+
+                        max_tokens:
+                            1024,
+
+                        stream:
+                            false
+
+                    }),
+
+                    signal:
+                        controller.signal
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        let reply = "";
+
+
+        if (
+            data.choices &&
+            data.choices.length > 0
+        ) {
+
+            const content =
+                data.choices[0].message?.content;
+
+
+            if (typeof content === "string") {
+
+                reply = content;
+
+            } else if (
+                Array.isArray(content)
+            ) {
+
+                reply =
+                    content
+                    .map(function(item) {
+
+                        return item.text || "";
+
+                    })
+                    .join("");
+
+            }
+
+        }
+
+
+        if (!reply.trim()) {
+
+            throw new Error(
+                "Empty AI response"
+            );
+
+        }
+
+
+        aiMessage.querySelector(
+            ".bubble"
+        ).innerHTML =
+            formatResponse(reply);
+
+
+        conversation.push({
+            role: "assistant",
+            content: reply
+        });
+
+
+        scrollBottom();
+
+    }
+
+    catch (error) {
+
+        if (
+            error.name ===
+            "AbortError"
+        ) {
+
+            aiMessage.remove();
+
+            return;
+
+        }
+
+
+        console.error(
+            "AI Error:",
+            error
         );
 
-    }, 700);
+
+        aiMessage.querySelector(
+            ".bubble"
+        ).innerHTML =
+
+            '<span class="error">' +
+            '⚠️ Server is down.<br><br>' +
+            'Please make sure llama.cpp and ' +
+            'Tailscale Funnel are running.' +
+            '</span>';
+
+    }
+
+    finally {
+
+        controller = null;
+
+        setGenerating(false);
+
+    }
 
 }
 
 
-/* ================= ADD MESSAGE ================= */
+/* =========================================================
+   GENERATING STATE
+   ========================================================= */
 
-function addMessage(text, type) {
+function setGenerating(state) {
+
+    generating = state;
+
+    sendButton.style.display =
+        state ? "none" : "block";
+
+    stopButton.style.display =
+        state ? "block" : "none";
+
+    input.disabled = state;
+
+}
+
+
+/* =========================================================
+   STOP GENERATION
+   ========================================================= */
+
+function stopGeneration() {
+
+    if (controller) {
+
+        controller.abort();
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE AI MESSAGE
+   ========================================================= */
+
+function createAIMessage() {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message ai";
+
+
+    message.innerHTML = `
+
+        <div class="msg-avatar">
+            12
+        </div>
+
+        <div class="bubble">
+            Thinking...
+        </div>
+
+    `;
+
+
+    messages.appendChild(message);
+
+    scrollBottom();
+
+
+    return message;
+
+}
+
+
+/* =========================================================
+   ADD MESSAGE
+   ========================================================= */
+
+function addMessage(
+    text,
+    type
+) {
 
     const message =
         document.createElement("div");
@@ -1114,13 +1303,7 @@ function addMessage(text, type) {
             </div>
 
             <div class="bubble">
-
-                <div class="ai-content">
-
-                    ${formatAIResponse(text)}
-
-                </div>
-
+                ${formatResponse(text)}
             </div>
 
         `;
@@ -1140,20 +1323,24 @@ function addMessage(text, type) {
 
     messages.appendChild(message);
 
-    addCopyButtons();
-
     scrollBottom();
 
 }
 
 
-/* ================= AI FORMATTER ================= */
+/* =========================================================
+   FORMAT AI RESPONSE
+   ========================================================= */
 
-function formatAIResponse(text) {
+function formatResponse(text) {
+
+    if (!text)
+        return "";
+
 
     /*
-       First escape everything so AI output
-       cannot execute HTML or JavaScript.
+       First escape HTML so the AI cannot
+       inject HTML into the page.
     */
 
     let safe =
@@ -1161,170 +1348,120 @@ function formatAIResponse(text) {
 
 
     /*
-       Extract fenced code blocks before
-       processing Markdown-like formatting.
+       Extract fenced code blocks first.
+       This prevents ``` from appearing
+       as normal text.
     */
 
     const codeBlocks = [];
 
-    safe = safe.replace(
-        /```([a-zA-Z0-9_+#.-]*)\n?([\s\S]*?)```/g,
-        function(match, language, code) {
-
-            const id =
-                "code_" +
-                codeBlocks.length;
-
-            codeBlocks.push({
-                id: id,
-                language:
-                    language || "code",
-                code: code
-            });
-
-            return "\n@@@" + id + "@@@\n";
-
-        }
-    );
-
-
-    /*
-       Process headings.
-    */
-
-    safe = safe.replace(
-        /^### (.+)$/gm,
-        "<h3>$1</h3>"
-    );
-
-    safe = safe.replace(
-        /^## (.+)$/gm,
-        "<h2>$1</h2>"
-    );
-
-    safe = safe.replace(
-        /^# (.+)$/gm,
-        "<h1>$1</h1>"
-    );
-
-
-    /*
-       Horizontal rule.
-    */
-
-    safe = safe.replace(
-        /^---$/gm,
-        "<hr>"
-    );
-
-
-    /*
-       Blockquotes.
-    */
-
-    safe = safe.replace(
-        /^&gt; (.+)$/gm,
-        "<blockquote>$1</blockquote>"
-    );
-
-
-    /*
-       Bold.
-    */
-
-    safe = safe.replace(
-        /\*\*(.+?)\*\*/g,
-        "<strong>$1</strong>"
-    );
-
-    safe = safe.replace(
-        /__(.+?)__/g,
-        "<strong>$1</strong>"
-    );
-
-
-    /*
-       Italic.
-    */
-
-    safe = safe.replace(
-        /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
-        "<em>$1</em>"
-    );
-
-
-    /*
-       Inline code.
-    */
-
-    safe = safe.replace(
-        /`([^`\n]+)`/g,
-        '<code class="inline-code">$1</code>'
-    );
-
-
-    /*
-       Convert bullet lists.
-    */
-
     safe =
-        formatLists(
-            safe
+        safe.replace(
+            /```([a-zA-Z0-9_+-]*)\n?([\s\S]*?)```/g,
+            function(
+                match,
+                language,
+                code
+            ) {
+
+                const id =
+                    codeBlocks.length;
+
+                codeBlocks.push({
+
+                    language:
+                        language || "code",
+
+                    code:
+                        code.trim()
+
+                });
+
+
+                return (
+                    "___CODE_BLOCK_" +
+                    id +
+                    "___"
+                );
+
+            }
         );
 
 
     /*
-       Convert normal line breaks.
+       Basic Markdown formatting.
     */
 
-    safe = safe.replace(
-        /\r?\n/g,
-        "<br>"
-    );
+    safe =
+        safe.replace(
+            /\*\*(.*?)\*\*/g,
+            "<strong>$1</strong>"
+        );
+
+
+    safe =
+        safe.replace(
+            /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
+            "<em>$1</em>"
+        );
+
+
+    safe =
+        safe.replace(
+            /`([^`\n]+)`/g,
+            '<code class="inline-code">$1</code>'
+        );
+
+
+    /*
+       Preserve line breaks.
+    */
+
+    safe =
+        safe.replace(
+            /\n/g,
+            "<br>"
+        );
 
 
     /*
        Restore code blocks.
     */
 
-    codeBlocks.forEach(function(block) {
+    codeBlocks.forEach(
+        function(block, index) {
 
-        const escapedCode =
-            block.code;
+            const placeholder =
+                "___CODE_BLOCK_" +
+                index +
+                "___";
 
-        const codeHTML = `
 
-            <div class="code-wrapper">
+            const html =
 
-                <div class="code-header">
+                '<div class="code-block">' +
 
-                    <span>
-                        ${escapeHTML(block.language)}
-                    </span>
+                '<span class="code-language">' +
+                escapeHTML(
+                    block.language
+                ) +
+                '</span>' +
 
-                    <button
-                        class="copy-code"
-                        type="button"
-                        data-code="${encodeURIComponent(block.code)}">
+                escapeHTML(
+                    block.code
+                ) +
 
-                        Copy
+                '</div>';
 
-                    </button>
 
-                </div>
+            safe =
+                safe.replace(
+                    placeholder,
+                    html
+                );
 
-                <pre><code>${escapedCode}</code></pre>
-
-            </div>
-
-        `;
-
-        safe = safe.replace(
-            "@@@" + block.id + "@@@",
-            codeHTML
-        );
-
-    });
+        }
+    );
 
 
     return safe;
@@ -1332,210 +1469,26 @@ function formatAIResponse(text) {
 }
 
 
-/* ================= LIST FORMATTER ================= */
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
 
-function formatLists(text) {
+function escapeHTML(text) {
 
-    const lines =
-        text.split("\n");
+    const div =
+        document.createElement("div");
 
-    let result = [];
+    div.textContent =
+        text;
 
-    let inUL = false;
-    let inOL = false;
-
-
-    function closeLists() {
-
-        if (inUL) {
-
-            result.push("</ul>");
-
-            inUL = false;
-
-        }
-
-        if (inOL) {
-
-            result.push("</ol>");
-
-            inOL = false;
-
-        }
-
-    }
-
-
-    lines.forEach(function(line) {
-
-        /*
-           Bullet:
-
-           - item
-           * item
-           + item
-        */
-
-        const bullet =
-            line.match(
-                /^\s*[-*+]\s+(.+)$/
-            );
-
-
-        /*
-           Number:
-
-           1. item
-           2. item
-        */
-
-        const number =
-            line.match(
-                /^\s*\d+\.\s+(.+)$/
-            );
-
-
-        if (bullet) {
-
-            if (inOL) {
-
-                result.push("</ol>");
-
-                inOL = false;
-
-            }
-
-            if (!inUL) {
-
-                result.push("<ul>");
-
-                inUL = true;
-
-            }
-
-            result.push(
-                "<li>" +
-                bullet[1] +
-                "</li>"
-            );
-
-            return;
-
-        }
-
-
-        if (number) {
-
-            if (inUL) {
-
-                result.push("</ul>");
-
-                inUL = false;
-
-            }
-
-            if (!inOL) {
-
-                result.push("<ol>");
-
-                inOL = true;
-
-            }
-
-            result.push(
-                "<li>" +
-                number[1] +
-                "</li>"
-            );
-
-            return;
-
-        }
-
-
-        closeLists();
-
-        result.push(line);
-
-    });
-
-
-    closeLists();
-
-
-    return result.join("\n");
+    return div.innerHTML;
 
 }
 
 
-/* ================= COPY BUTTONS ================= */
-
-function addCopyButtons() {
-
-    const buttons =
-        document.querySelectorAll(
-            ".copy-code"
-        );
-
-
-    buttons.forEach(function(button) {
-
-        if (
-            button.dataset.ready
-        ) {
-            return;
-        }
-
-
-        button.dataset.ready = "true";
-
-
-        button.addEventListener(
-            "click",
-            async function() {
-
-                const code =
-                    decodeURIComponent(
-                        button.dataset.code
-                    );
-
-
-                try {
-
-                    await navigator.clipboard.writeText(
-                        code
-                    );
-
-                    button.textContent =
-                        "Copied!";
-
-
-                    setTimeout(
-                        function() {
-
-                            button.textContent =
-                                "Copy";
-
-                        },
-                        1200
-                    );
-
-                } catch (error) {
-
-                    button.textContent =
-                        "Failed";
-
-                }
-
-            }
-        );
-
-    });
-
-}
-
-
-/* ================= SCROLL ================= */
+/* =========================================================
+   SCROLL
+   ========================================================= */
 
 function scrollBottom() {
 
@@ -1555,9 +1508,14 @@ function scrollBottom() {
 }
 
 
-/* ================= NEW CHAT ================= */
+/* =========================================================
+   NEW CHAT
+   ========================================================= */
 
 function newChat() {
+
+    conversation = [];
+
 
     messages.innerHTML = `
 
@@ -1578,22 +1536,48 @@ function newChat() {
 
     `;
 
-}
+
+    input.value = "";
+
+    input.style.height = "auto";
 
 
-/* ================= ESCAPE ================= */
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        text;
-
-    return div.innerHTML;
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
 
 }
+
+
+/* =========================================================
+   CLOSE SIDEBAR ON OUTSIDE CLICK
+   ========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const menu =
+            document.querySelector(
+                ".menu-button"
+            );
+
+
+        if (
+            sidebar.classList.contains("open") &&
+            !sidebar.contains(event.target) &&
+            !menu.contains(event.target)
+        ) {
+
+            sidebar.classList.remove("open");
+
+        }
+
+    }
+);
 
 </script>
 
