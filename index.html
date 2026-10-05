@@ -10,8 +10,6 @@
 
 <style>
 
-/* ================= THEME ================= */
-
 :root {
     --bg: #0b0d10;
     --sidebar: #111318;
@@ -41,9 +39,6 @@ body.light {
     --purple: #6941d9;
     --code: #f0f1f4;
 }
-
-
-/* ================= RESET ================= */
 
 * {
     box-sizing: border-box;
@@ -91,17 +86,6 @@ body {
 }
 
 
-/* ================= SIDEBAR HEADER ================= */
-
-.sidebar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 30px;
-}
-
-
 /* ================= LOGO ================= */
 
 .logo {
@@ -111,6 +95,8 @@ body {
 
     font-size: 20px;
     font-weight: 800;
+
+    margin-bottom: 30px;
 }
 
 .logo-icon {
@@ -197,39 +183,6 @@ body {
             rotate(-45deg);
     }
 
-}
-
-
-/* ================= CLOSE SIDEBAR ================= */
-
-.close-sidebar {
-    width: 38px;
-    height: 38px;
-
-    border: none;
-    border-radius: 9px;
-
-    background: transparent;
-
-    color: var(--secondary);
-
-    font-size: 25px;
-    font-weight: 300;
-
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transition: .15s;
-}
-
-.close-sidebar:hover {
-    background: var(--hover);
-    color: var(--text);
-
-    transform: scale(1.05);
 }
 
 
@@ -508,6 +461,37 @@ body {
 .bubble em {
     font-style: italic;
 }
+
+
+/* ================= MARKDOWN HEADINGS ================= */
+
+.bubble .md-heading {
+    display: block;
+
+    margin: 18px 0 9px;
+
+    color: var(--text);
+
+    line-height: 1.25;
+}
+
+.bubble h2.md-heading {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.bubble h3.md-heading {
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.bubble h4.md-heading {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* ================= INLINE CODE ================= */
 
 .bubble code.inline-code {
     background: var(--code);
@@ -813,33 +797,15 @@ textarea::placeholder {
     class="sidebar"
     id="sidebar">
 
+    <div class="logo">
 
-    <!-- ================= SIDEBAR HEADER ================= -->
-
-    <div class="sidebar-header">
-
-        <div class="logo">
-
-            <div class="logo-icon">
-                12
-            </div>
-
-            <span>
-                12n0name
-            </span>
-
+        <div class="logo-icon">
+            12
         </div>
 
-
-        <button
-            class="close-sidebar"
-            type="button"
-            onclick="closeSidebar()"
-            aria-label="Close sidebar">
-
-            ×
-
-        </button>
+        <span>
+            12n0name
+        </span>
 
     </div>
 
@@ -1030,16 +996,6 @@ function toggleSidebar() {
         document.getElementById("sidebar");
 
     sidebar.classList.toggle("open");
-
-}
-
-
-function closeSidebar() {
-
-    const sidebar =
-        document.getElementById("sidebar");
-
-    sidebar.classList.remove("open");
 
 }
 
@@ -1244,10 +1200,6 @@ async function sendMessage() {
             await response.json();
 
 
-        /* =================================================
-           HANDLE LLAMA.CPP RESPONSE
-           ================================================= */
-
         const choice =
             data?.choices?.[0];
 
@@ -1256,10 +1208,6 @@ async function sendMessage() {
             choice?.text ??
             "";
 
-
-        /* =================================================
-           ARRAY RESPONSE SUPPORT
-           ================================================= */
 
         if (Array.isArray(reply)) {
 
@@ -1286,10 +1234,6 @@ async function sendMessage() {
 
         }
 
-
-        /* =================================================
-           FINAL CONVERSION
-           ================================================= */
 
         if (
             typeof reply !==
@@ -1529,11 +1473,6 @@ function formatResponse(text) {
                     codeBlocks.length;
 
 
-                /*
-                   Decode HTML entities ONLY
-                   inside code blocks.
-                */
-
                 const decodedCode =
                     decodeHTMLEntities(
                         code
@@ -1566,6 +1505,38 @@ function formatResponse(text) {
                 );
 
             }
+        );
+
+
+    /*
+       MARKDOWN HEADINGS
+
+       This fixes:
+
+       ## Analysis of the Python Code
+
+       and converts it into a real
+       HTML heading.
+    */
+
+    safe =
+        safe.replace(
+            /^####[ \t]+(.+)$/gm,
+            '<h4 class="md-heading">$1</h4>'
+        );
+
+
+    safe =
+        safe.replace(
+            /^###[ \t]+(.+)$/gm,
+            '<h3 class="md-heading">$1</h3>'
+        );
+
+
+    safe =
+        safe.replace(
+            /^##[ \t]+(.+)$/gm,
+            '<h2 class="md-heading">$1</h2>'
         );
 
 
@@ -1625,11 +1596,6 @@ function formatResponse(text) {
                 index +
                 "___";
 
-
-            /*
-               Escape decoded code before
-               inserting it into HTML.
-            */
 
             const safeCode =
                 escapeHTML(
@@ -1741,7 +1707,6 @@ async function copyCode(button) {
         button.textContent =
             "Copied!";
 
-
         button.classList.add(
             "copied"
         );
@@ -1771,10 +1736,6 @@ async function copyCode(button) {
         );
 
 
-        /*
-           Fallback copy method.
-        */
-
         const textarea =
             document.createElement(
                 "textarea"
@@ -1783,7 +1744,6 @@ async function copyCode(button) {
 
         textarea.value =
             text;
-
 
         textarea.style.position =
             "fixed";
@@ -1809,7 +1769,6 @@ async function copyCode(button) {
 
             button.textContent =
                 "Copied!";
-
 
             button.classList.add(
                 "copied"
@@ -1928,7 +1887,9 @@ function newChat() {
         "auto";
 
 
-    closeSidebar();
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
 
 }
 
