@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -110,6 +109,7 @@ body {
         );
 
     border: 1px solid rgba(0,229,255,.75);
+
     color: white;
     font-size: 17px;
     font-weight: 900;
@@ -145,7 +145,9 @@ body {
         );
 
     transform: rotate(-45deg);
-    animation: scan 2.5s linear infinite;
+
+    animation:
+        scan 2.5s linear infinite;
 }
 
 @keyframes scan {
@@ -216,7 +218,6 @@ body {
     color: var(--text);
     font-size: 23px;
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -391,16 +392,14 @@ body {
     font-style: italic;
 }
 
+
+/* ================= MARKDOWN HEADINGS ================= */
+
 .bubble .md-heading {
     display: block;
     margin: 18px 0 9px;
     color: var(--text);
     line-height: 1.25;
-}
-
-.bubble h1.md-heading {
-    font-size: 25px;
-    font-weight: 800;
 }
 
 .bubble h2.md-heading {
@@ -527,7 +526,9 @@ body {
 .input-box {
     max-width: 850px;
     margin: auto;
+
     background: var(--surface);
+
     border: 1px solid var(--border);
     border-radius: 17px;
 
@@ -598,6 +599,7 @@ textarea::placeholder {
     border-radius: 12px;
 
     background: #333842;
+
     color: white;
     cursor: pointer;
     font-size: 16px;
@@ -651,7 +653,9 @@ textarea::placeholder {
 
 </head>
 
+
 <body>
+
 
 <!-- ================= SIDEBAR ================= -->
 
@@ -659,177 +663,170 @@ textarea::placeholder {
     class="sidebar"
     id="sidebar">
 
-```
-<div class="logo">
+    <div class="logo">
 
-    <div class="logo-icon">
-        12
+        <div class="logo-icon">
+            12
+        </div>
+
+        <span>
+            12n0name
+        </span>
+
     </div>
 
-    <span>
-        12n0name
-    </span>
 
-</div>
+    <button
+        class="new-chat"
+        onclick="newChat()">
 
+        ＋ New chat
 
-<button
-    class="new-chat"
-    onclick="newChat()">
-
-    ＋ New chat
-
-</button>
-```
+    </button>
 
 </aside>
+
 
 <!-- ================= MAIN ================= -->
 
 <main class="main">
 
-```
-<!-- ================= TOP BAR ================= -->
 
-<header class="topbar">
+    <!-- ================= TOP BAR ================= -->
 
-    <button
-        class="menu-button"
-        type="button"
-        onclick="toggleSidebar()">
+    <header class="topbar">
 
-        ☰
+        <button
+            class="menu-button"
+            type="button"
+            onclick="toggleSidebar()">
 
-    </button>
+            ☰
 
-
-    <div class="model">
-
-        12n0name
-        <span>AI</span>
-
-    </div>
+        </button>
 
 
-    <div class="status">
+        <div class="model">
 
-        <span class="status-dot"></span>
+            12n0name
+            <span>AI</span>
 
-        Online
-
-    </div>
-
-
-    <button
-        class="theme-button"
-        id="themeButton"
-        type="button"
-        onclick="toggleTheme()">
-
-        🌙
-
-    </button>
-
-</header>
+        </div>
 
 
-<!-- ================= CHAT ================= -->
+        <div class="status">
 
-<section
-    class="chat"
-    id="chat">
+            <span class="status-dot"></span>
 
-    <div
-        class="messages"
-        id="messages">
+            Online
+
+        </div>
+
+
+        <button
+            class="theme-button"
+            id="themeButton"
+            type="button"
+            onclick="toggleTheme()">
+
+            🌙
+
+        </button>
+
+    </header>
+
+
+    <!-- ================= CHAT ================= -->
+
+    <section
+        class="chat"
+        id="chat">
 
         <div
-            class="welcome"
-            id="welcome">
+            class="messages"
+            id="messages">
 
-            <h1>
-                What can I help with?
-            </h1>
+            <div
+                class="welcome"
+                id="welcome">
 
-            <p>
-                Ask anything. Build anything.
-                Explore anything.
-            </p>
+                <h1>
+                    What can I help with?
+                </h1>
+
+                <p>
+                    Ask anything. Build anything.
+                    Explore anything.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MESSAGE BOX ================= -->
+
+    <div class="input-area">
+
+        <div class="input-box">
+
+            <textarea
+                id="input"
+                rows="1"
+                placeholder="Ask 12n0name..."></textarea>
+
+
+            <button
+                class="send"
+                id="sendButton"
+                type="button"
+                onclick="sendMessage()">
+
+                ➤
+
+            </button>
+
+
+            <button
+                class="stop"
+                id="stopButton"
+                type="button"
+                onclick="stopGeneration()">
+
+                ■
+
+            </button>
+
+        </div>
+
+
+        <div class="footer">
+
+            12n0name AI can make mistakes.
+            Check important information.
 
         </div>
 
     </div>
 
-</section>
-
-
-<!-- ================= MESSAGE BOX ================= -->
-
-<div class="input-area">
-
-    <div class="input-box">
-
-        <textarea
-            id="input"
-            rows="1"
-            placeholder="Ask 12n0name..."></textarea>
-
-
-        <button
-            class="send"
-            id="sendButton"
-            type="button"
-            onclick="sendMessage()">
-
-            ➤
-
-        </button>
-
-
-        <button
-            class="stop"
-            id="stopButton"
-            type="button"
-            onclick="stopGeneration()">
-
-            ■
-
-        </button>
-
-    </div>
-
-
-    <div class="footer">
-
-        12n0name AI can make mistakes.
-        Check important information.
-
-    </div>
-
-</div>
-```
-
 </main>
+
 
 <script>
 
 /* =========================================================
    API
-========================================================= */
-
-const API_BASE =
-    "https://desktop-3fdvn7b.tail77d397.ts.net";
+   ========================================================= */
 
 const API_URL =
-    API_BASE + "/v1/chat/completions";
-
-const MODELS_URL =
-    API_BASE + "/v1/models";
+    "https://desktop-3fdvn7b.tail77d397.ts.net/v1/chat/completions";
 
 
 /* =========================================================
    STATE
-========================================================= */
+   ========================================================= */
 
 let conversation = [];
 
@@ -840,7 +837,7 @@ let generating = false;
 
 /* =========================================================
    ELEMENTS
-========================================================= */
+   ========================================================= */
 
 const input =
     document.getElementById("input");
@@ -857,7 +854,7 @@ const stopButton =
 
 /* =========================================================
    SIDEBAR
-========================================================= */
+   ========================================================= */
 
 function toggleSidebar() {
 
@@ -871,7 +868,7 @@ function toggleSidebar() {
 
 /* =========================================================
    THEME
-========================================================= */
+   ========================================================= */
 
 function toggleTheme() {
 
@@ -908,7 +905,7 @@ function toggleTheme() {
 
 /* =========================================================
    LOAD THEME
-========================================================= */
+   ========================================================= */
 
 if (
     localStorage.getItem("theme")
@@ -926,7 +923,7 @@ if (
 
 /* =========================================================
    INPUT
-========================================================= */
+   ========================================================= */
 
 input.addEventListener(
     "keydown",
@@ -949,7 +946,7 @@ input.addEventListener(
 
 /* =========================================================
    AUTO RESIZE
-========================================================= */
+   ========================================================= */
 
 input.addEventListener(
     "input",
@@ -969,7 +966,7 @@ input.addEventListener(
 
 /* =========================================================
    SEND MESSAGE
-========================================================= */
+   ========================================================= */
 
 async function sendMessage() {
 
@@ -1027,10 +1024,6 @@ async function sendMessage() {
                 {
                     method: "POST",
 
-                    mode: "cors",
-
-                    cache: "no-store",
-
                     headers: {
                         "Content-Type":
                             "application/json",
@@ -1061,47 +1054,23 @@ async function sendMessage() {
             );
 
 
-        const responseText =
-            await response.text();
-
-
         if (!response.ok) {
 
             throw new Error(
                 "HTTP " +
-                response.status +
-                ": " +
-                responseText.substring(
-                    0,
-                    500
-                )
+                response.status
             );
 
         }
 
 
-        let data;
-
-        try {
-
-            data =
-                JSON.parse(
-                    responseText
-                );
-
-        }
-
-        catch (jsonError) {
-
-            throw new Error(
-                "The server returned invalid JSON."
-            );
-
-        }
+        const data =
+            await response.json();
 
 
         const choice =
             data?.choices?.[0];
+
 
         let reply =
             choice?.message?.content ??
@@ -1116,12 +1085,18 @@ async function sendMessage() {
                 .map(function(item) {
 
                     if (
-                        typeof item === "string"
+                        typeof item ===
+                        "string"
                     ) {
+
                         return item;
+
                     }
 
-                    return item?.text ?? "";
+                    return (
+                        item?.text ??
+                        ""
+                    );
 
                 })
                 .join("");
@@ -1130,7 +1105,8 @@ async function sendMessage() {
 
 
         if (
-            typeof reply !== "string"
+            typeof reply !==
+            "string"
         ) {
 
             reply =
@@ -1142,7 +1118,7 @@ async function sendMessage() {
         if (!reply.trim()) {
 
             throw new Error(
-                "The AI server returned an empty response."
+                "Empty AI response"
             );
 
         }
@@ -1167,8 +1143,8 @@ async function sendMessage() {
     catch (error) {
 
         if (
-            error &&
-            error.name === "AbortError"
+            error.name ===
+            "AbortError"
         ) {
 
             aiMessage.remove();
@@ -1179,7 +1155,7 @@ async function sendMessage() {
 
 
         console.error(
-            "12n0name AI error:",
+            "AI Error:",
             error
         );
 
@@ -1189,15 +1165,9 @@ async function sendMessage() {
         ).innerHTML =
 
             '<span class="error">' +
-
-            '⚠️ Server is down.' +
-
-            '<br><br>' +
-
-            'Please contact ' +
-
-            '<strong>arfankn5@gmail.com</strong>' +
-
+            '⚠️ Server is down.<br><br>' +
+            'Please make sure llama.cpp and ' +
+            'Tailscale Funnel are running.' +
             '</span>';
 
     }
@@ -1215,7 +1185,7 @@ async function sendMessage() {
 
 /* =========================================================
    GENERATING STATE
-========================================================= */
+   ========================================================= */
 
 function setGenerating(state) {
 
@@ -1227,14 +1197,14 @@ function setGenerating(state) {
     stopButton.style.display =
         state ? "block" : "none";
 
-    input.disabled = false;
+    input.disabled = state;
 
 }
 
 
 /* =========================================================
    STOP GENERATION
-========================================================= */
+   ========================================================= */
 
 function stopGeneration() {
 
@@ -1249,7 +1219,7 @@ function stopGeneration() {
 
 /* =========================================================
    CREATE AI MESSAGE
-========================================================= */
+   ========================================================= */
 
 function createAIMessage() {
 
@@ -1285,7 +1255,7 @@ function createAIMessage() {
 
 /* =========================================================
    ADD MESSAGE
-========================================================= */
+   ========================================================= */
 
 function addMessage(
     text,
@@ -1313,9 +1283,7 @@ function addMessage(
 
         `;
 
-    }
-
-    else {
+    } else {
 
         message.innerHTML = `
 
@@ -1337,48 +1305,53 @@ function addMessage(
 
 /* =========================================================
    FORMAT AI RESPONSE
-   FIXED CODE-FENCE PARSER
-========================================================= */
+   ========================================================= */
 
 function formatResponse(text) {
 
-    if (!text)
+    if (text === null || text === undefined)
         return "";
 
 
     /*
-     * Normalize line endings first.
-     */
+       Normalize line endings first.
+    */
 
-    text =
+    let source =
         String(text)
         .replace(/\r\n/g, "\n")
         .replace(/\r/g, "\n");
 
 
+    /*
+       Store fenced code blocks BEFORE
+       HTML escaping.
+
+       This is the important fix.
+
+       It handles:
+
+       ```python
+       code
+       ```
+
+       ``` js
+       code
+       ```
+
+       ```
+       code
+       ```
+
+       and prevents literal ``` from
+       appearing in the message.
+    */
+
     const codeBlocks = [];
 
 
-    /*
-     * Extract fenced code BEFORE HTML escaping.
-     *
-     * Supports:
-     *
-     * ```python
-     * code
-     * ```
-     *
-     * ``` python
-     * code
-     * ```
-     *
-     * ```
-     * code
-     * ```
-     */
-
-    text =
-        text.replace(
+    source =
+        source.replace(
             /```[ \t]*([a-zA-Z0-9_+#.-]*)[ \t]*\n([\s\S]*?)\n?[ \t]*```/g,
 
             function(
@@ -1394,7 +1367,56 @@ function formatResponse(text) {
                 codeBlocks.push({
 
                     language:
-                        language ||
+                        language || "code",
+
+                    code:
+                        code
+                        .replace(
+                            /^\n+/,
+                            ""
+                        )
+                        .replace(
+                            /\n+$/,
+                            ""
+                        )
+
+                });
+
+
+                return (
+                    "\n" +
+                    "___CODE_BLOCK_" +
+                    id +
+                    "___" +
+                    "\n"
+                );
+
+            }
+        );
+
+
+    /*
+       Handle code fences where the model
+       puts extra spaces before the closing
+       fence.
+    */
+
+    source =
+        source.replace(
+            /```[ \t]*\n([\s\S]*?)```/g,
+
+            function(
+                match,
+                code
+            ) {
+
+                const id =
+                    codeBlocks.length;
+
+
+                codeBlocks.push({
+
+                    language:
                         "code",
 
                     code:
@@ -1412,9 +1434,11 @@ function formatResponse(text) {
 
 
                 return (
-                    "\n___CODE_BLOCK_" +
+                    "\n" +
+                    "___CODE_BLOCK_" +
                     id +
-                    "___\n"
+                    "___" +
+                    "\n"
                 );
 
             }
@@ -1422,49 +1446,30 @@ function formatResponse(text) {
 
 
     /*
-     * Also remove any unmatched standalone
-     * triple backticks.
-     *
-     * This prevents ``` from appearing
-     * at the top-left of the message.
-     */
+       Remove ANY remaining triple backticks.
 
-    text =
-        text.replace(
-            /```[a-zA-Z0-9_+#.-]*/g,
-            ""
-        );
+       This catches unmatched ``` generated
+       by the model.
+    */
 
-    text =
-        text.replace(
-            /```/g,
+    source =
+        source.replace(
+            /```+/g,
             ""
         );
 
 
     /*
-     * Escape normal text.
-     */
+       Escape normal HTML.
+    */
 
     let safe =
-        escapeHTML(text);
+        escapeHTML(source);
 
 
     /*
-     * Headings
-     */
-
-    safe =
-        safe.replace(
-            /^######[ \t]+(.+)$/gm,
-            '<h4 class="md-heading">$1</h4>'
-        );
-
-    safe =
-        safe.replace(
-            /^#####[ \t]+(.+)$/gm,
-            '<h4 class="md-heading">$1</h4>'
-        );
+       MARKDOWN HEADINGS
+    */
 
     safe =
         safe.replace(
@@ -1472,11 +1477,13 @@ function formatResponse(text) {
             '<h4 class="md-heading">$1</h4>'
         );
 
+
     safe =
         safe.replace(
             /^###[ \t]+(.+)$/gm,
             '<h3 class="md-heading">$1</h3>'
         );
+
 
     safe =
         safe.replace(
@@ -1484,27 +1491,10 @@ function formatResponse(text) {
             '<h2 class="md-heading">$1</h2>'
         );
 
-    safe =
-        safe.replace(
-            /^#[ \t]+(.+)$/gm,
-            '<h1 class="md-heading">$1</h1>'
-        );
-
 
     /*
-     * Horizontal rules
-     */
-
-    safe =
-        safe.replace(
-            /^[ \t]*((\* *){3,}|(- *){3,}|(_ *){3,})[ \t]*$/gm,
-            "<hr>"
-        );
-
-
-    /*
-     * Bold
-     */
+       Bold.
+    */
 
     safe =
         safe.replace(
@@ -1512,16 +1502,10 @@ function formatResponse(text) {
             "<strong>$1</strong>"
         );
 
-    safe =
-        safe.replace(
-            /__(.*?)__/g,
-            "<strong>$1</strong>"
-        );
-
 
     /*
-     * Italic
-     */
+       Italic.
+    */
 
     safe =
         safe.replace(
@@ -1529,16 +1513,13 @@ function formatResponse(text) {
             "<em>$1</em>"
         );
 
-    safe =
-        safe.replace(
-            /(?<!_)_([^_\n]+)_(?!_)/g,
-            "<em>$1</em>"
-        );
-
 
     /*
-     * Inline code
-     */
+       Inline code.
+
+       Do not process our code block
+       placeholders as inline code.
+    */
 
     safe =
         safe.replace(
@@ -1548,41 +1529,8 @@ function formatResponse(text) {
 
 
     /*
-     * Links
-     */
-
-    safe =
-        safe.replace(
-            /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
-            '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
-        );
-
-
-    /*
-     * Unordered lists
-     */
-
-    safe =
-        safe.replace(
-            /^[ \t]*[-*+][ \t]+(.+)$/gm,
-            "• $1"
-        );
-
-
-    /*
-     * Ordered lists
-     */
-
-    safe =
-        safe.replace(
-            /^[ \t]*(\d+)[.)][ \t]+(.+)$/gm,
-            "$1. $2"
-        );
-
-
-    /*
-     * Line breaks
-     */
+       Convert line breaks.
+    */
 
     safe =
         safe.replace(
@@ -1592,8 +1540,8 @@ function formatResponse(text) {
 
 
     /*
-     * Restore code blocks.
-     */
+       Restore code blocks.
+    */
 
     codeBlocks.forEach(
         function(block, index) {
@@ -1655,7 +1603,7 @@ function formatResponse(text) {
 
 /* =========================================================
    COPY CODE
-========================================================= */
+   ========================================================= */
 
 async function copyCode(button) {
 
@@ -1715,6 +1663,12 @@ async function copyCode(button) {
     }
 
     catch (error) {
+
+        console.error(
+            "Clipboard error:",
+            error
+        );
+
 
         const textarea =
             document.createElement(
@@ -1788,7 +1742,7 @@ async function copyCode(button) {
 
 /* =========================================================
    ESCAPE HTML
-========================================================= */
+   ========================================================= */
 
 function escapeHTML(text) {
 
@@ -1797,8 +1751,10 @@ function escapeHTML(text) {
             "div"
         );
 
+
     div.textContent =
         String(text);
+
 
     return div.innerHTML;
 
@@ -1807,7 +1763,7 @@ function escapeHTML(text) {
 
 /* =========================================================
    SCROLL
-========================================================= */
+   ========================================================= */
 
 function scrollBottom() {
 
@@ -1832,7 +1788,7 @@ function scrollBottom() {
 
 /* =========================================================
    NEW CHAT
-========================================================= */
+   ========================================================= */
 
 function newChat() {
 
@@ -1874,7 +1830,7 @@ function newChat() {
 
 /* =========================================================
    CLOSE SIDEBAR ON OUTSIDE CLICK
-========================================================= */
+   ========================================================= */
 
 document.addEventListener(
     "click",
