@@ -12,75 +12,95 @@
 
 /* =========================================================
    THEME
-   ========================================================= */
+========================================================= */
 
 :root {
     --bg: #0b0d10;
     --sidebar: #111318;
     --surface: #171a20;
-    --hover: #22262e;
-    --border: #292d35;
-    --text: #ffffff;
-    --secondary: #969ca8;
-    --muted: #646a75;
-    --user: #252a33;
-    --cyan: #00e5ff;
-    --purple: #7c4dff;
-    --code: #0a0c0f;
-}
+    --surface-2: #1d2129;
+    --hover: #252a33;
+    --border: #2b3039;
 
-body.light {
-    --bg: #f7f8fa;
-    --sidebar: #ffffff;
-    --surface: #ffffff;
-    --hover: #eef0f4;
-    --border: #dfe2e8;
-    --text: #17191d;
-    --secondary: #626875;
-    --muted: #8b919d;
-    --user: #e9ebef;
-    --cyan: #009fc0;
-    --purple: #6941d9;
-    --code: #f0f1f4;
-}
+    --text: #f1f3f5;
+    --secondary: #9aa1ac;
+    --muted: #737b87;
 
+    --accent: #ffffff;
+    --accent-text: #0b0d10;
+
+    --danger: #ff6b6b;
+    --success: #52d273;
+    --code-bg: #0a0c0f;
+}
 
 /* =========================================================
-   GLOBAL
-   ========================================================= */
+   LIGHT THEME
+========================================================= */
+
+body.light {
+    --bg: #f5f6f8;
+    --sidebar: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #eef0f3;
+    --hover: #e4e7eb;
+    --border: #d5d9df;
+
+    --text: #17191d;
+    --secondary: #606772;
+    --muted: #858b95;
+
+    --accent: #17191d;
+    --accent-text: #ffffff;
+
+    --code-bg: #f0f1f3;
+}
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 html,
 body {
     width: 100%;
     height: 100%;
+    margin: 0;
 }
 
 body {
     font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
         Arial,
-        Helvetica,
         sans-serif;
 
     background: var(--bg);
     color: var(--text);
 
     overflow: hidden;
-
-    transition:
-        background .25s,
-        color .25s;
 }
 
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
 /* =========================================================
    SIDEBAR
-   ========================================================= */
+========================================================= */
 
 .sidebar {
     position: fixed;
@@ -89,641 +109,468 @@ body {
     top: 0;
     bottom: 0;
 
-    width: 270px;
+    width: 280px;
 
     background: var(--sidebar);
+    border-right: 1px solid var(--border);
 
-    border-right:
-        1px solid var(--border);
+    padding: 16px;
 
-    padding: 18px;
-
-    z-index: 1000;
+    z-index: 3000;
 
     display: none;
+
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.25);
 }
 
 .sidebar.open {
     display: block;
 }
 
+/* Sidebar top row */
 
-/* =========================================================
-   SIDEBAR CLOSE BUTTON
-   ========================================================= */
-
-.sidebar-close {
-    position: absolute;
-
-    top: 17px;
-    right: 14px;
-
-    width: 36px;
-    height: 36px;
-
-    border: none;
-
-    border-radius: 9px;
-
-    background: transparent;
-
-    color: var(--secondary);
-
-    font-size: 25px;
-
-    line-height: 1;
-
-    cursor: pointer;
+.sidebar-header {
+    width: 100%;
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 24px;
 }
 
-.sidebar-close:hover {
-    background: var(--hover);
-    color: var(--text);
-}
-
-
-/* =========================================================
-   LOGO
-   ========================================================= */
+/* Logo */
 
 .logo {
     display: flex;
-
     align-items: center;
 
-    gap: 11px;
+    gap: 10px;
 
-    font-size: 20px;
-
-    font-weight: 800;
-
-    margin-bottom: 30px;
-
-    padding-right: 40px;
+    min-width: 0;
 }
 
 .logo-icon {
-    width: 44px;
-    height: 44px;
-
-    position: relative;
+    width: 38px;
+    height: 38px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #071b24,
-            #17102e
-        );
-
-    border:
-        1px solid rgba(0,229,255,.75);
-
-    color: white;
-
-    font-size: 17px;
-
-    font-weight: 900;
-
-    letter-spacing: -2px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 0 10px rgba(0,229,255,.5),
-        0 0 28px rgba(124,60,255,.25);
-}
-
-.logo-icon::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 4px;
-
     border-radius: 10px;
 
-    border:
-        1px solid rgba(255,255,255,.16);
+    background: var(--accent);
+    color: var(--accent-text);
+
+    font-weight: 800;
+    font-size: 14px;
+
+    flex-shrink: 0;
 }
 
-.logo-icon::after {
-    content: "";
+.logo span {
+    font-size: 17px;
+    font-weight: 700;
 
-    position: absolute;
-
-    width: 75px;
-    height: 2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #00e5ff,
-            #9b5cff,
-            transparent
-        );
-
-    transform: rotate(-45deg);
-
-    animation:
-        scan 2.5s linear infinite;
+    white-space: nowrap;
 }
-
-@keyframes scan {
-
-    0% {
-        transform:
-            translateX(-38px)
-            rotate(-45deg);
-    }
-
-    100% {
-        transform:
-            translateX(38px)
-            rotate(-45deg);
-    }
-
-}
-
 
 /* =========================================================
-   NEW CHAT
-   ========================================================= */
+   SIDEBAR CLOSE BUTTON
+========================================================= */
 
-.new-chat {
-    width: 100%;
+.sidebar-close {
+    width: 40px;
+    height: 40px;
 
-    padding: 13px;
+    flex-shrink: 0;
 
-    border:
-        1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border-radius: 11px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
 
     background: var(--surface);
 
     color: var(--text);
 
-    font-size: 15px;
+    font-size: 28px;
+    font-weight: 400;
+
+    line-height: 1;
 
     cursor: pointer;
+
+    padding: 0;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.sidebar-close:hover {
+    background: var(--hover);
+    border-color: var(--text);
+}
+
+.sidebar-close:active {
+    transform: scale(0.92);
+}
+
+/* =========================================================
+   NEW CHAT
+========================================================= */
+
+.new-chat {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.15s ease;
 }
 
 .new-chat:hover {
     background: var(--hover);
 }
 
-
-/* =========================================================
-   MAIN
-   ========================================================= */
-
-.main {
-    width: 100%;
-    height: 100vh;
-
-    display: flex;
-
-    flex-direction: column;
-}
-
-
 /* =========================================================
    TOP BAR
-   ========================================================= */
+========================================================= */
 
 .topbar {
-    height: 64px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 0 18px;
-
-    border-bottom:
-        1px solid var(--border);
+    height: 62px;
 
     flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 0 16px;
+
+    border-bottom: 1px solid var(--border);
+
+    background: var(--bg);
 }
 
+/* Menu */
 
-/* =========================================================
-   MENU
-   ========================================================= */
+.menu-button,
+.theme-button {
+    width: 40px;
+    height: 40px;
 
-.menu-button {
-    width: 43px;
-    height: 43px;
-
-    border: none;
-
+    border: 1px solid var(--border);
     border-radius: 10px;
 
-    background: transparent;
+    background: var(--surface);
 
     color: var(--text);
-
-    font-size: 23px;
 
     cursor: pointer;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
+
+    font-size: 20px;
 }
 
-.menu-button:hover {
-    background: var(--hover);
-}
-
-
-/* =========================================================
-   MODEL
-   ========================================================= */
-
-.model {
-    font-size: 16px;
-
-    font-weight: bold;
-}
-
-.model span {
-    color: var(--cyan);
-}
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-.status {
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    color: var(--secondary);
-
-    font-size: 12px;
-}
-
-.status-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #42d392;
-
-    box-shadow:
-        0 0 8px #42d392;
-}
-
-
-/* =========================================================
-   THEME BUTTON
-   ========================================================= */
-
-.theme-button {
-    width: 42px;
-    height: 42px;
-
-    margin-left: auto;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: transparent;
-
-    color: var(--text);
-
-    font-size: 19px;
-
-    cursor: pointer;
-}
-
+.menu-button:hover,
 .theme-button:hover {
     background: var(--hover);
 }
 
+/* Model */
+
+.model {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.model span {
+    opacity: 0.55;
+    font-weight: 500;
+}
+
+/* Status */
+
+.status {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: var(--secondary);
+
+    font-size: 13px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+}
 
 /* =========================================================
    CHAT
-   ========================================================= */
+========================================================= */
 
 .chat {
     flex: 1;
 
-    overflow-y: auto;
+    min-height: 0;
 
-    padding:
-        40px 20px 145px;
+    display: flex;
+    justify-content: center;
+
+    overflow: hidden;
 }
 
 .messages {
-    max-width: 850px;
+    width: 100%;
+    max-width: 900px;
 
-    margin: auto;
+    padding: 28px 18px 160px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scroll-behavior: smooth;
 }
-
 
 /* =========================================================
    WELCOME
-   ========================================================= */
+========================================================= */
 
 .welcome {
-    text-align: center;
+    min-height: 60vh;
 
-    margin-top: 15vh;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
 }
 
 .welcome h1 {
-    font-size: 43px;
+    margin: 0 0 10px;
 
-    margin-bottom: 13px;
+    font-size: clamp(30px, 5vw, 48px);
 
-    background:
-        linear-gradient(
-            90deg,
-            var(--text),
-            var(--cyan),
-            var(--purple)
-        );
-
-    -webkit-background-clip: text;
-
-    background-clip: text;
-
-    color: transparent;
+    letter-spacing: -1.5px;
 }
 
 .welcome p {
+    margin: 0;
+
     color: var(--secondary);
+
+    font-size: 15px;
 }
 
-
 /* =========================================================
-   MESSAGES
-   ========================================================= */
+   MESSAGE
+========================================================= */
 
 .message {
     display: flex;
 
-    gap: 13px;
-
-    margin: 25px 0;
-
-    animation:
-        appear .25s ease;
-}
-
-@keyframes appear {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
-
+    margin-bottom: 24px;
 }
 
 .message.user {
     justify-content: flex-end;
 }
 
-.message.user .bubble {
-    background: var(--user);
-}
-
-.msg-avatar {
-    min-width: 35px;
-    height: 35px;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--cyan),
-            var(--purple)
-        );
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    color: white;
-
-    font-size: 12px;
-
-    font-weight: bold;
+.message.ai {
+    justify-content: flex-start;
 }
 
 .bubble {
-    max-width: 75%;
+    max-width: 85%;
 
-    padding: 12px 15px;
+    padding: 13px 16px;
 
-    border-radius: 14px;
+    border-radius: 15px;
 
-    line-height: 1.6;
-
-    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
 
     overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   MARKDOWN
-   ========================================================= */
-
-.bubble strong {
-    font-weight: 700;
+.user .bubble {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
 }
 
-.bubble em {
-    font-style: italic;
-}
+.ai .bubble {
+    background: transparent;
 
+    padding-left: 0;
+    padding-right: 0;
+}
 
 /* =========================================================
    MARKDOWN HEADINGS
-   ========================================================= */
+========================================================= */
 
-.bubble .md-heading {
-    display: block;
+.md-heading {
+    margin-top: 24px;
+    margin-bottom: 10px;
 
-    color: var(--text);
+    line-height: 1.3;
 
-    line-height: 1.25;
-
-    margin:
-        20px 0 10px;
+    letter-spacing: -0.3px;
 }
 
-.bubble h1.md-heading {
-    font-size: 25px;
-
-    font-weight: 800;
+.md-heading:first-child {
+    margin-top: 0;
 }
 
-.bubble h2.md-heading {
-    font-size: 22px;
-
-    font-weight: 800;
+.md-heading.h1 {
+    font-size: 28px;
 }
 
-.bubble h3.md-heading {
-    font-size: 19px;
-
-    font-weight: 750;
+.md-heading.h2 {
+    font-size: 24px;
 }
 
-.bubble h4.md-heading {
+.md-heading.h3 {
+    font-size: 20px;
+}
+
+.md-heading.h4 {
     font-size: 17px;
+}
 
+/* =========================================================
+   MARKDOWN TEXT
+========================================================= */
+
+.md-paragraph {
+    margin: 0 0 12px;
+}
+
+.md-bold {
     font-weight: 700;
 }
 
+.md-italic {
+    font-style: italic;
+}
 
-/* =========================================================
-   INLINE CODE
-   ========================================================= */
+.md-inline-code {
+    background: var(--code-bg);
 
-.bubble code.inline-code {
-    background: var(--code);
+    border: 1px solid var(--border);
 
-    border:
-        1px solid var(--border);
+    border-radius: 6px;
 
-    border-radius: 5px;
-
-    padding:
-        2px 5px;
+    padding: 2px 6px;
 
     font-family:
         Consolas,
         "Courier New",
         monospace;
 
-    font-size: 13px;
+    font-size: 0.9em;
 }
-
 
 /* =========================================================
    CODE BLOCK
-   ========================================================= */
+========================================================= */
 
-.code-block {
-    margin: 14px 0;
+.code-wrapper {
+    position: relative;
 
-    background: var(--code);
+    margin: 15px 0;
 
-    border:
-        1px solid var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
 
-    border-radius: 11px;
+    background: var(--code-bg);
 
     overflow: hidden;
-
-    width: 100%;
 }
 
 .code-header {
-    height: 38px;
+    min-height: 38px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
-    padding:
-        0 10px 0 13px;
+    padding: 7px 10px;
 
-    background:
-        rgba(255,255,255,.035);
+    border-bottom: 1px solid var(--border);
 
-    border-bottom:
-        1px solid var(--border);
+    color: var(--secondary);
+
+    font-size: 12px;
 }
 
 .code-language {
-    color: var(--secondary);
-
-    font-size: 11px;
-
-    font-weight: bold;
-
-    text-transform: uppercase;
-
-    letter-spacing: .5px;
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
 }
 
-.copy-button {
-    border:
-        1px solid var(--border);
+.copy-code {
+    border: 1px solid var(--border);
+    border-radius: 7px;
 
     background: var(--surface);
 
-    color: var(--secondary);
+    color: var(--text);
 
-    border-radius: 7px;
+    padding: 5px 9px;
 
-    padding:
-        5px 10px;
-
-    font-size: 11px;
+    font-size: 12px;
 
     cursor: pointer;
-
-    transition: .15s;
 }
 
-.copy-button:hover {
+.copy-code:hover {
     background: var(--hover);
-
-    color: var(--text);
 }
 
-.copy-button.copied {
-    color: var(--cyan);
+.code-wrapper pre {
+    margin: 0;
 
-    border-color:
-        rgba(0,229,255,.4);
-}
-
-.code-content {
-    display: block;
-
-    padding: 14px;
+    padding: 15px;
 
     overflow-x: auto;
 
@@ -737,327 +584,414 @@ body {
     font-size: 13px;
 
     line-height: 1.55;
-
-    color: var(--text);
-
-    tab-size: 4;
 }
 
+.code-wrapper code {
+    font-family: inherit;
+}
+
+/* =========================================================
+   LISTS
+========================================================= */
+
+.md-list {
+    margin: 8px 0 14px;
+
+    padding-left: 25px;
+}
+
+.md-list li {
+    margin: 5px 0;
+}
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+.md-link {
+    color: #62a8ff;
+
+    text-decoration: underline;
+
+    text-underline-offset: 2px;
+}
+
+.md-link:hover {
+    opacity: 0.8;
+}
+
+/* =========================================================
+   BLOCKQUOTE
+========================================================= */
+
+.md-quote {
+    margin: 14px 0;
+
+    padding: 8px 14px;
+
+    border-left: 3px solid var(--secondary);
+
+    color: var(--secondary);
+
+    background: var(--surface);
+}
+
+/* =========================================================
+   HORIZONTAL RULE
+========================================================= */
+
+.md-hr {
+    border: 0;
+
+    border-top: 1px solid var(--border);
+
+    margin: 20px 0;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error {
+    color: var(--danger);
+}
+
+/* =========================================================
+   GENERATING
+========================================================= */
+
+.generating {
+    display: inline-flex;
+
+    gap: 5px;
+
+    align-items: center;
+}
+
+.generating span {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--secondary);
+
+    animation: typing 1.2s infinite ease-in-out;
+}
+
+.generating span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.generating span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes typing {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+
+    30% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
 
 /* =========================================================
    INPUT AREA
-   ========================================================= */
+========================================================= */
 
 .input-area {
     position: fixed;
 
+    left: 0;
+    right: 0;
     bottom: 0;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 12px 16px 15px;
+
+    background:
+        linear-gradient(
+            to top,
+            var(--bg) 70%,
+            transparent
+        );
+
+    z-index: 100;
+}
+
+.input-container {
+    width: 100%;
+    max-width: 900px;
+
+    position: relative;
+
+    display: flex;
+    align-items: flex-end;
+
+    gap: 8px;
+
+    padding: 8px;
+
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    background: var(--surface);
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+}
+
+#prompt {
+    flex: 1;
+
+    min-height: 42px;
+    max-height: 180px;
+
+    resize: none;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 15px;
+
+    line-height: 1.5;
+
+    padding: 10px 8px;
+}
+
+#prompt::placeholder {
+    color: var(--muted);
+}
+
+/* =========================================================
+   SEND / STOP
+========================================================= */
+
+.send-button,
+.stop-button {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border: 0;
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+.send-button {
+    background: var(--accent);
+    color: var(--accent-text);
+}
+
+.send-button:hover {
+    opacity: 0.85;
+}
+
+.stop-button {
+    display: none;
+
+    background: var(--danger);
+    color: white;
+}
+
+.stop-button.show {
+    display: flex;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    position: absolute;
+
+    bottom: -21px;
 
     left: 0;
     right: 0;
 
-    padding:
-        18px 20px 20px;
-
-    background:
-        linear-gradient(
-            transparent,
-            var(--bg) 35%
-        );
-}
-
-.input-box {
-    max-width: 850px;
-
-    margin: auto;
-
-    background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 17px;
-
-    display: flex;
-
-    align-items: flex-end;
-
-    padding: 9px;
-}
-
-textarea {
-    flex: 1;
-
-    resize: none;
-
-    background: transparent;
-
-    border: none;
-
-    outline: none;
-
-    color: var(--text);
-
-    font-size: 15px;
-
-    padding: 10px;
-
-    font-family: inherit;
-
-    max-height: 180px;
-}
-
-textarea::placeholder {
-    color: var(--muted);
-}
-
-
-/* =========================================================
-   SEND
-   ========================================================= */
-
-.send {
-    width: 43px;
-    height: 43px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--cyan),
-            var(--purple)
-        );
-
-    color: white;
-
-    cursor: pointer;
-
-    font-size: 18px;
-
-    transition: .2s;
-}
-
-.send:hover {
-    transform: scale(1.06);
-}
-
-.send:disabled {
-    opacity: .5;
-
-    cursor: not-allowed;
-
-    transform: none;
-}
-
-
-/* =========================================================
-   STOP
-   ========================================================= */
-
-.stop {
-    display: none;
-
-    width: 43px;
-    height: 43px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: #333842;
-
-    color: white;
-
-    cursor: pointer;
-
-    font-size: 16px;
-}
-
-
-/* =========================================================
-   ERROR
-   ========================================================= */
-
-.error {
-    color: #ff6b6b;
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.footer {
     text-align: center;
 
     color: var(--muted);
 
-    font-size: 11px;
-
-    margin-top: 8px;
+    font-size: 10px;
 }
 
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
+}
 
 /* =========================================================
    MOBILE
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 700px) {
 
     .sidebar {
-        width: 280px;
-    }
-
-    .welcome h1 {
-        font-size: 32px;
+        width: 285px;
     }
 
     .bubble {
-        max-width: 85%;
+        max-width: 94%;
+    }
+
+    .messages {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .topbar {
+        padding: 0 10px;
     }
 
     .status {
         display: none;
     }
 
-    .code-content {
-        font-size: 12px;
-    }
-
-    .chat {
-        padding-left: 12px;
-        padding-right: 12px;
+    .welcome h1 {
+        font-size: 32px;
     }
 
 }
-
 
 /* =========================================================
-   SCROLLBAR
-   ========================================================= */
+   OVERLAY
+========================================================= */
 
-.chat::-webkit-scrollbar {
-    width: 7px;
+.sidebar-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    z-index: 2500;
+
+    display: none;
 }
 
-.chat::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.chat::-webkit-scrollbar-thumb {
-    background: var(--border);
-
-    border-radius: 10px;
-}
-
-.chat::-webkit-scrollbar-thumb:hover {
-    background: var(--muted);
+.sidebar-overlay.show {
+    display: block;
 }
 
 </style>
 
 </head>
 
-
 <body>
 
+<div class="app">
 
-<!-- =======================================================
-     SIDEBAR
-     ======================================================= -->
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
-<aside
-    class="sidebar"
-    id="sidebar">
+    <aside class="sidebar" id="sidebar">
 
+        <div class="sidebar-header">
 
-    <!-- CLOSE BUTTON -->
+            <div class="logo">
 
-    <button
-        class="sidebar-close"
-        type="button"
-        onclick="closeSidebar()"
-        aria-label="Close sidebar">
+                <div class="logo-icon">
+                    12
+                </div>
 
-        ×
+                <span>
+                    12n0name
+                </span>
 
-    </button>
+            </div>
 
+            <!-- CLEARLY VISIBLE CLOSE BUTTON -->
 
-    <!-- LOGO -->
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                type="button"
+                onclick="closeSidebar()"
+                aria-label="Close sidebar"
+                title="Close sidebar">
+                ×
+            </button>
 
-    <div class="logo">
-
-        <div class="logo-icon">
-            12
         </div>
 
-        <span>
-            12n0name
-        </span>
+        <button
+            class="new-chat"
+            type="button"
+            onclick="newChat()">
+            ＋ New chat
+        </button>
 
+    </aside>
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+        onclick="closeSidebar()">
     </div>
 
-
-    <!-- NEW CHAT -->
-
-    <button
-        class="new-chat"
-        type="button"
-        onclick="newChat()">
-
-        ＋ New chat
-
-    </button>
-
-
-</aside>
-
-
-<!-- =======================================================
-     MAIN
-     ======================================================= -->
-
-<main class="main">
-
-
-    <!-- ===================================================
+    <!-- =====================================================
          TOP BAR
-         =================================================== -->
+    ====================================================== -->
 
     <header class="topbar">
-
 
         <button
             class="menu-button"
             type="button"
             onclick="toggleSidebar()"
-            aria-label="Open sidebar">
-
+            aria-label="Open menu">
             ☰
-
         </button>
 
-
         <div class="model">
-
-            12n0name
-            <span>AI</span>
-
+            12n0name <span>AI</span>
         </div>
-
 
         <div class="status">
-
             <span class="status-dot"></span>
-
             Online
-
         </div>
-
 
         <button
             class="theme-button"
@@ -1065,28 +999,20 @@ textarea::placeholder {
             type="button"
             onclick="toggleTheme()"
             aria-label="Toggle theme">
-
             🌙
-
         </button>
-
 
     </header>
 
-
-    <!-- ===================================================
+    <!-- =====================================================
          CHAT
-         =================================================== -->
+    ====================================================== -->
 
-    <section
-        class="chat"
-        id="chat">
-
+    <section class="chat">
 
         <div
             class="messages"
             id="messages">
-
 
             <div
                 class="welcome"
@@ -1097,82 +1023,63 @@ textarea::placeholder {
                 </h1>
 
                 <p>
-                    Ask anything. Build anything.
-                    Explore anything.
+                    Ask anything. Build anything. Explore anything.
                 </p>
 
             </div>
 
-
         </div>
-
 
     </section>
 
-
-    <!-- ===================================================
+    <!-- =====================================================
          INPUT
-         =================================================== -->
+    ====================================================== -->
 
     <div class="input-area">
 
-
-        <div class="input-box">
-
+        <div class="input-container">
 
             <textarea
-                id="input"
+                id="prompt"
                 rows="1"
-                placeholder="Ask 12n0name..."
-                aria-label="Message"></textarea>
-
+                placeholder="Message 12n0name AI..."
+                autocomplete="off"
+                spellcheck="true"></textarea>
 
             <button
-                class="send"
+                class="send-button"
                 id="sendButton"
                 type="button"
                 onclick="sendMessage()"
-                aria-label="Send message">
-
+                aria-label="Send">
                 ➤
-
             </button>
 
-
             <button
-                class="stop"
+                class="stop-button"
                 id="stopButton"
                 type="button"
                 onclick="stopGeneration()"
-                aria-label="Stop generation">
-
+                aria-label="Stop">
                 ■
-
             </button>
 
+            <div class="footer">
+                12n0name AI
+            </div>
 
         </div>
-
-
-        <div class="footer">
-
-            12n0name AI can make mistakes.
-            Check important information.
-
-        </div>
-
 
     </div>
 
-
-</main>
-
+</div>
 
 <script>
 
 /* =========================================================
    API
-   ========================================================= */
+========================================================= */
 
 const API_URL =
     "https://desktop-3fdvn7b.tail77d397.ts.net/v1/chat/completions";
@@ -1180,7 +1087,7 @@ const API_URL =
 
 /* =========================================================
    STATE
-   ========================================================= */
+========================================================= */
 
 let conversation = [];
 
@@ -1191,13 +1098,19 @@ let generating = false;
 
 /* =========================================================
    ELEMENTS
-   ========================================================= */
+========================================================= */
 
-const input =
-    document.getElementById("input");
+const sidebar =
+    document.getElementById("sidebar");
+
+const sidebarOverlay =
+    document.getElementById("sidebarOverlay");
 
 const messages =
     document.getElementById("messages");
+
+const prompt =
+    document.getElementById("prompt");
 
 const sendButton =
     document.getElementById("sendButton");
@@ -1205,18 +1118,23 @@ const sendButton =
 const stopButton =
     document.getElementById("stopButton");
 
-const sidebar =
-    document.getElementById("sidebar");
+const themeButton =
+    document.getElementById("themeButton");
 
 
 /* =========================================================
    SIDEBAR
-   ========================================================= */
+========================================================= */
 
 function toggleSidebar() {
 
-    sidebar.classList.toggle("open");
+    const isOpen =
+        sidebar.classList.toggle("open");
 
+    sidebarOverlay.classList.toggle(
+        "show",
+        isOpen
+    );
 }
 
 
@@ -1224,162 +1142,580 @@ function closeSidebar() {
 
     sidebar.classList.remove("open");
 
+    sidebarOverlay.classList.remove("show");
 }
 
 
 /* =========================================================
    THEME
-   ========================================================= */
+========================================================= */
 
 function toggleTheme() {
 
     document.body.classList.toggle("light");
 
-    const isLight =
+    const light =
         document.body.classList.contains("light");
 
-    const themeButton =
-        document.getElementById("themeButton");
+    themeButton.textContent =
+        light ? "☀️" : "🌙";
+
+    localStorage.setItem(
+        "12n0name-theme",
+        light ? "light" : "dark"
+    );
+}
 
 
-    if (isLight) {
+(function loadTheme() {
+
+    const saved =
+        localStorage.getItem("12n0name-theme");
+
+    if (saved === "light") {
+
+        document.body.classList.add("light");
 
         themeButton.textContent = "☀️";
-
-        localStorage.setItem(
-            "theme",
-            "light"
-        );
-
-    } else {
-
-        themeButton.textContent = "🌙";
-
-        localStorage.setItem(
-            "theme",
-            "dark"
-        );
-
     }
 
+})();
+
+
+/* =========================================================
+   NEW CHAT
+========================================================= */
+
+function newChat() {
+
+    conversation = [];
+
+    messages.innerHTML = `
+        <div class="welcome" id="welcome">
+            <h1>What can I help with?</h1>
+            <p>Ask anything. Build anything. Explore anything.</p>
+        </div>
+    `;
+
+    prompt.value = "";
+
+    autoResize();
+
+    closeSidebar();
+
+    prompt.focus();
 }
 
 
 /* =========================================================
-   LOAD THEME
-   ========================================================= */
+   HTML ESCAPE
+========================================================= */
 
-if (
-    localStorage.getItem("theme") === "light"
-) {
+function escapeHTML(text) {
 
-    document.body.classList.add("light");
-
-    document.getElementById(
-        "themeButton"
-    ).textContent = "☀️";
-
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
 /* =========================================================
-   INPUT
-   ========================================================= */
+   INLINE MARKDOWN
+========================================================= */
 
-input.addEventListener(
-    "keydown",
-    function(event) {
+function formatInline(text) {
 
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey
-        ) {
+    let value = escapeHTML(text);
 
-            event.preventDefault();
 
-            sendMessage();
+    /* Links */
 
+    value = value.replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        '<a class="md-link" href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+
+
+    /* Inline code */
+
+    value = value.replace(
+        /`([^`\n]+)`/g,
+        '<code class="md-inline-code">$1</code>'
+    );
+
+
+    /* Bold */
+
+    value = value.replace(
+        /\*\*(.+?)\*\*/g,
+        '<strong class="md-bold">$1</strong>'
+    );
+
+
+    /* Bold using __ */
+
+    value = value.replace(
+        /__(.+?)__/g,
+        '<strong class="md-bold">$1</strong>'
+    );
+
+
+    /* Italic */
+
+    value = value.replace(
+        /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
+        '<em class="md-italic">$1</em>'
+    );
+
+
+    /* Italic using _ */
+
+    value = value.replace(
+        /(?<!\w)_([^_\n]+)_(?!\w)/g,
+        '<em class="md-italic">$1</em>'
+    );
+
+
+    return value;
+}
+
+
+/* =========================================================
+   MARKDOWN FORMATTER
+========================================================= */
+
+function formatResponse(rawText) {
+
+    if (rawText === null || rawText === undefined) {
+        return "";
+    }
+
+    let text = String(rawText)
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n");
+
+
+    /* -----------------------------------------------------
+       EXTRACT CODE BLOCKS FIRST
+    ----------------------------------------------------- */
+
+    const codeBlocks = [];
+
+    text = text.replace(
+        /```([^\n`]*)\n?([\s\S]*?)```/g,
+        function (_, language, code) {
+
+            const index =
+                codeBlocks.length;
+
+            const cleanLanguage =
+                language.trim() || "code";
+
+            codeBlocks.push({
+                language: cleanLanguage,
+                code: code.replace(/\n$/, "")
+            });
+
+            return `@@CODEBLOCK_${index}@@`;
         }
+    );
 
-    }
-);
+
+    /* -----------------------------------------------------
+       ESCAPE NORMAL TEXT
+    ----------------------------------------------------- */
+
+    text = escapeHTML(text);
+
+
+    /* -----------------------------------------------------
+       HEADINGS
+    ----------------------------------------------------- */
+
+    text = text.replace(
+        /^####\s+(.+)$/gm,
+        '<h4 class="md-heading h4">$1</h4>'
+    );
+
+    text = text.replace(
+        /^###\s+(.+)$/gm,
+        '<h3 class="md-heading h3">$1</h3>'
+    );
+
+    text = text.replace(
+        /^##\s+(.+)$/gm,
+        '<h2 class="md-heading h2">$1</h2>'
+    );
+
+    text = text.replace(
+        /^#\s+(.+)$/gm,
+        '<h1 class="md-heading h1">$1</h1>'
+    );
+
+
+    /* -----------------------------------------------------
+       HORIZONTAL RULE
+    ----------------------------------------------------- */
+
+    text = text.replace(
+        /^(\*\*\*|---|___)\s*$/gm,
+        '<hr class="md-hr">'
+    );
+
+
+    /* -----------------------------------------------------
+       BLOCKQUOTES
+    ----------------------------------------------------- */
+
+    text = text.replace(
+        /^&gt;\s?(.*)$/gm,
+        '<div class="md-quote">$1</div>'
+    );
+
+
+    /* -----------------------------------------------------
+       BULLET LISTS
+    ----------------------------------------------------- */
+
+    text = text.replace(
+        /(?:^|\n)(?:[-*+]\s+.+(?:\n|$))+/g,
+        function (block) {
+
+            const items =
+                block
+                    .trim()
+                    .split("\n")
+                    .map(line =>
+                        line.replace(
+                            /^[-*+]\s+/,
+                            ""
+                        )
+                    )
+                    .map(item =>
+                        `<li>${item}</li>`
+                    )
+                    .join("");
+
+            return `<ul class="md-list">${items}</ul>`;
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       NUMBERED LISTS
+    ----------------------------------------------------- */
+
+    text = text.replace(
+        /(?:^|\n)(?:\d+\.\s+.+(?:\n|$))+/g,
+        function (block) {
+
+            const items =
+                block
+                    .trim()
+                    .split("\n")
+                    .map(line =>
+                        line.replace(
+                            /^\d+\.\s+/,
+                            ""
+                        )
+                    )
+                    .map(item =>
+                        `<li>${item}</li>`
+                    )
+                    .join("");
+
+            return `<ol class="md-list">${items}</ol>`;
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       INLINE MARKDOWN
+    ----------------------------------------------------- */
+
+    /*
+       Don't run inline formatting over HTML tags.
+       Process only text portions outside tags.
+    */
+
+    text = text.replace(
+        /(^|>)([^<]+)(?=<|$)/g,
+        function (_, prefix, content) {
+
+            if (
+                content.includes("@@CODEBLOCK_")
+            ) {
+                return prefix + content;
+            }
+
+            return prefix +
+                formatInline(
+                    content
+                        .replace(/&lt;br&gt;/g, "")
+                );
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       NEW LINES
+    ----------------------------------------------------- */
+
+    text = text.replace(
+        /\n{2,}/g,
+        '</p><p class="md-paragraph">'
+    );
+
+    text = text.replace(
+        /\n/g,
+        "<br>"
+    );
+
+
+    /* -----------------------------------------------------
+       CODE BLOCKS
+    ----------------------------------------------------- */
+
+    text = text.replace(
+        /@@CODEBLOCK_(\d+)@@/g,
+        function (_, index) {
+
+            const block =
+                codeBlocks[Number(index)];
+
+            const language =
+                escapeHTML(block.language);
+
+            const code =
+                escapeHTML(block.code);
+
+            return `
+                <div class="code-wrapper">
+
+                    <div class="code-header">
+
+                        <span class="code-language">
+                            ${language}
+                        </span>
+
+                        <button
+                            class="copy-code"
+                            type="button"
+                            onclick="copyCode(this)">
+                            Copy
+                        </button>
+
+                    </div>
+
+                    <pre><code>${code}</code></pre>
+
+                </div>
+            `;
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       CLEAN EMPTY PARAGRAPHS
+    ----------------------------------------------------- */
+
+    text = text
+        .replace(
+            /<p class="md-paragraph"><\/p>/g,
+            ""
+        )
+        .trim();
+
+
+    return text;
+}
 
 
 /* =========================================================
-   AUTO RESIZE
-   ========================================================= */
+   COPY CODE
+========================================================= */
 
-input.addEventListener(
-    "input",
-    function() {
+async function copyCode(button) {
 
-        this.style.height = "auto";
+    const wrapper =
+        button.closest(".code-wrapper");
 
-        this.style.height =
-            Math.min(
-                this.scrollHeight,
-                180
-            ) + "px";
+    const code =
+        wrapper.querySelector("code");
 
+    if (!code) {
+        return;
     }
-);
+
+    try {
+
+        await navigator.clipboard.writeText(
+            code.textContent
+        );
+
+        const oldText =
+            button.textContent;
+
+        button.textContent =
+            "Copied!";
+
+        setTimeout(() => {
+            button.textContent =
+                oldText;
+        }, 1200);
+
+    } catch (error) {
+
+        button.textContent =
+            "Failed";
+
+        setTimeout(() => {
+            button.textContent =
+                "Copy";
+        }, 1200);
+    }
+}
 
 
 /* =========================================================
-   SEND MESSAGE
-   ========================================================= */
+   ADD MESSAGE
+========================================================= */
 
-async function sendMessage() {
-
-    if (generating)
-        return;
-
-
-    const text =
-        input.value.trim();
-
-
-    if (!text)
-        return;
-
+function addMessage(role, content) {
 
     const welcome =
         document.getElementById("welcome");
 
-
-    if (welcome)
+    if (welcome) {
         welcome.remove();
+    }
+
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        `message ${role}`;
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+
+    if (role === "user") {
+
+        bubble.textContent =
+            content;
+
+    } else {
+
+        bubble.innerHTML =
+            content;
+    }
+
+
+    message.appendChild(bubble);
+
+    messages.appendChild(message);
+
+    scrollToBottom();
+
+
+    return message;
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollToBottom() {
+
+    requestAnimationFrame(() => {
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+    });
+}
+
+
+/* =========================================================
+   GENERATING MESSAGE
+========================================================= */
+
+function createGeneratingMessage() {
+
+    return addMessage(
+        "ai",
+        `
+        <div class="generating">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        `
+    );
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function sendMessage() {
+
+    if (generating) {
+        return;
+    }
+
+
+    const text =
+        prompt.value.trim();
+
+
+    if (!text) {
+        return;
+    }
 
 
     addMessage(
-        text,
-        "user"
+        "user",
+        text
     );
 
 
     conversation.push({
-
         role: "user",
-
         content: text
-
     });
 
 
-    input.value = "";
+    prompt.value = "";
 
-    input.style.height = "auto";
-
-
-    setGenerating(true);
+    autoResize();
 
 
     const aiMessage =
-        createAIMessage();
+        createGeneratingMessage();
 
+
+    generating = true;
 
     controller =
         new AbortController();
+
+
+    sendButton.style.display =
+        "none";
+
+    stopButton.classList.add("show");
 
 
     try {
@@ -1388,36 +1724,31 @@ async function sendMessage() {
             await fetch(
                 API_URL,
                 {
-
                     method: "POST",
 
                     headers: {
-
                         "Content-Type":
                             "application/json"
-
                     },
 
-                    body:
-                        JSON.stringify({
+                    body: JSON.stringify({
 
-                            messages:
-                                conversation,
+                        messages:
+                            conversation,
 
-                            temperature:
-                                0.7,
+                        temperature:
+                            0.7,
 
-                            max_tokens:
-                                1024,
+                        max_tokens:
+                            1024,
 
-                            stream:
-                                false
+                        stream:
+                            false
 
-                        }),
+                    }),
 
                     signal:
                         controller.signal
-
                 }
             );
 
@@ -1425,10 +1756,8 @@ async function sendMessage() {
         if (!response.ok) {
 
             throw new Error(
-                "HTTP " +
-                response.status
+                `HTTP ${response.status}`
             );
-
         }
 
 
@@ -1446,140 +1775,101 @@ async function sendMessage() {
             "";
 
 
+        /* Handle array content */
+
         if (Array.isArray(reply)) {
 
             reply =
                 reply
-                .map(function(item) {
+                    .map(item => {
 
-                    if (
-                        typeof item === "string"
-                    ) {
+                        if (
+                            typeof item ===
+                            "string"
+                        ) {
+                            return item;
+                        }
 
-                        return item;
+                        return item?.text ?? "";
 
-                    }
-
-                    return (
-                        item?.text ??
-                        ""
-                    );
-
-                })
-                .join("");
-
+                    })
+                    .join("");
         }
 
 
-        if (
-            typeof reply !== "string"
-        ) {
-
-            reply =
-                JSON.stringify(reply);
-
-        }
+        reply =
+            String(reply);
 
 
         if (!reply.trim()) {
 
             throw new Error(
-                "Empty AI response"
+                "Empty response"
             );
-
         }
 
 
-        aiMessage.querySelector(
-            ".bubble"
-        ).innerHTML =
+        aiMessage
+            .querySelector(".bubble")
+            .innerHTML =
             formatResponse(reply);
 
 
         conversation.push({
-
             role: "assistant",
-
             content: reply
-
         });
 
 
-        scrollBottom();
-
-    }
+        scrollToBottom();
 
 
-    catch (error) {
+    } catch (error) {
 
         if (
-            error.name === "AbortError"
+            error.name ===
+            "AbortError"
         ) {
 
             aiMessage.remove();
 
-            return;
+        } else {
 
+            aiMessage
+                .querySelector(".bubble")
+                .innerHTML =
+
+                `
+                <span class="error">
+                    ⚠️ Server is down.
+                    <br><br>
+                    Contact on
+                    arfankn@gmail.com
+                </span>
+                `;
         }
 
+    } finally {
 
-        console.error(
-            "AI Error:",
-            error
-        );
-
-
-        aiMessage.querySelector(
-            ".bubble"
-        ).innerHTML =
-
-            '<span class="error">' +
-
-            '⚠️ Server is down.<br><br>' +
-
-            'Contact on arfankn@gmail.com' +
-
-            '</span>';
-
-    }
-
-
-    finally {
+        generating = false;
 
         controller = null;
 
-        setGenerating(false);
+        sendButton.style.display =
+            "flex";
 
+        stopButton.classList.remove(
+            "show"
+        );
+
+        prompt.focus();
     }
-
-}
-
-
-/* =========================================================
-   GENERATING STATE
-   ========================================================= */
-
-function setGenerating(state) {
-
-    generating = state;
-
-
-    sendButton.style.display =
-        state ? "none" : "block";
-
-
-    stopButton.style.display =
-        state ? "block" : "none";
-
-
-    input.disabled = state;
-
 }
 
 
 /* =========================================================
    STOP GENERATION
-   ========================================================= */
+========================================================= */
 
 function stopGeneration() {
 
@@ -1587,625 +1877,85 @@ function stopGeneration() {
 
         controller.abort();
 
+        controller = null;
     }
 
-}
+    generating = false;
 
+    sendButton.style.display =
+        "flex";
 
-/* =========================================================
-   CREATE AI MESSAGE
-   ========================================================= */
-
-function createAIMessage() {
-
-    const message =
-        document.createElement("div");
-
-
-    message.className =
-        "message ai";
-
-
-    message.innerHTML = `
-
-        <div class="msg-avatar">
-            12
-        </div>
-
-        <div class="bubble">
-            Thinking...
-        </div>
-
-    `;
-
-
-    messages.appendChild(message);
-
-    scrollBottom();
-
-
-    return message;
-
-}
-
-
-/* =========================================================
-   ADD MESSAGE
-   ========================================================= */
-
-function addMessage(
-    text,
-    type
-) {
-
-    const message =
-        document.createElement("div");
-
-
-    message.className =
-        "message " + type;
-
-
-    if (type === "ai") {
-
-        message.innerHTML = `
-
-            <div class="msg-avatar">
-                12
-            </div>
-
-            <div class="bubble">
-                ${formatResponse(text)}
-            </div>
-
-        `;
-
-    } else {
-
-        message.innerHTML = `
-
-            <div class="bubble">
-                ${escapeHTML(text)}
-            </div>
-
-        `;
-
-    }
-
-
-    messages.appendChild(message);
-
-    scrollBottom();
-
-}
-
-
-/* =========================================================
-   FORMAT AI RESPONSE
-   ========================================================= */
-
-function formatResponse(text) {
-
-    if (!text)
-        return "";
-
-
-    /*
-       Escape HTML first.
-    */
-
-    let safe =
-        escapeHTML(text);
-
-
-    /*
-       Store fenced code blocks first.
-
-       Example:
-
-       ```python
-       print("Hello")
-       ```
-    */
-
-    const codeBlocks = [];
-
-
-    safe =
-        safe.replace(
-            /```([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n?([\s\S]*?)```/g,
-
-            function(
-                match,
-                language,
-                code
-            ) {
-
-                const id =
-                    codeBlocks.length;
-
-
-                const decodedCode =
-                    decodeHTMLEntities(code);
-
-
-                codeBlocks.push({
-
-                    language:
-                        language || "code",
-
-                    code:
-                        decodedCode
-                        .replace(
-                            /^\r?\n/,
-                            ""
-                        )
-                        .replace(
-                            /\r?\n$/,
-                            ""
-                        )
-
-                });
-
-
-                return (
-                    "___CODE_BLOCK_" +
-                    id +
-                    "___"
-                );
-
-            }
-        );
-
-
-    /*
-       =====================================================
-       HEADINGS
-       =====================================================
-
-       # Heading
-       ## Heading
-       ### Heading
-       #### Heading
-
-       The # symbols are removed.
-    */
-
-
-    safe =
-        safe.replace(
-            /^####[ \t]+(.+?)[ \t]*$/gm,
-
-            '<h4 class="md-heading">$1</h4>'
-        );
-
-
-    safe =
-        safe.replace(
-            /^###[ \t]+(.+?)[ \t]*$/gm,
-
-            '<h3 class="md-heading">$1</h3>'
-        );
-
-
-    safe =
-        safe.replace(
-            /^##[ \t]+(.+?)[ \t]*$/gm,
-
-            '<h2 class="md-heading">$1</h2>'
-        );
-
-
-    safe =
-        safe.replace(
-            /^#[ \t]+(.+?)[ \t]*$/gm,
-
-            '<h1 class="md-heading">$1</h1>'
-        );
-
-
-    /*
-       Bold.
-    */
-
-    safe =
-        safe.replace(
-            /\*\*(.*?)\*\*/g,
-
-            "<strong>$1</strong>"
-        );
-
-
-    /*
-       Italic.
-    */
-
-    safe =
-        safe.replace(
-            /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
-
-            "<em>$1</em>"
-        );
-
-
-    /*
-       Inline code.
-    */
-
-    safe =
-        safe.replace(
-            /`([^`\n]+)`/g,
-
-            '<code class="inline-code">$1</code>'
-        );
-
-
-    /*
-       Line breaks.
-
-       Do this AFTER headings so the
-       generated heading HTML isn't damaged.
-    */
-
-    safe =
-        safe.replace(
-            /\r?\n/g,
-
-            "<br>"
-        );
-
-
-    /*
-       Restore code blocks.
-    */
-
-    codeBlocks.forEach(
-        function(block, index) {
-
-            const placeholder =
-                "___CODE_BLOCK_" +
-                index +
-                "___";
-
-
-            const safeCode =
-                escapeHTML(
-                    block.code
-                );
-
-
-            const html =
-
-                '<div class="code-block">' +
-
-                    '<div class="code-header">' +
-
-                        '<span class="code-language">' +
-
-                            escapeHTML(
-                                block.language
-                            ) +
-
-                        '</span>' +
-
-                        '<button ' +
-
-                            'class="copy-button" ' +
-
-                            'type="button" ' +
-
-                            'onclick="copyCode(this)">' +
-
-                            'Copy' +
-
-                        '</button>' +
-
-                    '</div>' +
-
-                    '<code class="code-content">' +
-
-                        safeCode +
-
-                    '</code>' +
-
-                '</div>';
-
-
-            safe =
-                safe.replace(
-                    placeholder,
-                    html
-                );
-
-        }
+    stopButton.classList.remove(
+        "show"
     );
-
-
-    return safe;
-
 }
 
 
 /* =========================================================
-   DECODE HTML ENTITIES
-   ========================================================= */
+   TEXTAREA AUTO RESIZE
+========================================================= */
 
-function decodeHTMLEntities(text) {
+function autoResize() {
 
-    const textarea =
-        document.createElement(
-            "textarea"
-        );
-
-
-    textarea.innerHTML =
-        text;
-
-
-    return textarea.value;
-
-}
-
-
-/* =========================================================
-   COPY CODE
-   ========================================================= */
-
-async function copyCode(button) {
-
-    const codeBlock =
-        button.closest(
-            ".code-block"
-        );
-
-
-    if (!codeBlock)
-        return;
-
-
-    const code =
-        codeBlock.querySelector(
-            ".code-content"
-        );
-
-
-    if (!code)
-        return;
-
-
-    const text =
-        code.textContent;
-
-
-    try {
-
-        await navigator.clipboard.writeText(
-            text
-        );
-
-
-        button.textContent =
-            "Copied!";
-
-
-        button.classList.add(
-            "copied"
-        );
-
-
-        setTimeout(
-            function() {
-
-                button.textContent =
-                    "Copy";
-
-
-                button.classList.remove(
-                    "copied"
-                );
-
-            },
-            1200
-        );
-
-    }
-
-
-    catch (error) {
-
-        console.error(
-            "Clipboard error:",
-            error
-        );
-
-
-        const textarea =
-            document.createElement(
-                "textarea"
-            );
-
-
-        textarea.value =
-            text;
-
-
-        textarea.style.position =
-            "fixed";
-
-
-        textarea.style.left =
-            "-9999px";
-
-
-        document.body.appendChild(
-            textarea
-        );
-
-
-        textarea.select();
-
-
-        try {
-
-            document.execCommand(
-                "copy"
-            );
-
-
-            button.textContent =
-                "Copied!";
-
-
-            button.classList.add(
-                "copied"
-            );
-
-
-            setTimeout(
-                function() {
-
-                    button.textContent =
-                        "Copy";
-
-
-                    button.classList.remove(
-                        "copied"
-                    );
-
-                },
-                1200
-            );
-
-        }
-
-
-        catch (fallbackError) {
-
-            button.textContent =
-                "Failed";
-
-        }
-
-
-        textarea.remove();
-
-    }
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-   ========================================================= */
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        String(text);
-
-
-    return div.innerHTML;
-
-}
-
-
-/* =========================================================
-   SCROLL
-   ========================================================= */
-
-function scrollBottom() {
-
-    const chat =
-        document.getElementById(
-            "chat"
-        );
-
-
-    chat.scrollTo({
-
-        top:
-            chat.scrollHeight,
-
-        behavior:
-            "smooth"
-
-    });
-
-}
-
-
-/* =========================================================
-   NEW CHAT
-   ========================================================= */
-
-function newChat() {
-
-    conversation = [];
-
-
-    messages.innerHTML = `
-
-        <div
-            class="welcome"
-            id="welcome">
-
-            <h1>
-                What can I help with?
-            </h1>
-
-            <p>
-                Ask anything. Build anything.
-                Explore anything.
-            </p>
-
-        </div>
-
-    `;
-
-
-    input.value = "";
-
-    input.style.height =
+    prompt.style.height =
         "auto";
 
-
-    closeSidebar();
-
+    prompt.style.height =
+        Math.min(
+            prompt.scrollHeight,
+            180
+        ) + "px";
 }
 
 
+prompt.addEventListener(
+    "input",
+    autoResize
+);
+
+
 /* =========================================================
-   CLOSE SIDEBAR WHEN CLICKING OUTSIDE
-   ========================================================= */
+   ENTER TO SEND
+========================================================= */
 
-document.addEventListener(
-    "click",
-    function(event) {
-
-        const menu =
-            document.querySelector(
-                ".menu-button"
-            );
-
+prompt.addEventListener(
+    "keydown",
+    function (event) {
 
         if (
-            sidebar.classList.contains("open") &&
-            !sidebar.contains(event.target) &&
-            !menu.contains(event.target)
+            event.key === "Enter" &&
+            !event.shiftKey
         ) {
 
-            closeSidebar();
+            event.preventDefault();
 
+            sendMessage();
         }
-
     }
 );
+
+
+/* =========================================================
+   ESC CLOSES SIDEBAR
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Escape") {
+
+            closeSidebar();
+        }
+    }
+);
+
+
+/* =========================================================
+   INITIAL FOCUS
+========================================================= */
+
+prompt.focus();
 
 </script>
 
