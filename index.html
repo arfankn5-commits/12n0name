@@ -246,7 +246,7 @@ textarea {
 }
 
 /* =========================================================
-   SIDEBAR OVERLAY
+   OVERLAY
 ========================================================= */
 
 .sidebar-overlay {
@@ -406,6 +406,7 @@ textarea {
 
 .message {
     display: flex;
+
     margin-bottom: 24px;
 }
 
@@ -488,7 +489,7 @@ textarea {
 }
 
 /* =========================================================
-   INLINE
+   INLINE MARKDOWN
 ========================================================= */
 
 .md-inline-code {
@@ -564,7 +565,7 @@ textarea {
 }
 
 /* =========================================================
-   CODE BLOCK
+   CODE
 ========================================================= */
 
 .code-wrapper {
@@ -660,9 +661,9 @@ textarea {
 .md-table {
     width: 100%;
 
-    border-collapse: collapse;
-
     min-width: 500px;
+
+    border-collapse: collapse;
 
     font-size: 14px;
 }
@@ -675,7 +676,6 @@ textarea {
     border-right: 1px solid var(--border);
 
     text-align: left;
-
     vertical-align: top;
 }
 
@@ -741,11 +741,29 @@ textarea {
 }
 
 /* =========================================================
-   ERROR
+   ERRORS
 ========================================================= */
 
 .error {
     color: var(--danger);
+}
+
+.error-title {
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.error-detail {
+    color: var(--secondary);
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size: 12px;
+
+    word-break: break-word;
 }
 
 /* =========================================================
@@ -812,6 +830,7 @@ textarea {
     color: var(--text);
 
     font-size: 15px;
+
     line-height: 1.5;
 
     padding: 10px 8px;
@@ -928,6 +947,11 @@ textarea {
         font-size: 32px;
     }
 
+    .input-area {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
 }
 
 </style>
@@ -938,9 +962,9 @@ textarea {
 
 <div class="app">
 
-<!-- =======================================================
+<!-- =====================================================
      SIDEBAR
-======================================================== -->
+====================================================== -->
 
 <aside
     class="sidebar"
@@ -962,11 +986,12 @@ textarea {
 
         <button
             class="sidebar-close"
-            id="sidebarClose"
             type="button"
             onclick="closeSidebar()"
             aria-label="Close sidebar"
-            title="Close sidebar">×</button>
+            title="Close sidebar">
+            ×
+        </button>
 
     </div>
 
@@ -979,6 +1004,7 @@ textarea {
 
 </aside>
 
+
 <div
     class="sidebar-overlay"
     id="sidebarOverlay"
@@ -986,9 +1012,9 @@ textarea {
 </div>
 
 
-<!-- =======================================================
-     TOP BAR
-======================================================== -->
+<!-- =====================================================
+     TOPBAR
+====================================================== -->
 
 <header class="topbar">
 
@@ -1021,9 +1047,9 @@ textarea {
 </header>
 
 
-<!-- =======================================================
+<!-- =====================================================
      CHAT
-======================================================== -->
+====================================================== -->
 
 <section class="chat">
 
@@ -1050,9 +1076,9 @@ textarea {
 </section>
 
 
-<!-- =======================================================
+<!-- =====================================================
      INPUT
-======================================================== -->
+====================================================== -->
 
 <div class="input-area">
 
@@ -1184,6 +1210,7 @@ function toggleTheme() {
     );
 }
 
+
 (function loadTheme() {
 
     if (
@@ -1241,7 +1268,7 @@ function escapeHTML(text) {
 
 
 /* =========================================================
-   UNESCAPE COMMON MARKDOWN ESCAPES
+   MARKDOWN ESCAPES
 ========================================================= */
 
 function unescapeMarkdown(text) {
@@ -1259,11 +1286,12 @@ function unescapeMarkdown(text) {
 
 function inlineMarkdown(text) {
 
-    /*
-       Protect inline code first.
-    */
-
     const inlineCodes = [];
+
+
+    /*
+       Protect inline code.
+    */
 
     text = text.replace(
         /`([^`\n]+)`/g,
@@ -1282,13 +1310,19 @@ function inlineMarkdown(text) {
 
 
     /*
-       Escape all normal text.
+       Remove Markdown escaping.
     */
 
     text =
-        escapeHTML(
-            unescapeMarkdown(text)
-        );
+        unescapeMarkdown(text);
+
+
+    /*
+       Escape HTML.
+    */
+
+    text =
+        escapeHTML(text);
 
 
     /*
@@ -1349,6 +1383,7 @@ function inlineMarkdown(text) {
     text = text.replace(
         /@@INLINECODE(\d+)@@/g,
         function (_, id) {
+
             return inlineCodes[
                 Number(id)
             ];
@@ -1361,7 +1396,7 @@ function inlineMarkdown(text) {
 
 
 /* =========================================================
-   TABLE DETECTION
+   TABLE
 ========================================================= */
 
 function isTableSeparator(line) {
@@ -1372,19 +1407,20 @@ function isTableSeparator(line) {
             .replace(/\|$/, "")
             .split("|");
 
+
     if (!cells.length) {
         return false;
     }
 
-    return cells.every(cell =>
-        /^ *:?-{3,}:? *$/.test(cell)
+
+    return cells.every(
+        cell =>
+            /^ *:?-{3,}:? *$/.test(
+                cell
+            )
     );
 }
 
-
-/* =========================================================
-   TABLE PARSER
-========================================================= */
 
 function parseTable(lines) {
 
@@ -1392,13 +1428,12 @@ function parseTable(lines) {
         return null;
     }
 
-    const headerLine =
-        lines[0];
 
-    const separatorLine =
-        lines[1];
-
-    if (!isTableSeparator(separatorLine)) {
+    if (
+        !isTableSeparator(
+            lines[1]
+        )
+    ) {
         return null;
     }
 
@@ -1410,17 +1445,19 @@ function parseTable(lines) {
             .replace(/^\|/, "")
             .replace(/\|$/, "")
             .split("|")
-            .map(cell =>
-                cell.trim()
+            .map(
+                cell =>
+                    cell.trim()
             );
     }
 
 
     const headers =
-        splitRow(headerLine);
+        splitRow(lines[0]);
+
 
     const alignments =
-        splitRow(separatorLine)
+        splitRow(lines[1])
             .map(cell => {
 
                 const left =
@@ -1429,13 +1466,19 @@ function parseTable(lines) {
                 const right =
                     cell.endsWith(":");
 
-                if (left && right) {
+
+                if (
+                    left &&
+                    right
+                ) {
                     return "center";
                 }
+
 
                 if (right) {
                     return "right";
                 }
+
 
                 return "left";
             });
@@ -1444,8 +1487,9 @@ function parseTable(lines) {
     let html = `
         <div class="table-wrapper">
         <table class="md-table">
-            <thead>
-                <tr>
+
+        <thead>
+        <tr>
     `;
 
 
@@ -1453,7 +1497,9 @@ function parseTable(lines) {
         (header, index) => {
 
             const align =
-                alignments[index] || "left";
+                alignments[index] ||
+                "left";
+
 
             html += `
                 <th style="text-align:${align}">
@@ -1465,9 +1511,9 @@ function parseTable(lines) {
 
 
     html += `
-                </tr>
-            </thead>
-            <tbody>
+        </tr>
+        </thead>
+        <tbody>
     `;
 
 
@@ -1479,6 +1525,7 @@ function parseTable(lines) {
 
         const cells =
             splitRow(lines[i]);
+
 
         html += "<tr>";
 
@@ -1492,8 +1539,11 @@ function parseTable(lines) {
             const value =
                 cells[j] ?? "";
 
+
             const align =
-                alignments[j] || "left";
+                alignments[j] ||
+                "left";
+
 
             html += `
                 <td style="text-align:${align}">
@@ -1508,7 +1558,7 @@ function parseTable(lines) {
 
 
     html += `
-            </tbody>
+        </tbody>
         </table>
         </div>
     `;
@@ -1527,22 +1577,15 @@ function createCodeBlock(
     code
 ) {
 
-    const safeLanguage =
-        escapeHTML(
-            language || "code"
-        );
-
-    const safeCode =
-        escapeHTML(code);
-
-
     return `
         <div class="code-wrapper">
 
             <div class="code-header">
 
                 <span class="code-language">
-                    ${safeLanguage}
+                    ${escapeHTML(
+                        language || "code"
+                    )}
                 </span>
 
                 <button
@@ -1554,7 +1597,9 @@ function createCodeBlock(
 
             </div>
 
-            <pre><code>${safeCode}</code></pre>
+            <pre><code>${escapeHTML(
+                code
+            )}</code></pre>
 
         </div>
     `;
@@ -1562,7 +1607,7 @@ function createCodeBlock(
 
 
 /* =========================================================
-   MAIN MARKDOWN PARSER
+   MARKDOWN PARSER
 ========================================================= */
 
 function formatResponse(rawText) {
@@ -1581,19 +1626,6 @@ function formatResponse(rawText) {
             .replace(/\r/g, "\n");
 
 
-    /*
-       Normalize escaped Markdown characters
-       outside code blocks.
-    */
-
-    text =
-        unescapeMarkdown(text);
-
-
-    /*
-       Split into lines.
-    */
-
     const lines =
         text.split("\n");
 
@@ -1605,13 +1637,11 @@ function formatResponse(rawText) {
 
     while (i < lines.length) {
 
-        let line =
+        const line =
             lines[i];
 
 
-        /* -------------------------------------------------
-           EMPTY LINE
-        ------------------------------------------------- */
+        /* EMPTY */
 
         if (!line.trim()) {
 
@@ -1621,9 +1651,9 @@ function formatResponse(rawText) {
         }
 
 
-        /* -------------------------------------------------
-           FENCED CODE BLOCK
-        ------------------------------------------------- */
+        /* =================================================
+           CODE BLOCK
+        ================================================= */
 
         if (
             line.trim().startsWith("```")
@@ -1632,7 +1662,9 @@ function formatResponse(rawText) {
             const language =
                 line.trim()
                     .slice(3)
-                    .trim() || "code";
+                    .trim() ||
+                "code";
+
 
             const codeLines = [];
 
@@ -1641,7 +1673,9 @@ function formatResponse(rawText) {
 
             while (
                 i < lines.length &&
-                !lines[i].trim().startsWith("```")
+                !lines[i]
+                    .trim()
+                    .startsWith("```")
             ) {
 
                 codeLines.push(
@@ -1653,8 +1687,7 @@ function formatResponse(rawText) {
 
 
             if (
-                i < lines.length &&
-                lines[i].trim().startsWith("```")
+                i < lines.length
             ) {
                 i++;
             }
@@ -1667,13 +1700,14 @@ function formatResponse(rawText) {
                 )
             );
 
+
             continue;
         }
 
 
-        /* -------------------------------------------------
+        /* =================================================
            HEADINGS
-        ------------------------------------------------- */
+        ================================================= */
 
         const heading =
             line.match(
@@ -1689,17 +1723,14 @@ function formatResponse(rawText) {
                     4
                 );
 
-            const content =
-                inlineMarkdown(
-                    heading[2]
-                );
-
 
             output.push(
                 `
                 <h${level}
                     class="md-heading md-h${level}">
-                    ${content}
+                    ${inlineMarkdown(
+                        heading[2]
+                    )}
                 </h${level}>
                 `
             );
@@ -1711,14 +1742,13 @@ function formatResponse(rawText) {
         }
 
 
-        /* -------------------------------------------------
+        /* =================================================
            HORIZONTAL RULE
-        ------------------------------------------------- */
+        ================================================= */
 
         if (
-            /^ {0,3}([-*_])(?:\s*\1){2,}\s*$/.test(
-                line
-            )
+            /^ {0,3}([-*_])(?:\s*\1){2,}\s*$/
+                .test(line)
         ) {
 
             output.push(
@@ -1731,9 +1761,9 @@ function formatResponse(rawText) {
         }
 
 
-        /* -------------------------------------------------
+        /* =================================================
            BLOCKQUOTE
-        ------------------------------------------------- */
+        ================================================= */
 
         if (
             /^>\s?/.test(line)
@@ -1744,7 +1774,9 @@ function formatResponse(rawText) {
 
             while (
                 i < lines.length &&
-                /^>\s?/.test(lines[i])
+                /^>\s?/.test(
+                    lines[i]
+                )
             ) {
 
                 quoteLines.push(
@@ -1764,19 +1796,22 @@ function formatResponse(rawText) {
                 <blockquote
                     class="md-blockquote">
                     ${quoteLines
-                        .map(inlineMarkdown)
+                        .map(
+                            inlineMarkdown
+                        )
                         .join("<br>")}
                 </blockquote>
                 `
             );
 
+
             continue;
         }
 
 
-        /* -------------------------------------------------
+        /* =================================================
            TABLE
-        ------------------------------------------------- */
+        ================================================= */
 
         if (
             i + 1 < lines.length &&
@@ -1790,6 +1825,7 @@ function formatResponse(rawText) {
                 lines[i],
                 lines[i + 1]
             ];
+
 
             i += 2;
 
@@ -1808,31 +1844,27 @@ function formatResponse(rawText) {
             }
 
 
-            const tableHTML =
-                parseTable(tableLines);
+            const table =
+                parseTable(
+                    tableLines
+                );
 
 
-            if (tableHTML) {
+            if (table) {
 
-                output.push(tableHTML);
+                output.push(table);
 
                 continue;
             }
-
-            /*
-               If parsing failed, continue normally.
-            */
-
-            i -= tableLines.length - 2;
         }
 
 
-        /* -------------------------------------------------
-           UNORDERED LIST
-        ------------------------------------------------- */
+        /* =================================================
+           BULLET LIST
+        ================================================= */
 
         if (
-            /^(\s*)[-*+]\s+/.test(line)
+            /^\s*[-*+]\s+/.test(line)
         ) {
 
             const items = [];
@@ -1840,7 +1872,7 @@ function formatResponse(rawText) {
 
             while (
                 i < lines.length &&
-                /^(\s*)[-*+]\s+/.test(
+                /^\s*[-*+]\s+/.test(
                     lines[i]
                 )
             ) {
@@ -1861,7 +1893,8 @@ function formatResponse(rawText) {
                 `
                 <ul class="md-list">
                     ${items
-                        .map(item =>
+                        .map(
+                            item =>
                             `<li>${inlineMarkdown(item)}</li>`
                         )
                         .join("")}
@@ -1869,13 +1902,14 @@ function formatResponse(rawText) {
                 `
             );
 
+
             continue;
         }
 
 
-        /* -------------------------------------------------
-           ORDERED LIST
-        ------------------------------------------------- */
+        /* =================================================
+           NUMBERED LIST
+        ================================================= */
 
         if (
             /^\s*\d+[.)]\s+/.test(line)
@@ -1907,7 +1941,8 @@ function formatResponse(rawText) {
                 `
                 <ol class="md-list">
                     ${items
-                        .map(item =>
+                        .map(
+                            item =>
                             `<li>${inlineMarkdown(item)}</li>`
                         )
                         .join("")}
@@ -1915,22 +1950,26 @@ function formatResponse(rawText) {
                 `
             );
 
+
             continue;
         }
 
 
-        /* -------------------------------------------------
+        /* =================================================
            NORMAL PARAGRAPH
-        ------------------------------------------------- */
+        ================================================= */
 
-        const paragraphLines = [
+        const paragraph = [
             line
         ];
+
 
         i++;
 
 
-        while (i < lines.length) {
+        while (
+            i < lines.length
+        ) {
 
             const next =
                 lines[i];
@@ -1942,16 +1981,17 @@ function formatResponse(rawText) {
 
 
             if (
-                /^```/.test(
-                    next.trim()
-                )
+                next.trim()
+                    .startsWith("```")
             ) {
                 break;
             }
 
 
             if (
-                /^(#{1,6})[ \t]+/.test(next)
+                /^(#{1,6})[ \t]+/.test(
+                    next
+                )
             ) {
                 break;
             }
@@ -1965,20 +2005,24 @@ function formatResponse(rawText) {
 
 
             if (
-                /^(\s*)[-*+]\s+/.test(next)
+                /^\s*[-*+]\s+/.test(
+                    next
+                )
             ) {
                 break;
             }
 
 
             if (
-                /^\s*\d+[.)]\s+/.test(next)
+                /^\s*\d+[.)]\s+/.test(
+                    next
+                )
             ) {
                 break;
             }
 
 
-            paragraphLines.push(
+            paragraph.push(
                 next
             );
 
@@ -1989,8 +2033,10 @@ function formatResponse(rawText) {
         output.push(
             `
             <p class="md-paragraph">
-                ${paragraphLines
-                    .map(inlineMarkdown)
+                ${paragraph
+                    .map(
+                        inlineMarkdown
+                    )
                     .join("<br>")}
             </p>
             `
@@ -2013,6 +2059,7 @@ async function copyCode(button) {
             ".code-wrapper"
         );
 
+
     const code =
         wrapper?.querySelector(
             "code"
@@ -2031,8 +2078,9 @@ async function copyCode(button) {
         );
 
 
-        const oldText =
+        const old =
             button.textContent;
+
 
         button.textContent =
             "Copied!";
@@ -2041,7 +2089,7 @@ async function copyCode(button) {
         setTimeout(
             () => {
                 button.textContent =
-                    oldText;
+                    old;
             },
             1200
         );
@@ -2051,6 +2099,7 @@ async function copyCode(button) {
 
         button.textContent =
             "Failed";
+
 
         setTimeout(
             () => {
@@ -2088,6 +2137,7 @@ function addMessage(
             "div"
         );
 
+
     message.className =
         `message ${role}`;
 
@@ -2096,6 +2146,7 @@ function addMessage(
         document.createElement(
             "div"
         );
+
 
     bubble.className =
         "bubble";
@@ -2116,6 +2167,7 @@ function addMessage(
     message.appendChild(
         bubble
     );
+
 
     messages.appendChild(
         message
@@ -2140,7 +2192,6 @@ function scrollToBottom() {
 
             messages.scrollTop =
                 messages.scrollHeight;
-
         }
     );
 }
@@ -2166,7 +2217,7 @@ function createGeneratingMessage() {
 
 
 /* =========================================================
-   SEND
+   SEND MESSAGE
 ========================================================= */
 
 async function sendMessage() {
@@ -2208,12 +2259,14 @@ async function sendMessage() {
 
     generating = true;
 
+
     controller =
         new AbortController();
 
 
     sendButton.style.display =
         "none";
+
 
     stopButton.classList.add(
         "show"
@@ -2230,6 +2283,9 @@ async function sendMessage() {
 
                     headers: {
                         "Content-Type":
+                            "application/json",
+
+                        "Accept":
                             "application/json"
                     },
 
@@ -2257,8 +2313,23 @@ async function sendMessage() {
 
         if (!response.ok) {
 
+            let serverText = "";
+
+            try {
+                serverText =
+                    await response.text();
+            } catch (_) {
+                serverText = "";
+            }
+
+
             throw new Error(
-                `HTTP ${response.status}`
+                `HTTP ${response.status}` +
+                (
+                    serverText
+                        ? ` — ${serverText.slice(0, 300)}`
+                        : ""
+                )
             );
         }
 
@@ -2291,7 +2362,9 @@ async function sendMessage() {
                         }
 
                         return (
-                            item?.text ?? ""
+                            item?.text ||
+                            item?.content ||
+                            ""
                         );
                     })
                     .join("");
@@ -2305,7 +2378,7 @@ async function sendMessage() {
         if (!reply.trim()) {
 
             throw new Error(
-                "Empty response"
+                "The server returned an empty response."
             );
         }
 
@@ -2331,6 +2404,12 @@ async function sendMessage() {
 
     } catch (error) {
 
+        console.error(
+            "12n0name AI API error:",
+            error
+        );
+
+
         if (
             error.name ===
             "AbortError"
@@ -2340,19 +2419,52 @@ async function sendMessage() {
 
         } else {
 
+            let message =
+                error?.message ||
+                "Unknown connection error.";
+
+
+            /*
+               Special browser network error.
+            */
+
+            if (
+                error instanceof TypeError
+            ) {
+
+                message =
+                    "The browser could not reach the AI server. " +
+                    "Check your Tailscale connection, llama.cpp server, " +
+                    "HTTPS endpoint, and CORS configuration.";
+            }
+
+
             aiMessage
                 .querySelector(
                     ".bubble"
                 )
-                .innerHTML =
+                .innerHTML = `
+                    <div class="error">
 
-                `
-                <span class="error">
-                    ⚠️ Server is down.
-                    <br><br>
-                    Contact on
-                    arfankn@gmail.com
-                </span>
+                        <div class="error-title">
+                            ⚠️ Connection failed
+                        </div>
+
+                        <div class="error-detail">
+                            ${escapeHTML(message)}
+                        </div>
+
+                        <br>
+
+                        <div>
+                            If the problem continues,
+                            contact on
+                            <strong>
+                                arfankn@gmail.com
+                            </strong>
+                        </div>
+
+                    </div>
                 `;
         }
 
@@ -2362,12 +2474,15 @@ async function sendMessage() {
 
         controller = null;
 
+
         sendButton.style.display =
             "flex";
+
 
         stopButton.classList.remove(
             "show"
         );
+
 
         prompt.focus();
     }
@@ -2393,6 +2508,7 @@ function stopGeneration() {
 
     sendButton.style.display =
         "flex";
+
 
     stopButton.classList.remove(
         "show"
@@ -2425,7 +2541,7 @@ prompt.addEventListener(
 
 
 /* =========================================================
-   ENTER TO SEND
+   ENTER
 ========================================================= */
 
 prompt.addEventListener(
@@ -2456,6 +2572,7 @@ document.addEventListener(
         if (
             event.key === "Escape"
         ) {
+
             closeSidebar();
         }
     }
