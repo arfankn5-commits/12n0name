@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -792,9 +793,7 @@ textarea::placeholder {
 
 </head>
 
-
 <body>
-
 
 <!-- ================= SIDEBAR ================= -->
 
@@ -802,156 +801,157 @@ textarea::placeholder {
     class="sidebar"
     id="sidebar">
 
-    <div class="logo">
+```
+<div class="logo">
 
-        <div class="logo-icon">
-            12
-        </div>
-
-        <span>
-            12n0name
-        </span>
-
+    <div class="logo-icon">
+        12
     </div>
 
+    <span>
+        12n0name
+    </span>
 
-    <button
-        class="new-chat"
-        onclick="newChat()">
+</div>
 
-        ＋ New chat
 
-    </button>
+<button
+    class="new-chat"
+    onclick="newChat()">
+
+    ＋ New chat
+
+</button>
+```
 
 </aside>
-
 
 <!-- ================= MAIN ================= -->
 
 <main class="main">
 
+```
+<!-- ================= TOP BAR ================= -->
 
-    <!-- ================= TOP BAR ================= -->
+<header class="topbar">
 
-    <header class="topbar">
+    <button
+        class="menu-button"
+        type="button"
+        onclick="toggleSidebar()">
 
-        <button
-            class="menu-button"
-            type="button"
-            onclick="toggleSidebar()">
+        ☰
 
-            ☰
-
-        </button>
-
-
-        <div class="model">
-
-            12n0name
-            <span>AI</span>
-
-        </div>
+    </button>
 
 
-        <div class="status">
+    <div class="model">
 
-            <span class="status-dot"></span>
+        12n0name
+        <span>AI</span>
 
-            Online
-
-        </div>
-
-
-        <button
-            class="theme-button"
-            id="themeButton"
-            type="button"
-            onclick="toggleTheme()">
-
-            🌙
-
-        </button>
-
-    </header>
+    </div>
 
 
-    <!-- ================= CHAT ================= -->
+    <div class="status">
 
-    <section
-        class="chat"
-        id="chat">
+        <span class="status-dot"></span>
+
+        Online
+
+    </div>
+
+
+    <button
+        class="theme-button"
+        id="themeButton"
+        type="button"
+        onclick="toggleTheme()">
+
+        🌙
+
+    </button>
+
+</header>
+
+
+<!-- ================= CHAT ================= -->
+
+<section
+    class="chat"
+    id="chat">
+
+    <div
+        class="messages"
+        id="messages">
 
         <div
-            class="messages"
-            id="messages">
+            class="welcome"
+            id="welcome">
 
-            <div
-                class="welcome"
-                id="welcome">
+            <h1>
+                What can I help with?
+            </h1>
 
-                <h1>
-                    What can I help with?
-                </h1>
-
-                <p>
-                    Ask anything. Build anything.
-                    Explore anything.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= MESSAGE BOX ================= -->
-
-    <div class="input-area">
-
-        <div class="input-box">
-
-            <textarea
-                id="input"
-                rows="1"
-                placeholder="Ask 12n0name..."></textarea>
-
-
-            <button
-                class="send"
-                id="sendButton"
-                type="button"
-                onclick="sendMessage()">
-
-                ➤
-
-            </button>
-
-
-            <button
-                class="stop"
-                id="stopButton"
-                type="button"
-                onclick="stopGeneration()">
-
-                ■
-
-            </button>
-
-        </div>
-
-
-        <div class="footer">
-
-            12n0name AI can make mistakes.
-            Check important information.
+            <p>
+                Ask anything. Build anything.
+                Explore anything.
+            </p>
 
         </div>
 
     </div>
 
-</main>
+</section>
 
+
+<!-- ================= MESSAGE BOX ================= -->
+
+<div class="input-area">
+
+    <div class="input-box">
+
+        <textarea
+            id="input"
+            rows="1"
+            placeholder="Ask 12n0name..."></textarea>
+
+
+        <button
+            class="send"
+            id="sendButton"
+            type="button"
+            onclick="sendMessage()">
+
+            ➤
+
+        </button>
+
+
+        <button
+            class="stop"
+            id="stopButton"
+            type="button"
+            onclick="stopGeneration()">
+
+            ■
+
+        </button>
+
+    </div>
+
+
+    <div class="footer">
+
+        12n0name AI can make mistakes.
+        Check important information.
+
+    </div>
+
+</div>
+```
+
+</main>
 
 <script>
 
@@ -1163,14 +1163,6 @@ async function sendMessage() {
 
     try {
 
-        /*
-         * IMPORTANT:
-         *
-         * Do not use no-cors here.
-         * no-cors would hide the response and
-         * make it impossible to read the AI answer.
-         */
-
         const response =
             await fetch(
                 API_URL,
@@ -1340,13 +1332,12 @@ async function sendMessage() {
         );
 
 
-        /*
-         * Mobile browsers usually report CORS/network
-         * failures as TypeError: Failed to fetch.
-         */
-
         let errorHTML = "";
 
+
+        /*
+         * Browser/network failure
+         */
 
         if (
             error instanceof TypeError
@@ -1356,46 +1347,21 @@ async function sendMessage() {
 
                 '<span class="error">' +
 
-                '⚠️ Browser connection blocked.' +
+                '⚠️ Server is down.' +
 
                 '<br><br>' +
 
-                'Tailscale Funnel is reachable, ' +
-                'but the browser could not send/read ' +
-                'the chat request.' +
+                'Please contact ' +
 
-                '<br><br>' +
-
-                '<strong>Most likely: CORS.</strong>' +
-
-                '<br><br>' +
-
-                'Open this on your phone:' +
-
-                '<br>' +
-
-                escapeHTML(
-                    MODELS_URL
-                ) +
-
-                '<br><br>' +
-
-                'If that page shows your model, ' +
-                'Tailscale is working.' +
-
-                '<br><br>' +
-
-                'The llama.cpp server must allow ' +
-                'browser requests from this page.' +
-
-                '<br><br>' +
-
-                'Contact: ' +
-                'arfankn@gmail.com' +
+                '<strong>arfankn5@gmail.com</strong>' +
 
                 '</span>';
 
         }
+
+        /*
+         * Server returned an HTTP error
+         */
 
         else {
 
@@ -1403,29 +1369,13 @@ async function sendMessage() {
 
                 '<span class="error">' +
 
-                '⚠️ AI request failed.' +
+                '⚠️ Server is down.' +
 
                 '<br><br>' +
 
-                escapeHTML(
-                    error.message ||
-                    String(error)
-                ) +
+                'Please contact ' +
 
-                '<br><br>' +
-
-                '<strong>API:</strong>' +
-
-                '<br>' +
-
-                escapeHTML(
-                    API_URL
-                ) +
-
-                '<br><br>' +
-
-                'Contact: ' +
-                'arfankn@gmail.com' +
+                '<strong>arfankn5@gmail.com</strong>' +
 
                 '</span>';
 
@@ -1463,14 +1413,6 @@ function setGenerating(state) {
 
     stopButton.style.display =
         state ? "block" : "none";
-
-    /*
-     * IMPORTANT MOBILE FIX:
-     *
-     * Keep the input enabled while waiting.
-     * Some mobile browsers handle disabled inputs
-     * badly when the keyboard is open.
-     */
 
     input.disabled = false;
 
@@ -1710,7 +1652,6 @@ function formatResponse(text) {
             "<strong>$1</strong>"
         );
 
-
     safe =
         safe.replace(
             /__(.*?)__/g,
@@ -1727,7 +1668,6 @@ function formatResponse(text) {
             /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
             "<em>$1</em>"
         );
-
 
     safe =
         safe.replace(
@@ -1864,10 +1804,8 @@ function decodeHTMLEntities(text) {
             "textarea"
         );
 
-
     textarea.innerHTML =
         text;
-
 
     return textarea.value;
 
