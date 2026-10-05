@@ -484,16 +484,88 @@ body {
     font-size: 13px;
 }
 
-.code-block {
-    margin: 12px 0;
 
-    padding: 14px;
+/* ================= CODE BLOCK ================= */
+
+.code-block {
+    margin: 14px 0;
 
     background: var(--code);
 
     border: 1px solid var(--border);
 
-    border-radius: 10px;
+    border-radius: 11px;
+
+    overflow: hidden;
+
+    width: 100%;
+}
+
+.code-header {
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 10px 0 13px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.code-language {
+    color: var(--secondary);
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+}
+
+.copy-button {
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    color: var(--secondary);
+
+    border-radius: 7px;
+
+    padding: 5px 10px;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition: .15s;
+}
+
+.copy-button:hover {
+    background: var(--hover);
+
+    color: var(--text);
+}
+
+.copy-button.copied {
+    color: var(--cyan);
+
+    border-color:
+        rgba(0,229,255,.4);
+}
+
+.code-content {
+    display: block;
+
+    padding: 14px;
 
     overflow-x: auto;
 
@@ -507,18 +579,10 @@ body {
     font-size: 13px;
 
     line-height: 1.55;
-}
 
-.code-language {
-    display: block;
+    color: var(--text);
 
-    color: var(--secondary);
-
-    font-size: 11px;
-
-    margin-bottom: 8px;
-
-    text-transform: uppercase;
+    tab-size: 4;
 }
 
 
@@ -685,6 +749,10 @@ textarea::placeholder {
 
     .status {
         display: none;
+    }
+
+    .code-content {
+        font-size: 12px;
     }
 
 }
@@ -1106,36 +1174,62 @@ async function sendMessage() {
             await response.json();
 
 
-        let reply = "";
+        /*
+           Handle the different content
+           formats llama.cpp may return.
+        */
 
+        const choice =
+            data?.choices?.[0];
+
+        let reply =
+            choice?.message?.content ??
+            choice?.text ??
+            "";
+
+
+        /*
+           Some APIs return content
+           as an array.
+        */
+
+        if (Array.isArray(reply)) {
+
+            reply =
+                reply
+                .map(function(item) {
+
+                    if (
+                        typeof item ===
+                        "string"
+                    ) {
+
+                        return item;
+
+                    }
+
+                    return (
+                        item?.text ??
+                        ""
+                    );
+
+                })
+                .join("");
+
+        }
+
+
+        /*
+           Final safety conversion.
+        */
 
         if (
-            data.choices &&
-            data.choices.length > 0
+            typeof reply !==
+            "string"
         ) {
 
-            const content =
-                data.choices[0].message?.content;
-
-
-            if (typeof content === "string") {
-
-                reply = content;
-
-            } else if (
-                Array.isArray(content)
-            ) {
-
-                reply =
-                    content
-                    .map(function(item) {
-
-                        return item.text || "";
-
-                    })
-                    .join("");
-
-            }
+            reply =
+                JSON.stringify(reply);
 
         }
 
@@ -1339,8 +1433,9 @@ function formatResponse(text) {
 
 
     /*
-       First escape HTML so the AI cannot
-       inject HTML into the page.
+       Escape the complete response first.
+       This keeps AI-generated HTML from
+       becoming executable HTML.
     */
 
     let safe =
@@ -1348,16 +1443,22 @@ function formatResponse(text) {
 
 
     /*
-       Extract fenced code blocks first.
-       This prevents ``` from appearing
-       as normal text.
+       Store code blocks temporarily.
+       This prevents Markdown formatting
+       from modifying the code.
     */
 
     const codeBlocks = [];
 
+
+    /*
+       Supports both Unix and Windows
+       line endings: \n and \r\n.
+    */
+
     safe =
         safe.replace(
-            /```([a-zA-Z0-9_+-]*)\n?([\s\S]*?)```/g,
+            /```([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n?([\s\S]*?)```/g,
             function(
                 match,
                 language,
@@ -1367,13 +1468,22 @@ function formatResponse(text) {
                 const id =
                     codeBlocks.length;
 
+
                 codeBlocks.push({
 
                     language:
                         language || "code",
 
                     code:
-                        code.trim()
+                        code
+                        .replace(
+                            /^\r?\n/,
+                            ""
+                        )
+                        .replace(
+                            /\r?\n$/,
+                            ""
+                        )
 
                 });
 
@@ -1389,7 +1499,7 @@ function formatResponse(text) {
 
 
     /*
-       Basic Markdown formatting.
+       Bold.
     */
 
     safe =
@@ -1399,12 +1509,20 @@ function formatResponse(text) {
         );
 
 
+    /*
+       Italic.
+    */
+
     safe =
         safe.replace(
             /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
             "<em>$1</em>"
         );
 
+
+    /*
+       Inline code.
+    */
 
     safe =
         safe.replace(
@@ -1414,12 +1532,12 @@ function formatResponse(text) {
 
 
     /*
-       Preserve line breaks.
+       Line breaks.
     */
 
     safe =
         safe.replace(
-            /\n/g,
+            /\r?\n/g,
             "<br>"
         );
 
@@ -1441,15 +1559,26 @@ function formatResponse(text) {
 
                 '<div class="code-block">' +
 
-                '<span class="code-language">' +
-                escapeHTML(
-                    block.language
-                ) +
-                '</span>' +
+                    '<div class="code-header">' +
 
-                escapeHTML(
-                    block.code
-                ) +
+                        '<span class="code-language">' +
+                            escapeHTML(
+                                block.language
+                            ) +
+                        '</span>' +
+
+                        '<button ' +
+                            'class="copy-button" ' +
+                            'type="button" ' +
+                            'onclick="copyCode(this)">' +
+                            'Copy' +
+                        '</button>' +
+
+                    '</div>' +
+
+                    '<code class="code-content">' +
+                        block.code +
+                    '</code>' +
 
                 '</div>';
 
@@ -1470,6 +1599,138 @@ function formatResponse(text) {
 
 
 /* =========================================================
+   COPY CODE
+   ========================================================= */
+
+async function copyCode(button) {
+
+    const codeBlock =
+        button.closest(".code-block");
+
+
+    if (!codeBlock)
+        return;
+
+
+    const code =
+        codeBlock.querySelector(
+            ".code-content"
+        );
+
+
+    if (!code)
+        return;
+
+
+    const text =
+        code.textContent;
+
+
+    try {
+
+        await navigator.clipboard.writeText(
+            text
+        );
+
+
+        const oldText =
+            button.textContent;
+
+
+        button.textContent =
+            "Copied!";
+
+
+        button.classList.add(
+            "copied"
+        );
+
+
+        setTimeout(
+            function() {
+
+                button.textContent =
+                    oldText;
+
+                button.classList.remove(
+                    "copied"
+                );
+
+            },
+            1200
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Copy failed:",
+            error
+        );
+
+
+        /*
+           Fallback for browsers where
+           Clipboard API is unavailable.
+        */
+
+        const textarea =
+            document.createElement(
+                "textarea"
+            );
+
+        textarea.value = text;
+
+        textarea.style.position =
+            "fixed";
+
+        textarea.style.opacity =
+            "0";
+
+        document.body.appendChild(
+            textarea
+        );
+
+        textarea.select();
+
+        try {
+
+            document.execCommand(
+                "copy"
+            );
+
+            button.textContent =
+                "Copied!";
+
+            setTimeout(
+                function() {
+
+                    button.textContent =
+                        "Copy";
+
+                },
+                1200
+            );
+
+        }
+
+        catch (fallbackError) {
+
+            button.textContent =
+                "Failed";
+
+        }
+
+        textarea.remove();
+
+    }
+
+}
+
+
+/* =========================================================
    ESCAPE HTML
    ========================================================= */
 
@@ -1479,7 +1740,7 @@ function escapeHTML(text) {
         document.createElement("div");
 
     div.textContent =
-        text;
+        String(text);
 
     return div.innerHTML;
 
