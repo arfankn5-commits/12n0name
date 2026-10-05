@@ -91,6 +91,17 @@ body {
 }
 
 
+/* ================= SIDEBAR HEADER ================= */
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+
 /* ================= LOGO ================= */
 
 .logo {
@@ -100,8 +111,6 @@ body {
 
     font-size: 20px;
     font-weight: 800;
-
-    margin-bottom: 30px;
 }
 
 .logo-icon {
@@ -188,6 +197,39 @@ body {
             rotate(-45deg);
     }
 
+}
+
+
+/* ================= CLOSE SIDEBAR ================= */
+
+.close-sidebar {
+    width: 38px;
+    height: 38px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: var(--secondary);
+
+    font-size: 25px;
+    font-weight: 300;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: .15s;
+}
+
+.close-sidebar:hover {
+    background: var(--hover);
+    color: var(--text);
+
+    transform: scale(1.05);
 }
 
 
@@ -771,15 +813,33 @@ textarea::placeholder {
     class="sidebar"
     id="sidebar">
 
-    <div class="logo">
 
-        <div class="logo-icon">
-            12
+    <!-- ================= SIDEBAR HEADER ================= -->
+
+    <div class="sidebar-header">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                12
+            </div>
+
+            <span>
+                12n0name
+            </span>
+
         </div>
 
-        <span>
-            12n0name
-        </span>
+
+        <button
+            class="close-sidebar"
+            type="button"
+            onclick="closeSidebar()"
+            aria-label="Close sidebar">
+
+            ×
+
+        </button>
 
     </div>
 
@@ -970,6 +1030,16 @@ function toggleSidebar() {
         document.getElementById("sidebar");
 
     sidebar.classList.toggle("open");
+
+}
+
+
+function closeSidebar() {
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    sidebar.classList.remove("open");
 
 }
 
@@ -1174,9 +1244,9 @@ async function sendMessage() {
             await response.json();
 
 
-        /*
-           Handle llama.cpp response formats.
-        */
+        /* =================================================
+           HANDLE LLAMA.CPP RESPONSE
+           ================================================= */
 
         const choice =
             data?.choices?.[0];
@@ -1187,9 +1257,9 @@ async function sendMessage() {
             "";
 
 
-        /*
-           Some responses use an array.
-        */
+        /* =================================================
+           ARRAY RESPONSE SUPPORT
+           ================================================= */
 
         if (Array.isArray(reply)) {
 
@@ -1217,9 +1287,9 @@ async function sendMessage() {
         }
 
 
-        /*
-           Final conversion.
-        */
+        /* =================================================
+           FINAL CONVERSION
+           ================================================= */
 
         if (
             typeof reply !==
@@ -1460,17 +1530,8 @@ function formatResponse(text) {
 
 
                 /*
-                   IMPORTANT:
                    Decode HTML entities ONLY
                    inside code blocks.
-
-                   This converts:
-
-                   &lt;html&gt;
-
-                   back to:
-
-                   <html>
                 */
 
                 const decodedCode =
@@ -1566,11 +1627,8 @@ function formatResponse(text) {
 
 
             /*
-               Escape the decoded code again
-               before inserting it into HTML.
-
-               This makes the code DISPLAY
-               instead of EXECUTE.
+               Escape decoded code before
+               inserting it into HTML.
             */
 
             const safeCode =
@@ -1870,9 +1928,7 @@ function newChat() {
         "auto";
 
 
-    document
-        .getElementById("sidebar")
-        .classList.remove("open");
+    closeSidebar();
 
 }
 
