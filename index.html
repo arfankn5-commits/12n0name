@@ -80,6 +80,33 @@ body {
     display: block;
 }
 
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.close-sidebar-btn {
+    background: transparent;
+    border: none;
+    color: var(--secondary);
+    font-size: 20px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s, color .15s;
+}
+
+.close-sidebar-btn:hover {
+    background: var(--hover);
+    color: var(--text);
+}
+
 
 /* LOGO */
 
@@ -89,7 +116,6 @@ body {
     gap: 11px;
     font-size: 20px;
     font-weight: 800;
-    margin-bottom: 30px;
 }
 
 .logo-icon {
@@ -184,6 +210,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 
@@ -276,6 +303,7 @@ body {
     flex: 1;
     overflow-y: auto;
     padding: 40px 20px 145px;
+    scroll-behavior: smooth;
 }
 
 .messages {
@@ -516,6 +544,41 @@ body {
 }
 
 
+/* SCROLL TO BOTTOM BUTTON */
+
+.scroll-bottom-btn {
+    position: fixed;
+    bottom: 95px;
+    right: 25px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.2s ease, background 0.2s;
+    z-index: 900;
+}
+
+.scroll-bottom-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.scroll-bottom-btn:hover {
+    background: var(--hover);
+    transform: translateY(-2px);
+}
+
+
 /* INPUT */
 
 .input-area {
@@ -646,6 +709,11 @@ textarea::placeholder {
         font-size: 12px;
     }
 
+    .scroll-bottom-btn {
+        bottom: 95px;
+        right: 15px;
+    }
+
 }
 
 </style>
@@ -660,15 +728,27 @@ textarea::placeholder {
     class="sidebar"
     id="sidebar">
 
-    <div class="logo">
+    <div class="sidebar-header">
 
-        <div class="logo-icon">
-            12
+        <div class="logo">
+
+            <div class="logo-icon">
+                12
+            </div>
+
+            <span>
+                12n0name
+            </span>
+
         </div>
 
-        <span>
-            12n0name
-        </span>
+        <button
+            class="close-sidebar-btn"
+            type="button"
+            onclick="toggleSidebar()"
+            aria-label="Close sidebar">
+            ✕
+        </button>
 
     </div>
 
@@ -676,6 +756,484 @@ textarea::placeholder {
     <button
         class="new-chat"
         onclick="newChat()">
+
+        ＋ New chat
+
+    </button>
+
+</aside>
+
+
+<main class="main">
+
+
+    <header class="topbar">
+
+        <button
+            class="menu-button"
+            type="button"
+            onclick="toggleSidebar()">
+
+            ☰
+
+        </button>
+
+
+        <div class="model">
+
+            12n0name
+            <span>AI</span>
+
+        </div>
+
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            Online
+
+        </div>
+
+
+        <button
+            class="theme-button"
+            id="themeButton"
+            type="button"
+            onclick="toggleTheme()">
+
+            🌙
+
+        </button>
+
+    </header>
+
+
+    <section
+        class="chat"
+        id="chat">
+
+        <div
+            class="messages"
+            id="messages">
+
+            <div
+                class="welcome"
+                id="welcome">
+
+                <h1>
+                    What can I help with?
+                </h1>
+
+                <p>
+                    Ask anything. Build anything.
+                    Explore anything.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SCROLL TO BOTTOM BUTTON -->
+    <button 
+        id="scrollBottomBtn" 
+        class="scroll-bottom-btn" 
+        type="button" 
+        onclick="scrollBottom()" 
+        aria-label="Scroll to bottom">
+        ↓
+    </button>
+
+
+    <div class="input-area">
+
+        <div class="input-box">
+
+            <textarea
+                id="input"
+                rows="1"
+                placeholder="Ask 12n0name..."></textarea>
+
+
+            <button
+                class="send"
+                id="sendButton"
+                type="button"
+                onclick="sendMessage()">
+
+                ➤
+
+            </button>
+
+
+            <button
+                class="stop"
+                id="stopButton"
+                type="button"
+                onclick="stopGeneration()">
+
+                ■
+
+            </button>
+
+        </div>
+
+
+        <div class="footer">
+
+            12n0name AI can make mistakes.
+            Check important information.
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   API
+   ========================================================= */
+
+const API_URL =
+    "https://desktop-3fdvn7b.tail77d397.ts.net/v1/chat/completions";
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let conversation = [];
+
+let controller = null;
+
+let generating = false;
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const input =
+    document.getElementById("input");
+
+const messages =
+    document.getElementById("messages");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const stopButton =
+    document.getElementById("stopButton");
+
+const chat =
+    document.getElementById("chat");
+
+const scrollBottomBtn =
+    document.getElementById("scrollBottomBtn");
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+function toggleSidebar() {
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    sidebar.classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   THEME
+   ========================================================= */
+
+function toggleTheme() {
+
+    document.body.classList.toggle("light");
+
+    const isLight =
+        document.body.classList.contains("light");
+
+    const themeButton =
+        document.getElementById("themeButton");
+
+    if (isLight) {
+
+        themeButton.textContent = "☀️";
+
+        localStorage.setItem(
+            "theme",
+            "light"
+        );
+
+    } else {
+
+        themeButton.textContent = "🌙";
+
+        localStorage.setItem(
+            "theme",
+            "dark"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD THEME
+   ========================================================= */
+
+if (
+    localStorage.getItem("theme")
+    === "light"
+) {
+
+    document.body.classList.add("light");
+
+    document.getElementById(
+        "themeButton"
+    ).textContent = "☀️";
+
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+input.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   AUTO RESIZE
+   ========================================================= */
+
+input.addEventListener(
+    "input",
+    function() {
+
+        this.style.height = "auto";
+
+        this.style.height =
+            Math.min(
+                this.scrollHeight,
+                180
+            ) + "px";
+
+    }
+);
+
+
+/* =========================================================
+   SCROLL TO BOTTOM UTILITIES
+   ========================================================= */
+
+function scrollBottom() {
+
+    chat.scrollTo({
+        top: chat.scrollHeight,
+        behavior: "smooth"
+    });
+
+}
+
+chat.addEventListener("scroll", function() {
+
+    const distanceFromBottom =
+        chat.scrollHeight - chat.scrollTop - chat.clientHeight;
+
+    if (distanceFromBottom > 150) {
+        scrollBottomBtn.classList.add("visible");
+    } else {
+        scrollBottomBtn.classList.remove("visible");
+    }
+
+});
+
+
+/* =========================================================
+   NEW CHAT
+   ========================================================= */
+
+function newChat() {
+
+    conversation = [];
+
+    messages.innerHTML = `
+        <div class="welcome" id="welcome">
+            <h1>What can I help with?</h1>
+            <p>Ask anything. Build anything. Explore anything.</p>
+        </div>
+    `;
+
+    input.value = "";
+
+    input.style.height = "auto";
+
+    if (window.innerWidth <= 700) {
+
+        toggleSidebar();
+
+    }
+
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+   ========================================================= */
+
+async function sendMessage() {
+
+    if (generating)
+        return;
+
+
+    const text =
+        input.value.trim();
+
+    if (!text)
+        return;
+
+
+    const welcome =
+        document.getElementById("welcome");
+
+    if (welcome)
+        welcome.remove();
+
+
+    addMessage(
+        text,
+        "user"
+    );
+
+
+    conversation.push({
+        role: "user",
+        content: text
+    });
+
+
+    input.value = "";
+
+    input.style.height = "auto";
+
+
+    setGenerating(true);
+
+
+    const aiMessage =
+        createAIMessage();
+
+
+    controller =
+        new AbortController();
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        messages:
+                            conversation,
+
+                        temperature:
+                            0.7,
+
+                        max_tokens:
+                            16384,
+
+                        stream:
+                            false
+
+                    }),
+
+                    signal:
+                        controller.signal
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const choice =
+            data?.choices?.[0];
+
+        let reply =
+            choice?.message?.content ??
+            choice?.text ??
+            "";
+
+
+        if (Array.isArray(reply)) {
+
+            reply =
+                reply
+                .map(function(item) {
+
+                    if (
+                        typeof item ===
+                        "string"
+                    ) {
+
+                        return item;
+
+                    }
+
+                    return (
+                        item?.text ??
+                        ">
 
         ＋ New chat
 
