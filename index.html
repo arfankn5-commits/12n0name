@@ -10,6 +10,8 @@
 
 <style>
 
+/* ================= THEME ================= */
+
 :root {
     --bg: #0b0d10;
     --sidebar: #111318;
@@ -40,6 +42,9 @@ body.light {
     --code: #f0f1f4;
 }
 
+
+/* ================= RESET ================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -61,18 +66,23 @@ body {
 }
 
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 
 .sidebar {
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
+
     width: 270px;
+
     background: var(--sidebar);
     border-right: 1px solid var(--border);
+
     padding: 18px;
+
     z-index: 1000;
+
     display: none;
 }
 
@@ -80,64 +90,50 @@ body {
     display: block;
 }
 
-.sidebar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
-}
 
-.close-sidebar-btn {
-    background: transparent;
-    border: none;
-    color: var(--secondary);
-    font-size: 20px;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background .15s, color .15s;
-}
-
-.close-sidebar-btn:hover {
-    background: var(--hover);
-    color: var(--text);
-}
-
-
-/* LOGO */
+/* ================= LOGO ================= */
 
 .logo {
     display: flex;
     align-items: center;
     gap: 11px;
+
     font-size: 20px;
     font-weight: 800;
+
+    margin-bottom: 30px;
 }
 
 .logo-icon {
     width: 44px;
     height: 44px;
+
     position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     border-radius: 13px;
+
     background:
         linear-gradient(
             135deg,
             #071b24,
             #17102e
         );
+
     border: 1px solid rgba(0,229,255,.75);
+
     color: white;
+
     font-size: 17px;
     font-weight: 900;
+
     letter-spacing: -2px;
+
     overflow: hidden;
+
     box-shadow:
         0 0 10px rgba(0,229,255,.5),
         0 0 28px rgba(124,60,255,.25);
@@ -145,17 +141,24 @@ body {
 
 .logo-icon::before {
     content: "";
+
     position: absolute;
+
     inset: 4px;
+
     border-radius: 10px;
+
     border: 1px solid rgba(255,255,255,.16);
 }
 
 .logo-icon::after {
     content: "";
+
     position: absolute;
+
     width: 75px;
     height: 2px;
+
     background:
         linear-gradient(
             90deg,
@@ -164,8 +167,11 @@ body {
             #9b5cff,
             transparent
         );
+
     transform: rotate(-45deg);
-    animation: scan 2.5s linear infinite;
+
+    animation:
+        scan 2.5s linear infinite;
 }
 
 @keyframes scan {
@@ -185,16 +191,23 @@ body {
 }
 
 
-/* NEW CHAT */
+/* ================= NEW CHAT ================= */
 
 .new-chat {
     width: 100%;
+
     padding: 13px;
+
     border: 1px solid var(--border);
+
     border-radius: 11px;
+
     background: var(--surface);
+
     color: var(--text);
+
     font-size: 15px;
+
     cursor: pointer;
 }
 
@@ -203,40 +216,52 @@ body {
 }
 
 
-/* MAIN */
+/* ================= MAIN ================= */
 
 .main {
     width: 100%;
     height: 100vh;
+
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
 
-/* TOP BAR */
+/* ================= TOP BAR ================= */
 
 .topbar {
     height: 64px;
+
     display: flex;
     align-items: center;
+
     gap: 12px;
+
     padding: 0 18px;
-    border-bottom: 1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
 }
 
 
-/* MENU */
+/* ================= MENU ================= */
 
 .menu-button {
     width: 43px;
     height: 43px;
+
     border: none;
+
     border-radius: 10px;
+
     background: transparent;
+
     color: var(--text);
+
     font-size: 23px;
+
     cursor: pointer;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -247,7 +272,7 @@ body {
 }
 
 
-/* NAME */
+/* ================= NAME ================= */
 
 .model {
     font-size: 16px;
@@ -259,36 +284,48 @@ body {
 }
 
 
-/* STATUS */
+/* ================= STATUS ================= */
 
 .status {
     display: flex;
     align-items: center;
     gap: 6px;
+
     color: var(--secondary);
+
     font-size: 12px;
 }
 
 .status-dot {
     width: 7px;
     height: 7px;
+
     border-radius: 50%;
+
     background: #42d392;
+
     box-shadow: 0 0 8px #42d392;
 }
 
 
-/* THEME */
+/* ================= THEME ================= */
 
 .theme-button {
     width: 42px;
     height: 42px;
+
     margin-left: auto;
+
     border: none;
+
     border-radius: 10px;
+
     background: transparent;
+
     color: var(--text);
+
     font-size: 19px;
+
     cursor: pointer;
 }
 
@@ -297,13 +334,15 @@ body {
 }
 
 
-/* CHAT */
+/* ================= CHAT ================= */
 
 .chat {
     flex: 1;
+
     overflow-y: auto;
-    padding: 40px 20px 145px;
-    scroll-behavior: smooth;
+
+    padding:
+        40px 20px 145px;
 }
 
 .messages {
@@ -312,16 +351,19 @@ body {
 }
 
 
-/* WELCOME */
+/* ================= WELCOME ================= */
 
 .welcome {
     text-align: center;
+
     margin-top: 15vh;
 }
 
 .welcome h1 {
     font-size: 43px;
+
     margin-bottom: 13px;
+
     background:
         linear-gradient(
             90deg,
@@ -329,7 +371,9 @@ body {
             var(--cyan),
             var(--purple)
         );
+
     -webkit-background-clip: text;
+
     color: transparent;
 }
 
@@ -338,13 +382,17 @@ body {
 }
 
 
-/* MESSAGES */
+/* ================= MESSAGES ================= */
 
 .message {
     display: flex;
+
     gap: 13px;
+
     margin: 25px 0;
-    animation: appear .25s ease;
+
+    animation:
+        appear .25s ease;
 }
 
 @keyframes appear {
@@ -372,32 +420,44 @@ body {
 .msg-avatar {
     min-width: 35px;
     height: 35px;
+
     border-radius: 10px;
+
     background:
         linear-gradient(
             135deg,
             var(--cyan),
             var(--purple)
         );
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     color: white;
+
     font-size: 12px;
+
     font-weight: bold;
 }
 
 .bubble {
     max-width: 75%;
+
     padding: 12px 15px;
+
     border-radius: 14px;
+
     line-height: 1.6;
+
     color: var(--text);
+
     overflow-wrap: anywhere;
 }
 
 
-/* MARKDOWN */
+/* ================= MARKDOWN ================= */
 
 .bubble strong {
     font-weight: 700;
@@ -407,186 +467,138 @@ body {
     font-style: italic;
 }
 
-
-/* BOLD HEADINGS */
-
-.bubble .markdown-heading {
-    display: block;
-    font-weight: 700;
-    margin: 16px 0 8px;
-    line-height: 1.4;
-}
-
-.bubble .markdown-heading:first-child {
-    margin-top: 2px;
-}
-
-
-/* PARAGRAPHS */
-
-.bubble p {
-    margin: 6px 0;
-}
-
-
-/* LISTS */
-
-.bubble ul,
-.bubble ol {
-    margin-top: 8px;
-    margin-bottom: 10px;
-    padding-left: 25px;
-}
-
-.bubble ul {
-    list-style-type: disc;
-}
-
-.bubble ol {
-    list-style-type: decimal;
-}
-
-.bubble li {
-    margin: 5px 0;
-    padding-left: 3px;
-}
-
-.bubble ul ul {
-    list-style-type: circle;
-    margin-top: 4px;
-    margin-bottom: 4px;
-}
-
-.bubble ol ol {
-    margin-top: 4px;
-    margin-bottom: 4px;
-}
-
-
-/* INLINE CODE */
-
 .bubble code.inline-code {
     background: var(--code);
+
     border: 1px solid var(--border);
+
     border-radius: 5px;
+
     padding: 2px 5px;
+
     font-family:
         Consolas,
         "Courier New",
         monospace;
+
     font-size: 13px;
 }
 
 
-/* CODE BLOCK */
+/* ================= CODE BLOCK ================= */
 
 .code-block {
     margin: 14px 0;
+
     background: var(--code);
+
     border: 1px solid var(--border);
+
     border-radius: 11px;
+
     overflow: hidden;
+
     width: 100%;
 }
 
 .code-header {
     height: 38px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     padding: 0 10px 0 13px;
-    background: rgba(255,255,255,.035);
-    border-bottom: 1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.035);
+
+    border-bottom:
+        1px solid var(--border);
 }
 
 .code-language {
     color: var(--secondary);
+
     font-size: 11px;
+
     font-weight: bold;
+
     text-transform: uppercase;
+
     letter-spacing: .5px;
 }
 
 .copy-button {
     border: 1px solid var(--border);
+
     background: var(--surface);
+
     color: var(--secondary);
+
     border-radius: 7px;
+
     padding: 5px 10px;
+
     font-size: 11px;
+
     cursor: pointer;
+
     transition: .15s;
 }
 
 .copy-button:hover {
     background: var(--hover);
+
     color: var(--text);
 }
 
 .copy-button.copied {
     color: var(--cyan);
-    border-color: rgba(0,229,255,.4);
+
+    border-color:
+        rgba(0,229,255,.4);
 }
 
 .code-content {
     display: block;
+
     padding: 14px;
+
     overflow-x: auto;
+
     white-space: pre;
+
     font-family:
         Consolas,
         "Courier New",
         monospace;
+
     font-size: 13px;
+
     line-height: 1.55;
+
     color: var(--text);
+
     tab-size: 4;
 }
 
 
-/* SCROLL TO BOTTOM BUTTON */
-
-.scroll-bottom-btn {
-    position: fixed;
-    bottom: 95px;
-    right: 25px;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.2s ease, background 0.2s;
-    z-index: 900;
-}
-
-.scroll-bottom-btn.visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.scroll-bottom-btn:hover {
-    background: var(--hover);
-    transform: translateY(-2px);
-}
-
-
-/* INPUT */
+/* ================= INPUT ================= */
 
 .input-area {
     position: fixed;
+
     bottom: 0;
+
     left: 0;
     right: 0;
-    padding: 18px 20px 20px;
+
+    padding:
+        18px 20px 20px;
+
     background:
         linear-gradient(
             transparent,
@@ -596,25 +608,42 @@ body {
 
 .input-box {
     max-width: 850px;
+
     margin: auto;
+
     background: var(--surface);
-    border: 1px solid var(--border);
+
+    border:
+        1px solid var(--border);
+
     border-radius: 17px;
+
     display: flex;
+
     align-items: flex-end;
+
     padding: 9px;
 }
 
 textarea {
     flex: 1;
+
     resize: none;
+
     background: transparent;
+
     border: none;
+
     outline: none;
+
     color: var(--text);
+
     font-size: 15px;
+
     padding: 10px;
+
     font-family: inherit;
+
     max-height: 180px;
 }
 
@@ -623,22 +652,29 @@ textarea::placeholder {
 }
 
 
-/* SEND */
+/* ================= SEND ================= */
 
 .send {
     width: 43px;
     height: 43px;
+
     border: none;
+
     border-radius: 12px;
+
     background:
         linear-gradient(
             135deg,
             var(--cyan),
             var(--purple)
         );
+
     color: white;
+
     cursor: pointer;
+
     font-size: 18px;
+
     transition: .2s;
 }
 
@@ -653,39 +689,49 @@ textarea::placeholder {
 }
 
 
-/* STOP */
+/* ================= STOP ================= */
 
 .stop {
     display: none;
+
     width: 43px;
     height: 43px;
+
     border: none;
+
     border-radius: 12px;
+
     background: #333842;
+
     color: white;
+
     cursor: pointer;
+
     font-size: 16px;
 }
 
 
-/* ERROR */
+/* ================= ERROR ================= */
 
 .error {
     color: #ff6b6b;
 }
 
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 
 .footer {
     text-align: center;
+
     color: var(--muted);
+
     font-size: 11px;
+
     margin-top: 8px;
 }
 
 
-/* MOBILE */
+/* ================= MOBILE ================= */
 
 @media (max-width: 700px) {
 
@@ -709,11 +755,6 @@ textarea::placeholder {
         font-size: 12px;
     }
 
-    .scroll-bottom-btn {
-        bottom: 95px;
-        right: 15px;
-    }
-
 }
 
 </style>
@@ -724,31 +765,21 @@ textarea::placeholder {
 <body>
 
 
+<!-- ================= SIDEBAR ================= -->
+
 <aside
     class="sidebar"
     id="sidebar">
 
-    <div class="sidebar-header">
+    <div class="logo">
 
-        <div class="logo">
-
-            <div class="logo-icon">
-                12
-            </div>
-
-            <span>
-                12n0name
-            </span>
-
+        <div class="logo-icon">
+            12
         </div>
 
-        <button
-            class="close-sidebar-btn"
-            type="button"
-            onclick="toggleSidebar()"
-            aria-label="Close sidebar">
-            ✕
-        </button>
+        <span>
+            12n0name
+        </span>
 
     </div>
 
@@ -764,8 +795,12 @@ textarea::placeholder {
 </aside>
 
 
+<!-- ================= MAIN ================= -->
+
 <main class="main">
 
+
+    <!-- ================= TOP BAR ================= -->
 
     <header class="topbar">
 
@@ -809,6 +844,8 @@ textarea::placeholder {
     </header>
 
 
+    <!-- ================= CHAT ================= -->
+
     <section
         class="chat"
         id="chat">
@@ -837,16 +874,7 @@ textarea::placeholder {
     </section>
 
 
-    <!-- SCROLL TO BOTTOM BUTTON -->
-    <button 
-        id="scrollBottomBtn" 
-        class="scroll-bottom-btn" 
-        type="button" 
-        onclick="scrollBottom()" 
-        aria-label="Scroll to bottom">
-        ↓
-    </button>
-
+    <!-- ================= MESSAGE BOX ================= -->
 
     <div class="input-area">
 
@@ -930,12 +958,6 @@ const sendButton =
 
 const stopButton =
     document.getElementById("stopButton");
-
-const chat =
-    document.getElementById("chat");
-
-const scrollBottomBtn =
-    document.getElementById("scrollBottomBtn");
 
 
 /* =========================================================
@@ -1051,61 +1073,6 @@ input.addEventListener(
 
 
 /* =========================================================
-   SCROLL TO BOTTOM UTILITIES
-   ========================================================= */
-
-function scrollBottom() {
-
-    chat.scrollTo({
-        top: chat.scrollHeight,
-        behavior: "smooth"
-    });
-
-}
-
-chat.addEventListener("scroll", function() {
-
-    const distanceFromBottom =
-        chat.scrollHeight - chat.scrollTop - chat.clientHeight;
-
-    if (distanceFromBottom > 150) {
-        scrollBottomBtn.classList.add("visible");
-    } else {
-        scrollBottomBtn.classList.remove("visible");
-    }
-
-});
-
-
-/* =========================================================
-   NEW CHAT
-   ========================================================= */
-
-function newChat() {
-
-    conversation = [];
-
-    messages.innerHTML = `
-        <div class="welcome" id="welcome">
-            <h1>What can I help with?</h1>
-            <p>Ask anything. Build anything. Explore anything.</p>
-        </div>
-    `;
-
-    input.value = "";
-
-    input.style.height = "auto";
-
-    if (window.innerWidth <= 700) {
-
-        toggleSidebar();
-
-    }
-
-}
-
-
-/* =========================================================
    SEND MESSAGE
    ========================================================= */
 
@@ -1179,7 +1146,7 @@ async function sendMessage() {
                             0.7,
 
                         max_tokens:
-                            16384,
+                            1024,
 
                         stream:
                             false
@@ -1207,6 +1174,10 @@ async function sendMessage() {
             await response.json();
 
 
+        /*
+           Handle llama.cpp response formats.
+        */
+
         const choice =
             data?.choices?.[0];
 
@@ -1215,6 +1186,10 @@ async function sendMessage() {
             choice?.text ??
             "";
 
+
+        /*
+           Some responses use an array.
+        */
 
         if (Array.isArray(reply)) {
 
@@ -1233,4 +1208,711 @@ async function sendMessage() {
 
                     return (
                         item?.text ??
-                        
+                        ""
+                    );
+
+                })
+                .join("");
+
+        }
+
+
+        /*
+           Final conversion.
+        */
+
+        if (
+            typeof reply !==
+            "string"
+        ) {
+
+            reply =
+                JSON.stringify(reply);
+
+        }
+
+
+        if (!reply.trim()) {
+
+            throw new Error(
+                "Empty AI response"
+            );
+
+        }
+
+
+        aiMessage.querySelector(
+            ".bubble"
+        ).innerHTML =
+            formatResponse(reply);
+
+
+        conversation.push({
+            role: "assistant",
+            content: reply
+        });
+
+
+        scrollBottom();
+
+    }
+
+    catch (error) {
+
+        if (
+            error.name ===
+            "AbortError"
+        ) {
+
+            aiMessage.remove();
+
+            return;
+
+        }
+
+
+        console.error(
+            "AI Error:",
+            error
+        );
+
+
+        aiMessage.querySelector(
+            ".bubble"
+        ).innerHTML =
+
+            '<span class="error">' +
+            '⚠️ Server is down.<br><br>' +
+            'Please make sure llama.cpp and ' +
+            'Tailscale Funnel are running.' +
+            '</span>';
+
+    }
+
+    finally {
+
+        controller = null;
+
+        setGenerating(false);
+
+    }
+
+}
+
+
+/* =========================================================
+   GENERATING STATE
+   ========================================================= */
+
+function setGenerating(state) {
+
+    generating = state;
+
+    sendButton.style.display =
+        state ? "none" : "block";
+
+    stopButton.style.display =
+        state ? "block" : "none";
+
+    input.disabled = state;
+
+}
+
+
+/* =========================================================
+   STOP GENERATION
+   ========================================================= */
+
+function stopGeneration() {
+
+    if (controller) {
+
+        controller.abort();
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE AI MESSAGE
+   ========================================================= */
+
+function createAIMessage() {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message ai";
+
+
+    message.innerHTML = `
+
+        <div class="msg-avatar">
+            12
+        </div>
+
+        <div class="bubble">
+            Thinking...
+        </div>
+
+    `;
+
+
+    messages.appendChild(message);
+
+    scrollBottom();
+
+
+    return message;
+
+}
+
+
+/* =========================================================
+   ADD MESSAGE
+   ========================================================= */
+
+function addMessage(
+    text,
+    type
+) {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+
+    if (type === "ai") {
+
+        message.innerHTML = `
+
+            <div class="msg-avatar">
+                12
+            </div>
+
+            <div class="bubble">
+                ${formatResponse(text)}
+            </div>
+
+        `;
+
+    } else {
+
+        message.innerHTML = `
+
+            <div class="bubble">
+                ${escapeHTML(text)}
+            </div>
+
+        `;
+
+    }
+
+
+    messages.appendChild(message);
+
+    scrollBottom();
+
+}
+
+
+/* =========================================================
+   FORMAT AI RESPONSE
+   ========================================================= */
+
+function formatResponse(text) {
+
+    if (!text)
+        return "";
+
+
+    /*
+       Escape normal HTML first.
+    */
+
+    let safe =
+        escapeHTML(text);
+
+
+    /*
+       Find fenced code blocks.
+    */
+
+    const codeBlocks = [];
+
+
+    safe =
+        safe.replace(
+            /```([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n?([\s\S]*?)```/g,
+
+            function(
+                match,
+                language,
+                code
+            ) {
+
+                const id =
+                    codeBlocks.length;
+
+
+                /*
+                   IMPORTANT:
+                   Decode HTML entities ONLY
+                   inside code blocks.
+
+                   This converts:
+
+                   &lt;html&gt;
+
+                   back to:
+
+                   <html>
+                */
+
+                const decodedCode =
+                    decodeHTMLEntities(
+                        code
+                    );
+
+
+                codeBlocks.push({
+
+                    language:
+                        language || "code",
+
+                    code:
+                        decodedCode
+                        .replace(
+                            /^\r?\n/,
+                            ""
+                        )
+                        .replace(
+                            /\r?\n$/,
+                            ""
+                        )
+
+                });
+
+
+                return (
+                    "___CODE_BLOCK_" +
+                    id +
+                    "___"
+                );
+
+            }
+        );
+
+
+    /*
+       Bold.
+    */
+
+    safe =
+        safe.replace(
+            /\*\*(.*?)\*\*/g,
+            "<strong>$1</strong>"
+        );
+
+
+    /*
+       Italic.
+    */
+
+    safe =
+        safe.replace(
+            /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
+            "<em>$1</em>"
+        );
+
+
+    /*
+       Inline code.
+    */
+
+    safe =
+        safe.replace(
+            /`([^`\n]+)`/g,
+            '<code class="inline-code">$1</code>'
+        );
+
+
+    /*
+       Line breaks.
+    */
+
+    safe =
+        safe.replace(
+            /\r?\n/g,
+            "<br>"
+        );
+
+
+    /*
+       Restore code blocks.
+    */
+
+    codeBlocks.forEach(
+        function(block, index) {
+
+            const placeholder =
+                "___CODE_BLOCK_" +
+                index +
+                "___";
+
+
+            /*
+               Escape the decoded code again
+               before inserting it into HTML.
+
+               This makes the code DISPLAY
+               instead of EXECUTE.
+            */
+
+            const safeCode =
+                escapeHTML(
+                    block.code
+                );
+
+
+            const html =
+
+                '<div class="code-block">' +
+
+                    '<div class="code-header">' +
+
+                        '<span class="code-language">' +
+                            escapeHTML(
+                                block.language
+                            ) +
+                        '</span>' +
+
+                        '<button ' +
+                            'class="copy-button" ' +
+                            'type="button" ' +
+                            'onclick="copyCode(this)">' +
+                            'Copy' +
+                        '</button>' +
+
+                    '</div>' +
+
+                    '<code class="code-content">' +
+                        safeCode +
+                    '</code>' +
+
+                '</div>';
+
+
+            safe =
+                safe.replace(
+                    placeholder,
+                    html
+                );
+
+        }
+    );
+
+
+    return safe;
+
+}
+
+
+/* =========================================================
+   DECODE HTML ENTITIES
+   ========================================================= */
+
+function decodeHTMLEntities(text) {
+
+    const textarea =
+        document.createElement(
+            "textarea"
+        );
+
+
+    textarea.innerHTML =
+        text;
+
+
+    return textarea.value;
+
+}
+
+
+/* =========================================================
+   COPY CODE
+   ========================================================= */
+
+async function copyCode(button) {
+
+    const codeBlock =
+        button.closest(
+            ".code-block"
+        );
+
+
+    if (!codeBlock)
+        return;
+
+
+    const code =
+        codeBlock.querySelector(
+            ".code-content"
+        );
+
+
+    if (!code)
+        return;
+
+
+    const text =
+        code.textContent;
+
+
+    try {
+
+        await navigator.clipboard.writeText(
+            text
+        );
+
+
+        button.textContent =
+            "Copied!";
+
+
+        button.classList.add(
+            "copied"
+        );
+
+
+        setTimeout(
+            function() {
+
+                button.textContent =
+                    "Copy";
+
+                button.classList.remove(
+                    "copied"
+                );
+
+            },
+            1200
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Clipboard error:",
+            error
+        );
+
+
+        /*
+           Fallback copy method.
+        */
+
+        const textarea =
+            document.createElement(
+                "textarea"
+            );
+
+
+        textarea.value =
+            text;
+
+
+        textarea.style.position =
+            "fixed";
+
+        textarea.style.left =
+            "-9999px";
+
+
+        document.body.appendChild(
+            textarea
+        );
+
+
+        textarea.select();
+
+
+        try {
+
+            document.execCommand(
+                "copy"
+            );
+
+
+            button.textContent =
+                "Copied!";
+
+
+            button.classList.add(
+                "copied"
+            );
+
+
+            setTimeout(
+                function() {
+
+                    button.textContent =
+                        "Copy";
+
+                    button.classList.remove(
+                        "copied"
+                    );
+
+                },
+                1200
+            );
+
+        }
+
+        catch (fallbackError) {
+
+            button.textContent =
+                "Failed";
+
+        }
+
+
+        textarea.remove();
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        String(text);
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   SCROLL
+   ========================================================= */
+
+function scrollBottom() {
+
+    const chat =
+        document.getElementById(
+            "chat"
+        );
+
+
+    chat.scrollTo({
+
+        top:
+            chat.scrollHeight,
+
+        behavior:
+            "smooth"
+
+    });
+
+}
+
+
+/* =========================================================
+   NEW CHAT
+   ========================================================= */
+
+function newChat() {
+
+    conversation = [];
+
+
+    messages.innerHTML = `
+
+        <div
+            class="welcome"
+            id="welcome">
+
+            <h1>
+                What can I help with?
+            </h1>
+
+            <p>
+                Ask anything. Build anything.
+                Explore anything.
+            </p>
+
+        </div>
+
+    `;
+
+
+    input.value = "";
+
+    input.style.height =
+        "auto";
+
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+}
+
+
+/* =========================================================
+   CLOSE SIDEBAR ON OUTSIDE CLICK
+   ========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const sidebar =
+            document.getElementById(
+                "sidebar"
+            );
+
+
+        const menu =
+            document.querySelector(
+                ".menu-button"
+            );
+
+
+        if (
+            sidebar.classList.contains("open") &&
+            !sidebar.contains(event.target) &&
+            !menu.contains(event.target)
+        ) {
+
+            sidebar.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
