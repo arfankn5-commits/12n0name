@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -24,6 +25,8 @@
     --user: #252a33;
     --cyan: #00e5ff;
     --purple: #7c4dff;
+    --code-bg: #0d1117;
+    --code-header: #161b22;
 }
 
 body.light {
@@ -38,6 +41,8 @@ body.light {
     --user: #e9ebef;
     --cyan: #009fc0;
     --purple: #6941d9;
+    --code-bg: #f1f3f5;
+    --code-header: #e3e6ea;
 }
 
 
@@ -68,21 +73,14 @@ body {
 
 .sidebar {
     position: fixed;
-
     left: 0;
     top: 0;
     bottom: 0;
-
     width: 270px;
-
     background: var(--sidebar);
-
     border-right: 1px solid var(--border);
-
     padding: 18px;
-
     z-index: 1000;
-
     display: none;
 }
 
@@ -124,7 +122,6 @@ body {
     display: flex;
     align-items: center;
     gap: 11px;
-
     font-size: 20px;
     font-weight: 800;
 }
@@ -132,13 +129,10 @@ body {
 .logo-icon {
     width: 44px;
     height: 44px;
-
     position: relative;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 13px;
 
     background:
@@ -151,12 +145,9 @@ body {
     border: 1px solid rgba(0,229,255,.75);
 
     color: white;
-
     font-size: 17px;
     font-weight: 900;
-
     letter-spacing: -2px;
-
     overflow: hidden;
 
     box-shadow:
@@ -166,21 +157,15 @@ body {
 
 .logo-icon::before {
     content: "";
-
     position: absolute;
-
     inset: 4px;
-
     border-radius: 10px;
-
     border: 1px solid rgba(255,255,255,.16);
 }
 
 .logo-icon::after {
     content: "";
-
     position: absolute;
-
     width: 75px;
     height: 2px;
 
@@ -194,9 +179,7 @@ body {
         );
 
     transform: rotate(-45deg);
-
-    animation:
-        scan 2.5s linear infinite;
+    animation: scan 2.5s linear infinite;
 }
 
 @keyframes scan {
@@ -220,19 +203,12 @@ body {
 
 .new-chat {
     width: 100%;
-
     padding: 13px;
-
     border: 1px solid var(--border);
-
     border-radius: 11px;
-
     background: var(--surface);
-
     color: var(--text);
-
     font-size: 15px;
-
     cursor: pointer;
 }
 
@@ -246,7 +222,6 @@ body {
 .main {
     width: 100%;
     height: 100vh;
-
     display: flex;
     flex-direction: column;
 }
@@ -256,16 +231,11 @@ body {
 
 .topbar {
     height: 64px;
-
     display: flex;
     align-items: center;
-
     gap: 12px;
-
     padding: 0 18px;
-
-    border-bottom:
-        1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
 
@@ -274,19 +244,12 @@ body {
 .menu-button {
     width: 43px;
     height: 43px;
-
     border: none;
-
     border-radius: 10px;
-
     background: transparent;
-
     color: var(--text);
-
     font-size: 23px;
-
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -314,19 +277,12 @@ body {
 .theme-button {
     width: 42px;
     height: 42px;
-
     margin-left: auto;
-
     border: none;
-
     border-radius: 10px;
-
     background: transparent;
-
     color: var(--text);
-
     font-size: 19px;
-
     cursor: pointer;
 }
 
@@ -339,11 +295,8 @@ body {
 
 .chat {
     flex: 1;
-
     overflow-y: auto;
-
-    padding:
-        40px 20px 145px;
+    padding: 40px 20px 145px;
 }
 
 .messages {
@@ -356,13 +309,11 @@ body {
 
 .welcome {
     text-align: center;
-
     margin-top: 15vh;
 }
 
 .welcome h1 {
     font-size: 43px;
-
     margin-bottom: 13px;
 
     background:
@@ -374,7 +325,6 @@ body {
         );
 
     -webkit-background-clip: text;
-
     color: transparent;
 }
 
@@ -387,13 +337,9 @@ body {
 
 .message {
     display: flex;
-
     gap: 13px;
-
     margin: 25px 0;
-
-    animation:
-        appear .25s ease;
+    animation: appear .25s ease;
 }
 
 @keyframes appear {
@@ -421,7 +367,6 @@ body {
 .msg-avatar {
     min-width: 35px;
     height: 35px;
-
     border-radius: 10px;
 
     background:
@@ -432,29 +377,167 @@ body {
         );
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     color: white;
-
     font-size: 12px;
-
     font-weight: bold;
 }
 
 .bubble {
-    max-width: 75%;
-
+    max-width: 85%;
     padding: 12px 15px;
-
     border-radius: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    overflow-wrap: anywhere;
+}
 
+
+/* ================= MARKDOWN ================= */
+
+.ai-content {
+    width: 100%;
+}
+
+.ai-content p {
+    margin: 0 0 12px;
+}
+
+.ai-content p:last-child {
+    margin-bottom: 0;
+}
+
+.ai-content strong {
+    font-weight: 700;
+}
+
+.ai-content em {
+    font-style: italic;
+}
+
+.ai-content del {
+    text-decoration: line-through;
+}
+
+.ai-content h1,
+.ai-content h2,
+.ai-content h3 {
+    margin: 16px 0 10px;
+    line-height: 1.3;
+}
+
+.ai-content h1 {
+    font-size: 25px;
+}
+
+.ai-content h2 {
+    font-size: 21px;
+}
+
+.ai-content h3 {
+    font-size: 18px;
+}
+
+.ai-content ul,
+.ai-content ol {
+    margin: 10px 0 14px;
+    padding-left: 25px;
+}
+
+.ai-content li {
+    margin: 5px 0;
+}
+
+.ai-content blockquote {
+    border-left: 3px solid var(--cyan);
+    padding-left: 12px;
+    margin: 12px 0;
+    color: var(--secondary);
+}
+
+.ai-content a {
+    color: var(--cyan);
+    text-decoration: underline;
+}
+
+.inline-code {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: .9em;
+}
+
+
+/* ================= CODE BOX ================= */
+
+.code-wrapper {
+    margin: 15px 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--code-bg);
+}
+
+.code-header {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 10px;
+
+    background: var(--code-header);
+    border-bottom: 1px solid var(--border);
+}
+
+.code-language {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--secondary);
+    text-transform: lowercase;
+}
+
+.copy-code {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 9px;
+
+    background: transparent;
+    color: var(--secondary);
+
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.copy-code:hover {
+    background: var(--hover);
+    color: var(--text);
+}
+
+.code-wrapper pre {
+    margin: 0;
+    padding: 15px;
+
+    overflow-x: auto;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size: 13px;
     line-height: 1.6;
 
-    color: var(--text);
+    white-space: pre;
+}
 
-    overflow-wrap: anywhere;
+.code-wrapper code {
+    font-family: inherit;
 }
 
 
@@ -507,9 +590,7 @@ body {
 
 .input-area {
     position: fixed;
-
     bottom: 0;
-
     left: 0;
     right: 0;
 
@@ -525,7 +606,6 @@ body {
 
 .input-box {
     max-width: 850px;
-
     margin: auto;
 
     background: var(--surface);
@@ -536,7 +616,6 @@ body {
     border-radius: 24px;
 
     display: flex;
-
     align-items: center;
 
     padding: 6px 6px 6px 12px;
@@ -544,23 +623,14 @@ body {
 
 textarea {
     flex: 1;
-
     resize: none;
-
     background: transparent;
-
     border: none;
-
     outline: none;
-
     color: var(--text);
-
     font-size: 15px;
-
     padding: 6px 8px;
-
     font-family: inherit;
-
     height: 24px;
     max-height: 150px;
 }
@@ -578,7 +648,6 @@ textarea::placeholder {
     min-width: 34px;
 
     border: none;
-
     border-radius: 50%;
 
     background:
@@ -589,9 +658,7 @@ textarea::placeholder {
         );
 
     color: white;
-
     cursor: pointer;
-
     font-size: 14px;
 
     display: flex;
@@ -614,15 +681,12 @@ textarea::placeholder {
     min-width: 34px;
 
     border: none;
-
     border-radius: 50%;
 
     background: #ef4444;
 
     color: white;
-
     cursor: pointer;
-
     font-size: 14px;
 
     display: none;
@@ -635,11 +699,8 @@ textarea::placeholder {
 
 .footer {
     text-align: center;
-
     color: var(--muted);
-
     font-size: 11px;
-
     margin-top: 8px;
 }
 
@@ -657,7 +718,11 @@ textarea::placeholder {
     }
 
     .bubble {
-        max-width: 85%;
+        max-width: 90%;
+    }
+
+    .code-wrapper pre {
+        font-size: 12px;
     }
 
 }
@@ -666,171 +731,168 @@ textarea::placeholder {
 
 </head>
 
-
 <body>
-
 
 <!-- ================= SIDEBAR ================= -->
 
-<aside
-    class="sidebar"
-    id="sidebar">
+<aside class="sidebar" id="sidebar">
 
-    <div class="sidebar-header">
+```
+<div class="sidebar-header">
 
-        <div class="logo">
+    <div class="logo">
 
-            <div class="logo-icon">
-                12
-            </div>
-
-            <span>
-                12n0name
-            </span>
-
+        <div class="logo-icon">
+            12
         </div>
 
-        <button
-            class="close-sidebar"
-            type="button"
-            title="Close sidebar"
-            onclick="toggleSidebar()">
-
-            ✕
-
-        </button>
+        <span>
+            12n0name
+        </span>
 
     </div>
 
-
     <button
-        class="new-chat"
-        onclick="newChat()">
+        class="close-sidebar"
+        type="button"
+        title="Close sidebar"
+        onclick="toggleSidebar()">
 
-        ＋ New chat
+        ✕
 
     </button>
 
-</aside>
+</div>
 
+
+<button
+    class="new-chat"
+    onclick="newChat()">
+
+    ＋ New chat
+
+</button>
+```
+
+</aside>
 
 <!-- ================= MAIN ================= -->
 
 <main class="main">
 
+```
+<!-- TOP BAR -->
 
-    <!-- TOP BAR -->
+<header class="topbar">
 
-    <header class="topbar">
+    <button
+        class="menu-button"
+        type="button"
+        onclick="toggleSidebar()">
 
-        <button
-            class="menu-button"
-            type="button"
-            onclick="toggleSidebar()">
+        ☰
 
-            ☰
-
-        </button>
-
-
-        <div class="model">
-
-            12n0name
-            <span>AI</span>
-
-        </div>
+    </button>
 
 
-        <button
-            class="theme-button"
-            id="themeButton"
-            type="button"
-            onclick="toggleTheme()">
+    <div class="model">
 
-            🌙
+        12n0name
+        <span>AI</span>
 
-        </button>
-
-    </header>
+    </div>
 
 
-    <!-- ================= CHAT ================= -->
+    <button
+        class="theme-button"
+        id="themeButton"
+        type="button"
+        onclick="toggleTheme()">
 
-    <section
-        class="chat"
-        id="chat">
+        🌙
+
+    </button>
+
+</header>
+
+
+<!-- ================= CHAT ================= -->
+
+<section
+    class="chat"
+    id="chat">
+
+    <div
+        class="messages"
+        id="messages">
 
         <div
-            class="messages"
-            id="messages">
+            class="welcome"
+            id="welcome">
 
-            <div
-                class="welcome"
-                id="welcome">
+            <h1>
+                What can I help with?
+            </h1>
 
-                <h1>
-                    What can I help with?
-                </h1>
-
-                <p>
-                    Ask anything. Build anything.
-                    Explore anything.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= MESSAGE BOX ================= -->
-
-    <div class="input-area">
-
-        <div class="input-box">
-
-            <textarea
-                id="input"
-                rows="1"
-                placeholder="Ask 12n0name..."></textarea>
-
-
-            <button
-                class="send"
-                id="sendButton"
-                type="button"
-                onclick="sendMessage()">
-
-                ➤
-
-            </button>
-
-
-            <button
-                class="stop"
-                id="stopButton"
-                type="button"
-                onclick="stopGenerating()">
-
-                ■
-
-            </button>
-
-        </div>
-
-
-        <div class="footer">
-
-            12n0name AI can make mistakes.
-            Check important information.
+            <p>
+                Ask anything. Build anything.
+                Explore anything.
+            </p>
 
         </div>
 
     </div>
 
-</main>
+</section>
 
+
+<!-- ================= MESSAGE BOX ================= -->
+
+<div class="input-area">
+
+    <div class="input-box">
+
+        <textarea
+            id="input"
+            rows="1"
+            placeholder="Ask 12n0name..."></textarea>
+
+
+        <button
+            class="send"
+            id="sendButton"
+            type="button"
+            onclick="sendMessage()">
+
+            ➤
+
+        </button>
+
+
+        <button
+            class="stop"
+            id="stopButton"
+            type="button"
+            onclick="stopGenerating()">
+
+            ■
+
+        </button>
+
+    </div>
+
+
+    <div class="footer">
+
+        12n0name AI can make mistakes.
+        Check important information.
+
+    </div>
+
+</div>
+```
+
+</main>
 
 <script>
 
@@ -841,16 +903,14 @@ textarea::placeholder {
 const API_URL =
     "https://desktop-3fdvn7b.tail77d397.ts.net/v1/chat/completions";
 
+
 /* =========================================
    VARIABLES
    ========================================= */
 
 let conversation = [];
-
 let controller = null;
-
 let generating = false;
-
 
 const input =
     document.getElementById("input");
@@ -939,13 +999,11 @@ function setGenerating(state) {
     if (state) {
 
         sendButton.style.display = "none";
-
         stopButton.style.display = "flex";
 
     } else {
 
         sendButton.style.display = "flex";
-
         stopButton.style.display = "none";
 
     }
@@ -962,7 +1020,6 @@ function newChat() {
     if (controller) {
 
         controller.abort();
-
         controller = null;
 
     }
@@ -993,7 +1050,6 @@ function newChat() {
 
 
     input.value = "";
-
     input.focus();
 
 }
@@ -1094,6 +1150,7 @@ async function sendMessage() {
     const welcome =
         document.getElementById("welcome");
 
+
     if (welcome)
         welcome.remove();
 
@@ -1104,7 +1161,6 @@ async function sendMessage() {
     conversation.push({
 
         role: "user",
-
         content: text
 
     });
@@ -1203,7 +1259,6 @@ async function sendMessage() {
         conversation.push({
 
             role: "assistant",
-
             content: answer
 
         });
@@ -1285,74 +1340,413 @@ function stopGenerating() {
 
 function formatResponse(text) {
 
-    return escapeHtml(text)
-        .replace(/\n/g, "<br>");
+    /*
+       First protect HTML characters.
+       This prevents AI output from injecting
+       HTML into the page.
+    */
+
+    let safe =
+        escapeHtml(text);
+
+
+    /*
+       CODE BLOCKS
+
+       Supports:
+
+       ```python
+       print("Hello")
+       ```
+
+       ```javascript
+       console.log("Hello")
+       ```
+
+       ```html
+       <h1>Hello</h1>
+       ```
+    */
+
+    safe =
+        safe.replace(
+            /```([a-zA-Z0-9_+#.-]*)\n?([\s\S]*?)```/g,
+            function(match, language, code) {
+
+                const lang =
+                    language || "code";
+
+                const codeId =
+                    "code_" +
+                    Math.random()
+                        .toString(36)
+                        .substring(2, 10);
+
+                return `
+
+                    <div
+                        class="code-wrapper">
+
+                        <div class="code-header">
+
+                            <span
+                                class="code-language">
+
+                                ${lang}
+
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-code-id="${codeId}"
+                                onclick="copyCode('${codeId}')">
+
+                                Copy
+
+                            </button>
+
+                        </div>
+
+                        <pre><code
+                            id="${codeId}">${code.trim()}</code></pre>
+
+```
+                </div>
+
+            `;
+
+        }
+    );
+
+
+/*
+   INLINE CODE
+
+   Example:
+   Use `print()` in Python.
+*/
+
+safe =
+    safe.replace(
+        /`([^`\n]+)`/g,
+        '<span class="inline-code">$1</span>'
+    );
+
+
+/*
+   HEADINGS
+*/
+
+safe =
+    safe.replace(
+        /^### (.*)$/gm,
+        "<h3>$1</h3>"
+    );
+
+safe =
+    safe.replace(
+        /^## (.*)$/gm,
+        "<h2>$1</h2>"
+    );
+
+safe =
+    safe.replace(
+        /^# (.*)$/gm,
+        "<h1>$1</h1>"
+    );
+
+
+/*
+   BOLD
+*/
+
+safe =
+    safe.replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+    );
+
+
+/*
+   ITALIC
+*/
+
+safe =
+    safe.replace(
+        /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
+        "<em>$1</em>"
+    );
+
+
+/*
+   STRIKETHROUGH
+*/
+
+safe =
+    safe.replace(
+        /~~(.*?)~~/g,
+        "<del>$1</del>"
+    );
+
+
+/*
+   BLOCKQUOTE
+*/
+
+safe =
+    safe.replace(
+        /^&gt; (.*)$/gm,
+        "<blockquote>$1</blockquote>"
+    );
+
+
+/*
+   UNORDERED LIST
+*/
+
+safe =
+    safe.replace(
+        /(?:^|\n)((?:[-*] .*(?:\n|$))+)/g,
+        function(match, list) {
+
+            const items =
+                list
+                    .trim()
+                    .split("\n")
+                    .map(
+                        line =>
+                            line
+                                .replace(
+                                    /^[-*] /,
+                                    ""
+                                )
+                    )
+                    .map(
+                        item =>
+                            `<li>${item}</li>`
+                    )
+                    .join("");
+
+            return `<ul>${items}</ul>`;
+
+        }
+    );
+
+
+/*
+   ORDERED LIST
+*/
+
+safe =
+    safe.replace(
+        /(?:^|\n)((?:\d+\. .*(?:\n|$))+)/g,
+        function(match, list) {
+
+            const items =
+                list
+                    .trim()
+                    .split("\n")
+                    .map(
+                        line =>
+                            line
+                                .replace(
+                                    /^\d+\. /,
+                                    ""
+                                )
+                    )
+                    .map(
+                        item =>
+                            `<li>${item}</li>`
+                    )
+                    .join("");
+
+            return `<ol>${items}</ol>`;
+
+        }
+    );
+
+
+/*
+   LINKS
+
+   [Google](https://google.com)
+*/
+
+safe =
+    safe.replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+
+
+/*
+   NORMAL LINE BREAKS
+
+   Do this last so HTML elements
+   aren't broken.
+*/
+
+safe =
+    safe.replace(
+        /\n/g,
+        "<br>"
+    );
+
+
+/*
+   Remove <br> immediately around
+   major HTML elements.
+*/
+
+safe =
+    safe.replace(
+        /<br>(<(?:h1|h2|h3|ul|ol|blockquote|div class="code-wrapper">)/g,
+        "$1"
+    );
+
+safe =
+    safe.replace(
+        /(<\/(?:h1|h2|h3|ul|ol|blockquote|div)>)<br>/g,
+        "$1"
+    );
+
+
+return `
+    <div class="ai-content">
+        ${safe}
+    </div>
+`;
+```
 
 }
 
-
 /* =========================================
-   ESCAPE HTML
-   ========================================= */
+ESCAPE HTML
+========================================= */
 
 function escapeHtml(text) {
 
-    const div =
-        document.createElement("div");
+```
+const div =
+    document.createElement("div");
 
-    div.textContent =
-        text;
+div.textContent =
+    text;
 
-    return div.innerHTML;
+return div.innerHTML;
+```
 
 }
 
+/* =========================================
+COPY CODE
+========================================= */
+
+async function copyCode(id) {
+
+```
+const code =
+    document.getElementById(id);
+
+
+if (!code)
+    return;
+
+
+try {
+
+    await navigator.clipboard.writeText(
+        code.textContent
+    );
+
+
+    const button =
+        document.querySelector(
+            `[data-code-id="${id}"]`
+        );
+
+
+    if (button) {
+
+        button.textContent =
+            "Copied!";
+
+
+        setTimeout(
+            () => {
+
+                button.textContent =
+                    "Copy";
+
+            },
+            1500
+        );
+
+    }
+
+}
+
+catch (error) {
+
+    console.error(
+        "Copy failed:",
+        error
+    );
+
+}
+```
+
+}
 
 /* =========================================
-   SCROLL
-   ========================================= */
+SCROLL
+========================================= */
 
 function scrollToBottom() {
 
-    chat.scrollTo({
+```
+chat.scrollTo({
 
-        top:
-            chat.scrollHeight,
+    top:
+        chat.scrollHeight,
 
-        behavior:
-            "smooth"
+    behavior:
+        "smooth"
 
-    });
+});
+```
 
 }
 
-
 /* =========================================
-   ENTER KEY
-   ========================================= */
+ENTER KEY
+========================================= */
 
 input.addEventListener(
-    "keydown",
-    function(event) {
+"keydown",
+function(event) {
 
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey
-        ) {
+```
+    if (
+        event.key === "Enter" &&
+        !event.shiftKey
+    ) {
 
-            event.preventDefault();
+        event.preventDefault();
 
-            sendMessage();
-
-        }
+        sendMessage();
 
     }
+
+}
+```
+
 );
 
-
 /* =========================================
-   START
-   ========================================= */
+START
+========================================= */
 
 input.focus();
 
