@@ -9,6 +9,8 @@
 
 <style>
 
+/* ================= THEME ================= */
+
 :root {
     --bg: #0b0d10;
     --sidebar: #111318;
@@ -32,6 +34,8 @@
     --muted: #6b7280;
 }
 
+/* ================= RESET ================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -51,6 +55,8 @@ body {
     color: var(--text);
 }
 
+/* ================= APP ================= */
+
 .app {
     width: 100%;
     height: 100vh;
@@ -62,7 +68,6 @@ body {
 .sidebar {
     width: 270px;
     height: 100vh;
-
     background: var(--sidebar);
     border-right: 1px solid var(--border);
 
@@ -86,7 +91,7 @@ body {
     transform: translateX(0);
 }
 
-/* ================= CLOSE BUTTON ================= */
+/* ================= SIDEBAR CLOSE ================= */
 
 .sidebar-close {
     position: absolute;
@@ -114,8 +119,6 @@ body {
     justify-content: center;
 
     z-index: 10;
-
-    -webkit-tap-highlight-color: transparent;
 }
 
 .sidebar-close:hover {
@@ -179,8 +182,6 @@ body {
     cursor: pointer;
 
     font-size: 14px;
-
-    -webkit-tap-highlight-color: transparent;
 }
 
 .new-chat:hover {
@@ -230,8 +231,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    -webkit-tap-highlight-color: transparent;
 }
 
 .menu-btn:hover {
@@ -282,8 +281,6 @@ body {
     font-size: 19px;
 
     cursor: pointer;
-
-    -webkit-tap-highlight-color: transparent;
 }
 
 .theme-btn:hover {
@@ -298,8 +295,6 @@ body {
     overflow-y: auto;
 
     padding: 25px 15px 120px;
-
-    -webkit-overflow-scrolling: touch;
 }
 
 .chat-inner {
@@ -399,37 +394,6 @@ body {
     border-bottom-left-radius: 4px;
 }
 
-.ai .bubble h1,
-.ai .bubble h2,
-.ai .bubble h3 {
-    margin-top: 10px;
-    margin-bottom: 8px;
-}
-
-.ai .bubble h1 {
-    font-size: 24px;
-}
-
-.ai .bubble h2 {
-    font-size: 20px;
-}
-
-.ai .bubble h3 {
-    font-size: 17px;
-}
-
-.ai .bubble code:not(pre code) {
-    background: rgba(127,127,127,0.2);
-
-    padding: 2px 5px;
-
-    border-radius: 5px;
-
-    font-family: Consolas, Monaco, monospace;
-
-    font-size: 0.9em;
-}
-
 /* ================= CODE ================= */
 
 .code-wrapper {
@@ -467,17 +431,10 @@ body {
     cursor: pointer;
 
     font-size: 12px;
-
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
 }
 
 .copy-btn:hover {
     background: #303641;
-}
-
-.copy-btn:active {
-    transform: scale(0.96);
 }
 
 .code-wrapper pre {
@@ -495,7 +452,6 @@ body {
     line-height: 1.5;
 
     white-space: pre-wrap;
-    word-break: break-word;
 }
 
 /* ================= INPUT ================= */
@@ -578,8 +534,6 @@ body {
     justify-content: center;
 
     font-size: 18px;
-
-    -webkit-tap-highlight-color: transparent;
 }
 
 .send-btn {
@@ -666,7 +620,7 @@ body {
 
 <div class="app">
 
-    <!-- SIDEBAR -->
+    <!-- ================= SIDEBAR ================= -->
 
     <aside class="sidebar" id="sidebar">
 
@@ -679,15 +633,8 @@ body {
         </button>
 
         <div class="logo">
-
-            <div class="logo-icon">
-                12
-            </div>
-
-            <span>
-                12n0name
-            </span>
-
+            <div class="logo-icon">12</div>
+            <span>12n0name</span>
         </div>
 
         <button
@@ -700,7 +647,7 @@ body {
     </aside>
 
 
-    <!-- MAIN -->
+    <!-- ================= MAIN ================= -->
 
     <main class="main">
 
@@ -733,7 +680,7 @@ body {
         </header>
 
 
-        <!-- CHAT -->
+        <!-- ================= CHAT ================= -->
 
         <section class="chat" id="chat">
 
@@ -760,7 +707,7 @@ body {
         </section>
 
 
-        <!-- INPUT -->
+        <!-- ================= INPUT ================= -->
 
         <div class="input-area">
 
@@ -834,7 +781,7 @@ function closeSidebar() {
 }
 
 
-/* Close sidebar when tapping outside */
+/* Close sidebar when tapping outside on mobile */
 
 document.addEventListener("click", function(event) {
 
@@ -852,7 +799,6 @@ document.addEventListener("click", function(event) {
     ) {
 
         closeSidebar();
-
     }
 
 });
@@ -870,8 +816,6 @@ function toggleTheme() {
 /* ================= NEW CHAT ================= */
 
 function newChat() {
-
-    stopGeneration();
 
     conversation = [];
 
@@ -895,7 +839,6 @@ function newChat() {
             </p>
 
         </div>
-
     `;
 
     closeSidebar();
@@ -907,13 +850,12 @@ function newChat() {
 
 function escapeHTML(text) {
 
-    return String(text)
+    return text
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
-
 }
 
 
@@ -932,7 +874,8 @@ function createCodeBlockHTML(code) {
 
                 <button
                     class="copy-btn"
-                    type="button">
+                    type="button"
+                    onclick="copyCode(this)">
                     Copy
                 </button>
 
@@ -943,159 +886,7 @@ function createCodeBlockHTML(code) {
         </div>
 
     `;
-
 }
-
-
-/* ================= COPY BUTTON ================= */
-
-/*
-    Uses the Clipboard API when available.
-
-    Falls back to a temporary textarea for
-    browsers where navigator.clipboard is
-    unavailable, especially some mobile browsers.
-*/
-
-async function copyText(text) {
-
-    if (
-        navigator.clipboard &&
-        window.isSecureContext
-    ) {
-
-        await navigator.clipboard.writeText(text);
-
-        return true;
-
-    }
-
-
-    const textarea =
-        document.createElement("textarea");
-
-    textarea.value = text;
-
-    textarea.style.position = "fixed";
-    textarea.style.left = "-9999px";
-    textarea.style.top = "0";
-
-    textarea.setAttribute(
-        "readonly",
-        ""
-    );
-
-    document.body.appendChild(textarea);
-
-    textarea.focus();
-    textarea.select();
-
-    textarea.setSelectionRange(
-        0,
-        textarea.value.length
-    );
-
-
-    let success = false;
-
-    try {
-
-        success =
-            document.execCommand("copy");
-
-    } catch {
-
-        success = false;
-
-    }
-
-
-    document.body.removeChild(textarea);
-
-    return success;
-
-}
-
-
-/* Event delegation makes Copy buttons
-   work for dynamically generated messages. */
-
-document.addEventListener(
-    "click",
-    async function(event) {
-
-        const button =
-            event.target.closest(".copy-btn");
-
-        if (!button) {
-            return;
-        }
-
-
-        const wrapper =
-            button.closest(".code-wrapper");
-
-        if (!wrapper) {
-            return;
-        }
-
-
-        const pre =
-            wrapper.querySelector("pre");
-
-        if (!pre) {
-            return;
-        }
-
-
-        const code =
-            pre.textContent;
-
-
-        const oldText =
-            button.textContent;
-
-
-        button.disabled = true;
-
-
-        try {
-
-            const success =
-                await copyText(code);
-
-
-            if (success) {
-
-                button.textContent =
-                    "Copied!";
-
-            } else {
-
-                button.textContent =
-                    "Select & Copy";
-
-            }
-
-        } catch {
-
-            button.textContent =
-                "Failed";
-
-        }
-
-
-        setTimeout(function() {
-
-            button.textContent =
-                oldText;
-
-            button.disabled = false;
-
-        }, 1500);
-
-    }
-);
 
 
 /* ================= FORMAT RESPONSE ================= */
@@ -1105,14 +896,11 @@ function formatResponse(text) {
     text = String(text || "");
 
     text =
-        text
-        .replace(/\r\n/g, "\n")
-        .replace(/\r/g, "\n");
-
+        text.replace(/\r\n/g, "\n")
+            .replace(/\r/g, "\n");
 
     const lines =
         text.split("\n");
-
 
     let html = "";
 
@@ -1120,30 +908,23 @@ function formatResponse(text) {
 
     let codeBuffer = [];
 
-
     function flushCode() {
 
-        if (codeBuffer.length === 0) {
-            return;
+        if (codeBuffer.length > 0) {
+
+            html +=
+                createCodeBlockHTML(
+                    codeBuffer.join("\n")
+                );
+
+            codeBuffer = [];
         }
-
-
-        html +=
-            createCodeBlockHTML(
-                codeBuffer.join("\n")
-            );
-
-
-        codeBuffer = [];
-
     }
-
 
     for (let line of lines) {
 
         const trimmed =
             line.trim();
-
 
         /* CODE FENCE */
 
@@ -1160,11 +941,9 @@ function formatResponse(text) {
                 inCode = false;
 
                 flushCode();
-
             }
 
             continue;
-
         }
 
 
@@ -1175,11 +954,10 @@ function formatResponse(text) {
             codeBuffer.push(line);
 
             continue;
-
         }
 
 
-        /* Remove stray fences */
+        /* REMOVE STRAY CODE FENCES */
 
         line =
             line.replace(/```+/g, "");
@@ -1192,7 +970,6 @@ function formatResponse(text) {
             html += "<br>";
 
             continue;
-
         }
 
 
@@ -1208,23 +985,19 @@ function formatResponse(text) {
                 "</h3>";
 
             continue;
-
         }
-
 
         if (/^##\s+/.test(line)) {
 
             html +=
-                "<h2>" +
+                "2" +
                 escapeHTML(
                     line.replace(/^##\s+/, "")
                 ) +
                 "</h2>";
 
             continue;
-
         }
-
 
         if (/^#\s+/.test(line)) {
 
@@ -1236,7 +1009,6 @@ function formatResponse(text) {
                 "</h1>";
 
             continue;
-
         }
 
 
@@ -1277,7 +1049,6 @@ function formatResponse(text) {
             "<div>" +
             safe +
             "</div>";
-
     }
 
 
@@ -1290,14 +1061,46 @@ function formatResponse(text) {
     }
 
 
-    /* Final fence cleanup */
+    /* FINAL SAFETY CLEANUP */
 
     html =
         html.replace(/```+/g, "");
 
 
     return html;
+}
 
+
+/* ================= COPY CODE ================= */
+
+async function copyCode(button) {
+
+    try {
+
+        const wrapper = button.closest(".code-wrapper");
+
+        const code = wrapper ? wrapper.querySelector("pre").innerText : "";
+
+        await navigator.clipboard.writeText(code);
+
+        button.textContent = "Copied!";
+
+        setTimeout(function() {
+
+            button.textContent = "Copy";
+
+        }, 1500);
+
+    } catch {
+
+        button.textContent = "Failed";
+
+        setTimeout(function() {
+
+            button.textContent = "Copy";
+
+        }, 1500);
+    }
 }
 
 
@@ -1308,21 +1111,17 @@ function addMessage(role, text) {
     const chatInner =
         document.getElementById("chatInner");
 
-
     const welcome =
         document.getElementById("welcome");
-
 
     if (welcome) {
 
         welcome.remove();
-
     }
 
 
     const message =
         document.createElement("div");
-
 
     message.className =
         "message " + role;
@@ -1331,21 +1130,18 @@ function addMessage(role, text) {
     const bubble =
         document.createElement("div");
 
-
     bubble.className =
         "bubble";
 
 
     if (role === "user") {
 
-        bubble.textContent =
-            text;
+        bubble.textContent = text;
 
     } else {
 
         bubble.innerHTML =
             formatResponse(text);
-
     }
 
 
@@ -1353,12 +1149,9 @@ function addMessage(role, text) {
 
     chatInner.appendChild(message);
 
-
     scrollBottom();
 
-
     return bubble;
-
 }
 
 
@@ -1369,10 +1162,8 @@ function scrollBottom() {
     const chat =
         document.getElementById("chat");
 
-
     chat.scrollTop =
         chat.scrollHeight;
-
 }
 
 
@@ -1385,31 +1176,15 @@ function stopGeneration() {
         controller.abort();
 
         controller = null;
-
     }
-
 
     generating = false;
 
+    document.getElementById("stopBtn").style.display =
+        "none";
 
-    document.getElementById("stopBtn")
-        .style.display = "none";
-
-
-    document.getElementById("sendBtn")
-        .style.display = "flex";
-
-}
-
-
-/* ================= SERVER ERROR ================= */
-
-function showServerError(bubble) {
-
-    bubble.innerHTML =
-        "<strong>⚠️ Server is down.</strong><br><br>" +
-        "Contact <strong>arfankn@gmail.com</strong>.";
-
+    document.getElementById("sendBtn").style.display =
+        "flex";
 }
 
 
@@ -1425,7 +1200,6 @@ async function sendMessage() {
     const input =
         document.getElementById("input");
 
-
     const text =
         input.value.trim();
 
@@ -1440,18 +1214,12 @@ async function sendMessage() {
     input.style.height = "auto";
 
 
-    addMessage(
-        "user",
-        text
-    );
+    addMessage("user", text);
 
 
     conversation.push({
-
         role: "user",
-
         content: text
-
     });
 
 
@@ -1461,19 +1229,15 @@ async function sendMessage() {
         new AbortController();
 
 
-    document.getElementById("sendBtn")
-        .style.display = "none";
+    document.getElementById("sendBtn").style.display =
+        "none";
 
-
-    document.getElementById("stopBtn")
-        .style.display = "flex";
+    document.getElementById("stopBtn").style.display =
+        "flex";
 
 
     const aiBubble =
-        addMessage(
-            "ai",
-            "Thinking..."
-        );
+        addMessage("ai", "Thinking...");
 
 
     try {
@@ -1482,58 +1246,26 @@ async function sendMessage() {
             await fetch(
                 API_URL,
                 {
-
                     method: "POST",
 
                     headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        "Accept":
-                            "application/json"
-
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
                     },
 
+                    body: JSON.stringify({
 
-                    body:
-                        JSON.stringify({
+                        messages: conversation,
 
-                            /*
-                             * The conversation is sent
-                             * on every request.
-                             *
-                             * 16K context must also be
-                             * configured in llama.cpp
-                             * with -c 16384.
-                             */
+                        temperature: 0.7,
 
-                            messages:
-                                conversation,
+                        max_tokens: 16384,
 
+                        stream: false
 
-                            temperature:
-                                0.7,
+                    }),
 
-
-                            /*
-                             * Maximum generated
-                             * response tokens.
-                             */
-
-                            max_tokens:
-                                4096,
-
-
-                            stream:
-                                false
-
-                        }),
-
-
-                    signal:
-                        controller.signal
-
+                    signal: controller.signal
                 }
             );
 
@@ -1543,7 +1275,6 @@ async function sendMessage() {
             throw new Error(
                 "Server error"
             );
-
         }
 
 
@@ -1552,27 +1283,15 @@ async function sendMessage() {
 
 
         let answer =
-            data
-                ?.choices
-                ?.[0]
-                ?.message
-                ?.content;
+            data?.choices?.[0]?.message?.content;
 
 
-        if (
-            typeof answer !== "string" ||
-            !answer.trim()
-        ) {
+        if (!answer) {
 
             throw new Error(
                 "Invalid response"
             );
-
         }
-
-
-        answer =
-            answer.trim();
 
 
         aiBubble.innerHTML =
@@ -1581,64 +1300,44 @@ async function sendMessage() {
 
         conversation.push({
 
-            role:
-                "assistant",
+            role: "assistant",
 
-            content:
-                answer
+            content: answer
 
         });
 
 
-        scrollBottom();
-
-    }
-
-
-    catch (error) {
+    } catch (error) {
 
         if (
             error.name === "AbortError"
         ) {
 
-            aiBubble.innerHTML =
-                "<em>Generation stopped.</em>";
+            aiBubble.remove();
 
         } else {
 
-            showServerError(
-                aiBubble
-            );
-
             /*
-             * Remove failed user message
-             * from the conversation history.
+             * ONLY show this message.
              */
 
-            conversation.pop();
-
+            aiBubble.textContent =
+                "⚠️ Server is down.";
         }
 
-    }
-
-
-    finally {
-
-        controller = null;
+    } finally {
 
         generating = false;
 
+        controller = null;
 
-        document.getElementById("stopBtn")
-            .style.display = "none";
+        document.getElementById("stopBtn").style.display =
+            "none";
 
-
-        document.getElementById("sendBtn")
-            .style.display = "flex";
-
+        document.getElementById("sendBtn").style.display =
+            "flex";
 
         scrollBottom();
-
     }
 
 }
@@ -1660,14 +1359,13 @@ document
                 event.preventDefault();
 
                 sendMessage();
-
             }
 
         }
     );
 
 
-/* ================= AUTO RESIZE ================= */
+/* ================= TEXTAREA AUTO HEIGHT ================= */
 
 document
     .getElementById("input")
@@ -1677,7 +1375,6 @@ document
 
             this.style.height =
                 "auto";
-
 
             this.style.height =
                 Math.min(
@@ -1692,3 +1389,4 @@ document
 
 </body>
 </html>
+      
