@@ -475,6 +475,11 @@ body {
     line-height: 1.25;
 }
 
+.bubble h1.md-heading {
+    font-size: 25px;
+    font-weight: 800;
+}
+
 .bubble h2.md-heading {
     font-size: 21px;
     font-weight: 800;
@@ -952,15 +957,21 @@ textarea::placeholder {
 
 /* =========================================================
    API
-   ========================================================= */
+========================================================= */
+
+const API_BASE =
+    "https://desktop-3fdvn7b.tail77d397.ts.net";
 
 const API_URL =
-    "https://desktop-3fdvn7b.tail77d397.ts.net/v1/chat/completions";
+    API_BASE + "/v1/chat/completions";
+
+const MODELS_URL =
+    API_BASE + "/v1/models";
 
 
 /* =========================================================
    STATE
-   ========================================================= */
+========================================================= */
 
 let conversation = [];
 
@@ -971,7 +982,7 @@ let generating = false;
 
 /* =========================================================
    ELEMENTS
-   ========================================================= */
+========================================================= */
 
 const input =
     document.getElementById("input");
@@ -988,7 +999,7 @@ const stopButton =
 
 /* =========================================================
    SIDEBAR
-   ========================================================= */
+========================================================= */
 
 function toggleSidebar() {
 
@@ -1002,7 +1013,7 @@ function toggleSidebar() {
 
 /* =========================================================
    THEME
-   ========================================================= */
+========================================================= */
 
 function toggleTheme() {
 
@@ -1039,7 +1050,7 @@ function toggleTheme() {
 
 /* =========================================================
    LOAD THEME
-   ========================================================= */
+========================================================= */
 
 if (
     localStorage.getItem("theme")
@@ -1057,7 +1068,7 @@ if (
 
 /* =========================================================
    INPUT
-   ========================================================= */
+========================================================= */
 
 input.addEventListener(
     "keydown",
@@ -1080,7 +1091,7 @@ input.addEventListener(
 
 /* =========================================================
    AUTO RESIZE
-   ========================================================= */
+========================================================= */
 
 input.addEventListener(
     "input",
@@ -1100,7 +1111,7 @@ input.addEventListener(
 
 /* =========================================================
    SEND MESSAGE
-   ========================================================= */
+========================================================= */
 
 async function sendMessage() {
 
@@ -1152,14 +1163,29 @@ async function sendMessage() {
 
     try {
 
+        /*
+         * IMPORTANT:
+         *
+         * Do not use no-cors here.
+         * no-cors would hide the response and
+         * make it impossible to read the AI answer.
+         */
+
         const response =
             await fetch(
                 API_URL,
                 {
                     method: "POST",
 
+                    mode: "cors",
+
+                    cache: "no-store",
+
                     headers: {
                         "Content-Type":
+                            "application/json",
+
+                        "Accept":
                             "application/json"
                     },
 
@@ -1181,23 +1207,45 @@ async function sendMessage() {
 
                     signal:
                         controller.signal
-
                 }
             );
+
+
+        const responseText =
+            await response.text();
 
 
         if (!response.ok) {
 
             throw new Error(
                 "HTTP " +
-                response.status
+                response.status +
+                ": " +
+                responseText.substring(
+                    0,
+                    500
+                )
             );
 
         }
 
 
-        const data =
-            await response.json();
+        let data;
+
+        try {
+
+            data =
+                JSON.parse(
+                    responseText
+                );
+
+        } catch (jsonError) {
+
+            throw new Error(
+                "The server returned invalid JSON."
+            );
+
+        }
 
 
         const choice =
@@ -1249,7 +1297,7 @@ async function sendMessage() {
         if (!reply.trim()) {
 
             throw new Error(
-                "Empty AI response"
+                "The AI server returned an empty response."
             );
 
         }
@@ -1274,6 +1322,7 @@ async function sendMessage() {
     catch (error) {
 
         if (
+            error &&
             error.name ===
             "AbortError"
         ) {
@@ -1286,20 +1335,107 @@ async function sendMessage() {
 
 
         console.error(
-            "AI Error:",
+            "12n0name AI error:",
             error
         );
+
+
+        /*
+         * Mobile browsers usually report CORS/network
+         * failures as TypeError: Failed to fetch.
+         */
+
+        let errorHTML = "";
+
+
+        if (
+            error instanceof TypeError
+        ) {
+
+            errorHTML =
+
+                '<span class="error">' +
+
+                '⚠️ Browser connection blocked.' +
+
+                '<br><br>' +
+
+                'Tailscale Funnel is reachable, ' +
+                'but the browser could not send/read ' +
+                'the chat request.' +
+
+                '<br><br>' +
+
+                '<strong>Most likely: CORS.</strong>' +
+
+                '<br><br>' +
+
+                'Open this on your phone:' +
+
+                '<br>' +
+
+                escapeHTML(
+                    MODELS_URL
+                ) +
+
+                '<br><br>' +
+
+                'If that page shows your model, ' +
+                'Tailscale is working.' +
+
+                '<br><br>' +
+
+                'The llama.cpp server must allow ' +
+                'browser requests from this page.' +
+
+                '<br><br>' +
+
+                'Contact: ' +
+                'arfankn@gmail.com' +
+
+                '</span>';
+
+        }
+
+        else {
+
+            errorHTML =
+
+                '<span class="error">' +
+
+                '⚠️ AI request failed.' +
+
+                '<br><br>' +
+
+                escapeHTML(
+                    error.message ||
+                    String(error)
+                ) +
+
+                '<br><br>' +
+
+                '<strong>API:</strong>' +
+
+                '<br>' +
+
+                escapeHTML(
+                    API_URL
+                ) +
+
+                '<br><br>' +
+
+                'Contact: ' +
+                'arfankn@gmail.com' +
+
+                '</span>';
+
+        }
 
 
         aiMessage.querySelector(
             ".bubble"
         ).innerHTML =
-
-            '<span class="error">' +
-            '⚠️ Server is down.<br><br>' +
-            'Please make sure llama.cpp and ' +
-            'Tailscale Funnel are running.' +
-            '</span>';
+            errorHTML;
 
     }
 
@@ -1316,7 +1452,7 @@ async function sendMessage() {
 
 /* =========================================================
    GENERATING STATE
-   ========================================================= */
+========================================================= */
 
 function setGenerating(state) {
 
@@ -1328,14 +1464,22 @@ function setGenerating(state) {
     stopButton.style.display =
         state ? "block" : "none";
 
-    input.disabled = state;
+    /*
+     * IMPORTANT MOBILE FIX:
+     *
+     * Keep the input enabled while waiting.
+     * Some mobile browsers handle disabled inputs
+     * badly when the keyboard is open.
+     */
+
+    input.disabled = false;
 
 }
 
 
 /* =========================================================
    STOP GENERATION
-   ========================================================= */
+========================================================= */
 
 function stopGeneration() {
 
@@ -1350,7 +1494,7 @@ function stopGeneration() {
 
 /* =========================================================
    CREATE AI MESSAGE
-   ========================================================= */
+========================================================= */
 
 function createAIMessage() {
 
@@ -1386,7 +1530,7 @@ function createAIMessage() {
 
 /* =========================================================
    ADD MESSAGE
-   ========================================================= */
+========================================================= */
 
 function addMessage(
     text,
@@ -1436,7 +1580,7 @@ function addMessage(
 
 /* =========================================================
    FORMAT AI RESPONSE
-   ========================================================= */
+========================================================= */
 
 function formatResponse(text) {
 
@@ -1444,20 +1588,16 @@ function formatResponse(text) {
         return "";
 
 
-    /*
-       Escape normal HTML first.
-    */
-
     let safe =
         escapeHTML(text);
 
 
-    /*
-       Find fenced code blocks.
-    */
-
     const codeBlocks = [];
 
+
+    /*
+     * Fenced code blocks
+     */
 
     safe =
         safe.replace(
@@ -1509,15 +1649,20 @@ function formatResponse(text) {
 
 
     /*
-       MARKDOWN HEADINGS
+     * Headings
+     */
 
-       This fixes:
+    safe =
+        safe.replace(
+            /^######[ \t]+(.+)$/gm,
+            '<h4 class="md-heading">$1</h4>'
+        );
 
-       ## Analysis of the Python Code
-
-       and converts it into a real
-       HTML heading.
-    */
+    safe =
+        safe.replace(
+            /^#####[ \t]+(.+)$/gm,
+            '<h4 class="md-heading">$1</h4>'
+        );
 
     safe =
         safe.replace(
@@ -1525,13 +1670,11 @@ function formatResponse(text) {
             '<h4 class="md-heading">$1</h4>'
         );
 
-
     safe =
         safe.replace(
             /^###[ \t]+(.+)$/gm,
             '<h3 class="md-heading">$1</h3>'
         );
-
 
     safe =
         safe.replace(
@@ -1539,10 +1682,27 @@ function formatResponse(text) {
             '<h2 class="md-heading">$1</h2>'
         );
 
+    safe =
+        safe.replace(
+            /^#[ \t]+(.+)$/gm,
+            '<h1 class="md-heading">$1</h1>'
+        );
+
 
     /*
-       Bold.
-    */
+     * Horizontal rules
+     */
+
+    safe =
+        safe.replace(
+            /^[ \t]*((\* *){3,}|(- *){3,}|(_ *){3,})[ \t]*$/gm,
+            "<hr>"
+        );
+
+
+    /*
+     * Bold
+     */
 
     safe =
         safe.replace(
@@ -1551,9 +1711,16 @@ function formatResponse(text) {
         );
 
 
+    safe =
+        safe.replace(
+            /__(.*?)__/g,
+            "<strong>$1</strong>"
+        );
+
+
     /*
-       Italic.
-    */
+     * Italic
+     */
 
     safe =
         safe.replace(
@@ -1562,9 +1729,16 @@ function formatResponse(text) {
         );
 
 
+    safe =
+        safe.replace(
+            /(?<!_)_([^_\n]+)_(?!_)/g,
+            "<em>$1</em>"
+        );
+
+
     /*
-       Inline code.
-    */
+     * Inline code
+     */
 
     safe =
         safe.replace(
@@ -1574,8 +1748,41 @@ function formatResponse(text) {
 
 
     /*
-       Line breaks.
-    */
+     * Links
+     */
+
+    safe =
+        safe.replace(
+            /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+            '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+        );
+
+
+    /*
+     * Unordered lists
+     */
+
+    safe =
+        safe.replace(
+            /^[ \t]*[-*+][ \t]+(.+)$/gm,
+            "• $1"
+        );
+
+
+    /*
+     * Ordered lists
+     */
+
+    safe =
+        safe.replace(
+            /^[ \t]*(\d+)[.)][ \t]+(.+)$/gm,
+            "$1. $2"
+        );
+
+
+    /*
+     * Line breaks
+     */
 
     safe =
         safe.replace(
@@ -1585,8 +1792,8 @@ function formatResponse(text) {
 
 
     /*
-       Restore code blocks.
-    */
+     * Restore code blocks
+     */
 
     codeBlocks.forEach(
         function(block, index) {
@@ -1648,7 +1855,7 @@ function formatResponse(text) {
 
 /* =========================================================
    DECODE HTML ENTITIES
-   ========================================================= */
+========================================================= */
 
 function decodeHTMLEntities(text) {
 
@@ -1669,7 +1876,7 @@ function decodeHTMLEntities(text) {
 
 /* =========================================================
    COPY CODE
-   ========================================================= */
+========================================================= */
 
 async function copyCode(button) {
 
@@ -1729,12 +1936,6 @@ async function copyCode(button) {
     }
 
     catch (error) {
-
-        console.error(
-            "Clipboard error:",
-            error
-        );
-
 
         const textarea =
             document.createElement(
@@ -1808,7 +2009,7 @@ async function copyCode(button) {
 
 /* =========================================================
    ESCAPE HTML
-   ========================================================= */
+========================================================= */
 
 function escapeHTML(text) {
 
@@ -1829,7 +2030,7 @@ function escapeHTML(text) {
 
 /* =========================================================
    SCROLL
-   ========================================================= */
+========================================================= */
 
 function scrollBottom() {
 
@@ -1854,7 +2055,7 @@ function scrollBottom() {
 
 /* =========================================================
    NEW CHAT
-   ========================================================= */
+========================================================= */
 
 function newChat() {
 
@@ -1896,7 +2097,7 @@ function newChat() {
 
 /* =========================================================
    CLOSE SIDEBAR ON OUTSIDE CLICK
-   ========================================================= */
+========================================================= */
 
 document.addEventListener(
     "click",
