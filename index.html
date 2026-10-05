@@ -467,6 +467,44 @@ body {
     font-style: italic;
 }
 
+.bubble h1,
+.bubble h2,
+.bubble h3,
+.bubble h4 {
+    margin: 16px 0 9px;
+    line-height: 1.3;
+}
+
+.bubble h1 {
+    font-size: 25px;
+}
+
+.bubble h2 {
+    font-size: 22px;
+}
+
+.bubble h3 {
+    font-size: 19px;
+}
+
+.bubble h4 {
+    font-size: 17px;
+}
+
+.bubble p {
+    margin: 5px 0;
+}
+
+.bubble ul,
+.bubble ol {
+    margin: 8px 0 8px 22px;
+    padding-left: 8px;
+}
+
+.bubble li {
+    margin: 4px 0;
+}
+
 .bubble code.inline-code {
     background: var(--code);
 
@@ -1146,13 +1184,12 @@ async function sendMessage() {
                             0.7,
 
                         /*
-                           Increased from 1024
-                           to allow much longer
-                           AI responses.
+                           16K maximum requested
+                           output tokens.
                         */
 
                         max_tokens:
-                            8192,
+                            16384,
 
                         stream:
                             false
@@ -1436,15 +1473,22 @@ function formatResponse(text) {
         return "";
 
 
-    let safe =
-        escapeHTML(text);
+    /*
+       First protect fenced code blocks.
 
+       This prevents HTML/JavaScript generated
+       by the AI from being interpreted by the
+       browser.
+    */
 
     const codeBlocks = [];
 
+    let working =
+        String(text);
 
-    safe =
-        safe.replace(
+
+    working =
+        working.replace(
             /```([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n?([\s\S]*?)```/g,
 
             function(
@@ -1457,9 +1501,33 @@ function formatResponse(text) {
                     codeBlocks.length;
 
 
-                const decodedCode =
-                    decodeHTMLEntities(
+                /*
+                   Decode entities repeatedly.
+
+                   This handles AI output such as:
+
+                   &lt;h1&gt;
+
+                   and also:
+
+                   &amp;lt;h1&amp;gt;
+                */
+
+                let decodedCode =
+                    decodeHTMLEntitiesFully(
                         code
+                    );
+
+
+                decodedCode =
+                    decodedCode
+                    .replace(
+                        /^\r?\n/,
+                        ""
+                    )
+                    .replace(
+                        /\r?\n$/,
+                        ""
                     );
 
 
@@ -1470,14 +1538,6 @@ function formatResponse(text) {
 
                     code:
                         decodedCode
-                        .replace(
-                            /^\r?\n/,
-                            ""
-                        )
-                        .replace(
-                            /\r?\n$/,
-                            ""
-                        )
 
                 });
 
@@ -1492,12 +1552,60 @@ function formatResponse(text) {
         );
 
 
+    /*
+       Escape all normal text.
+    */
+
+    let safe =
+        escapeHTML(working);
+
+
+    /* =====================================================
+       MARKDOWN HEADINGS
+       ===================================================== */
+
+    safe =
+        safe.replace(
+            /^####[ \t]+(.+)$/gm,
+            "<h4>$1</h4>"
+        );
+
+
+    safe =
+        safe.replace(
+            /^###[ \t]+(.+)$/gm,
+            "<h3>$1</h3>"
+        );
+
+
+    safe =
+        safe.replace(
+            /^##[ \t]+(.+)$/gm,
+            "<h2>$1</h2>"
+        );
+
+
+    safe =
+        safe.replace(
+            /^#[ \t]+(.+)$/gm,
+            "<h1>$1</h1>"
+        );
+
+
+    /* =====================================================
+       BOLD
+       ===================================================== */
+
     safe =
         safe.replace(
             /\*\*(.*?)\*\*/g,
             "<strong>$1</strong>"
         );
 
+
+    /* =====================================================
+       ITALIC
+       ===================================================== */
 
     safe =
         safe.replace(
@@ -1506,6 +1614,10 @@ function formatResponse(text) {
         );
 
 
+    /* =====================================================
+       INLINE CODE
+       ===================================================== */
+
     safe =
         safe.replace(
             /`([^`\n]+)`/g,
@@ -1513,12 +1625,96 @@ function formatResponse(text) {
         );
 
 
+    /* =====================================================
+       UNORDERED LISTS
+       ===================================================== */
+
+    safe =
+        safe.replace(
+            /^(?:[ \t]*[-*][ \t]+.+(?:\r?\n|$))+/gm,
+
+            function(block) {
+
+                const items =
+                    block
+                    .split(/\r?\n/)
+                    .filter(function(line) {
+                        return line.trim();
+                    })
+                    .map(function(line) {
+
+                        return line.replace(
+                            /^[ \t]*[-*][ \t]+/,
+                            ""
+                        );
+
+                    });
+
+
+                return (
+                    "<ul>" +
+                    items.map(function(item) {
+                        return "<li>" + item + "</li>";
+                    }).join("") +
+                    "</ul>"
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       ORDERED LISTS
+       ===================================================== */
+
+    safe =
+        safe.replace(
+            /^(?:[ \t]*\d+\.[ \t]+.+(?:\r?\n|$))+/gm,
+
+            function(block) {
+
+                const items =
+                    block
+                    .split(/\r?\n/)
+                    .filter(function(line) {
+                        return line.trim();
+                    })
+                    .map(function(line) {
+
+                        return line.replace(
+                            /^[ \t]*\d+\.[ \t]+/,
+                            ""
+                        );
+
+                    });
+
+
+                return (
+                    "<ol>" +
+                    items.map(function(item) {
+                        return "<li>" + item + "</li>";
+                    }).join("") +
+                    "</ol>"
+                );
+
+            }
+        );
+
+
+    /*
+       Convert remaining newlines to <br>.
+    */
+
     safe =
         safe.replace(
             /\r?\n/g,
             "<br>"
         );
 
+
+    /*
+       Restore protected code blocks.
+    */
 
     codeBlocks.forEach(
         function(block, index) {
@@ -1574,6 +1770,46 @@ function formatResponse(text) {
 
 
     return safe;
+
+}
+
+
+/* =========================================================
+   FULL HTML ENTITY DECODER
+   ========================================================= */
+
+function decodeHTMLEntitiesFully(text) {
+
+    let result =
+        String(text);
+
+
+    for (
+        let i = 0;
+        i < 5;
+        i++
+    ) {
+
+        const decoded =
+            decodeHTMLEntities(result);
+
+
+        if (
+            decoded === result
+        ) {
+
+            break;
+
+        }
+
+
+        result =
+            decoded;
+
+    }
+
+
+    return result;
 
 }
 
