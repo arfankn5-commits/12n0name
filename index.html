@@ -768,7 +768,7 @@ function toggleSidebar() {
     const sidebar =
         document.getElementById("sidebar");
 
-    sidebar.classList.toggle("open");
+    if (sidebar) sidebar.classList.toggle("open");
 }
 
 
@@ -777,7 +777,7 @@ function closeSidebar() {
     const sidebar =
         document.getElementById("sidebar");
 
-    sidebar.classList.remove("open");
+    if (sidebar) sidebar.classList.remove("open");
 }
 
 
@@ -792,6 +792,7 @@ document.addEventListener("click", function(event) {
         document.querySelector(".menu-btn");
 
     if (
+        sidebar && menu &&
         window.innerWidth <= 700 &&
         sidebar.classList.contains("open") &&
         !sidebar.contains(event.target) &&
@@ -822,24 +823,26 @@ function newChat() {
     const chatInner =
         document.getElementById("chatInner");
 
-    chatInner.innerHTML = `
+    if (chatInner) {
+        chatInner.innerHTML = `
 
-        <div class="welcome" id="welcome">
+            <div class="welcome" id="welcome">
 
-            <div class="welcome-icon">
-                12
+                <div class="welcome-icon">
+                    12
+                </div>
+
+                <h1>
+                    How can I help you?
+                </h1>
+
+                <p>
+                    Ask anything and 12n0name AI will respond.
+                </p>
+
             </div>
-
-            <h1>
-                How can I help you?
-            </h1>
-
-            <p>
-                Ask anything and 12n0name AI will respond.
-            </p>
-
-        </div>
-    `;
+        `;
+    }
 
     closeSidebar();
 
@@ -850,7 +853,7 @@ function newChat() {
 
 function escapeHTML(text) {
 
-    return text
+    return String(text || "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -990,7 +993,7 @@ function formatResponse(text) {
         if (/^##\s+/.test(line)) {
 
             html +=
-                "2" +
+                "<h2>" +
                 escapeHTML(
                     line.replace(/^##\s+/, "")
                 ) +
@@ -1007,6 +1010,69 @@ function formatResponse(text) {
                     line.replace(/^#\s+/, "")
                 ) +
                 "</h1>";
+
+            continue;
+        }
+
+
+        /* BULLET POINTS */
+
+        if (/^[\*\-\+]\s+/.test(line)) {
+
+            let safe = escapeHTML(line.replace(/^[\*\-\+]\s+/, ""));
+
+            safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>")
+                       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                       .replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+            html += "<div style='margin-left: 20px;'>• " + safe + "</div>";
+
+            continue;
+        }
+
+
+        /* NUMBERED LISTS */
+
+        if (/^\d+\.\s+/.test(line)) {
+
+            const match = line.match(/^(\d+\.)\s+(.*)$/);
+
+            if (match) {
+
+                let safe = escapeHTML(match[2]);
+
+                safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>")
+                           .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                           .replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+                html += "<div style='margin-left: 20px;'>" + escapeHTML(match[1]) + " " + safe + "</div>";
+
+                continue;
+            }
+        }
+
+
+        /* BLOCKQUOTES */
+
+        if (/^>\s+/.test(line)) {
+
+            let safe = escapeHTML(line.replace(/^>\s+/, ""));
+
+            safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>")
+                       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                       .replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+            html += "<blockquote style='border-left: 3px solid var(--accent); padding-left: 10px; margin: 6px 0; color: var(--muted);'>" + safe + "</blockquote>";
+
+            continue;
+        }
+
+
+        /* HORIZONTAL RULE */
+
+        if (/^(---|\*\*\*|___)$/.test(line.trim())) {
+
+            html += "<hr style='border: none; border-top: 1px solid var(--border); margin: 12px 0;'>";
 
             continue;
         }
@@ -1075,6 +1141,8 @@ function formatResponse(text) {
 
 async function copyCode(button) {
 
+    if (!button) return;
+
     try {
 
         const wrapper = button.closest(".code-wrapper");
@@ -1087,17 +1155,17 @@ async function copyCode(button) {
 
         setTimeout(function() {
 
-            button.textContent = "Copy";
+            if (button) button.textContent = "Copy";
 
         }, 1500);
 
-    } catch {
+    } catch (err) {
 
         button.textContent = "Failed";
 
         setTimeout(function() {
 
-            button.textContent = "Copy";
+            if (button) button.textContent = "Copy";
 
         }, 1500);
     }
@@ -1110,6 +1178,8 @@ function addMessage(role, text) {
 
     const chatInner =
         document.getElementById("chatInner");
+
+    if (!chatInner) return null;
 
     const welcome =
         document.getElementById("welcome");
@@ -1162,8 +1232,10 @@ function scrollBottom() {
     const chat =
         document.getElementById("chat");
 
-    chat.scrollTop =
-        chat.scrollHeight;
+    if (chat) {
+        chat.scrollTop =
+            chat.scrollHeight;
+    }
 }
 
 
@@ -1180,11 +1252,11 @@ function stopGeneration() {
 
     generating = false;
 
-    document.getElementById("stopBtn").style.display =
-        "none";
+    const stopBtn = document.getElementById("stopBtn");
+    const sendBtn = document.getElementById("sendBtn");
 
-    document.getElementById("sendBtn").style.display =
-        "flex";
+    if (stopBtn) stopBtn.style.display = "none";
+    if (sendBtn) sendBtn.style.display = "flex";
 }
 
 
@@ -1199,6 +1271,8 @@ async function sendMessage() {
 
     const input =
         document.getElementById("input");
+
+    if (!input) return;
 
     const text =
         input.value.trim();
@@ -1229,11 +1303,11 @@ async function sendMessage() {
         new AbortController();
 
 
-    document.getElementById("sendBtn").style.display =
-        "none";
+    const sendBtn = document.getElementById("sendBtn");
+    const stopBtn = document.getElementById("stopBtn");
 
-    document.getElementById("stopBtn").style.display =
-        "flex";
+    if (sendBtn) sendBtn.style.display = "none";
+    if (stopBtn) stopBtn.style.display = "flex";
 
 
     const aiBubble =
@@ -1294,8 +1368,10 @@ async function sendMessage() {
         }
 
 
-        aiBubble.innerHTML =
-            formatResponse(answer);
+        if (aiBubble) {
+            aiBubble.innerHTML =
+                formatResponse(answer);
+        }
 
 
         conversation.push({
@@ -1313,7 +1389,7 @@ async function sendMessage() {
             error.name === "AbortError"
         ) {
 
-            aiBubble.remove();
+            if (aiBubble) aiBubble.remove();
 
         } else {
 
@@ -1321,8 +1397,10 @@ async function sendMessage() {
              * ONLY show this message.
              */
 
-            aiBubble.textContent =
-                "⚠️ Server is down.";
+            if (aiBubble) {
+                aiBubble.textContent =
+                    "⚠️ Server is down.";
+            }
         }
 
     } finally {
@@ -1331,11 +1409,9 @@ async function sendMessage() {
 
         controller = null;
 
-        document.getElementById("stopBtn").style.display =
-            "none";
+        if (stopBtn) stopBtn.style.display = "none";
 
-        document.getElementById("sendBtn").style.display =
-            "flex";
+        if (sendBtn) sendBtn.style.display = "flex";
 
         scrollBottom();
     }
@@ -1345,9 +1421,11 @@ async function sendMessage() {
 
 /* ================= ENTER KEY ================= */
 
-document
-    .getElementById("input")
-    .addEventListener(
+const inputEl = document.getElementById("input");
+
+if (inputEl) {
+
+    inputEl.addEventListener(
         "keydown",
         function(event) {
 
@@ -1367,9 +1445,7 @@ document
 
 /* ================= TEXTAREA AUTO HEIGHT ================= */
 
-document
-    .getElementById("input")
-    .addEventListener(
+    inputEl.addEventListener(
         "input",
         function() {
 
@@ -1384,9 +1460,9 @@ document
 
         }
     );
+}
 
 </script>
 
 </body>
 </html>
-      
