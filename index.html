@@ -1145,8 +1145,14 @@ async function sendMessage() {
                         temperature:
                             0.7,
 
+                        /*
+                           Increased from 1024
+                           to allow much longer
+                           AI responses.
+                        */
+
                         max_tokens:
-                            1024,
+                            8192,
 
                         stream:
                             false
@@ -1430,17 +1436,9 @@ function formatResponse(text) {
         return "";
 
 
-    /*
-       Escape normal HTML first.
-    */
-
     let safe =
         escapeHTML(text);
 
-
-    /*
-       Find fenced code blocks.
-    */
 
     const codeBlocks = [];
 
@@ -1458,20 +1456,6 @@ function formatResponse(text) {
                 const id =
                     codeBlocks.length;
 
-
-                /*
-                   IMPORTANT:
-                   Decode HTML entities ONLY
-                   inside code blocks.
-
-                   This converts:
-
-                   &lt;html&gt;
-
-                   back to:
-
-                   <html>
-                */
 
                 const decodedCode =
                     decodeHTMLEntities(
@@ -1508,20 +1492,12 @@ function formatResponse(text) {
         );
 
 
-    /*
-       Bold.
-    */
-
     safe =
         safe.replace(
             /\*\*(.*?)\*\*/g,
             "<strong>$1</strong>"
         );
 
-
-    /*
-       Italic.
-    */
 
     safe =
         safe.replace(
@@ -1530,10 +1506,6 @@ function formatResponse(text) {
         );
 
 
-    /*
-       Inline code.
-    */
-
     safe =
         safe.replace(
             /`([^`\n]+)`/g,
@@ -1541,20 +1513,12 @@ function formatResponse(text) {
         );
 
 
-    /*
-       Line breaks.
-    */
-
     safe =
         safe.replace(
             /\r?\n/g,
             "<br>"
         );
 
-
-    /*
-       Restore code blocks.
-    */
 
     codeBlocks.forEach(
         function(block, index) {
@@ -1564,14 +1528,6 @@ function formatResponse(text) {
                 index +
                 "___";
 
-
-            /*
-               Escape the decoded code again
-               before inserting it into HTML.
-
-               This makes the code DISPLAY
-               instead of EXECUTE.
-            */
 
             const safeCode =
                 escapeHTML(
@@ -1712,10 +1668,6 @@ async function copyCode(button) {
             error
         );
 
-
-        /*
-           Fallback copy method.
-        */
 
         const textarea =
             document.createElement(
