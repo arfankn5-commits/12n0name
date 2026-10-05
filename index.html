@@ -10,8 +10,6 @@
 
 <style>
 
-/* ================= THEME ================= */
-
 :root {
     --bg: #0b0d10;
     --sidebar: #111318;
@@ -42,9 +40,6 @@ body.light {
     --code: #f0f1f4;
 }
 
-
-/* ================= RESET ================= */
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -66,23 +61,18 @@ body {
 }
 
 
-/* ================= SIDEBAR ================= */
+/* SIDEBAR */
 
 .sidebar {
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
-
     width: 270px;
-
     background: var(--sidebar);
     border-right: 1px solid var(--border);
-
     padding: 18px;
-
     z-index: 1000;
-
     display: none;
 }
 
@@ -91,49 +81,37 @@ body {
 }
 
 
-/* ================= LOGO ================= */
+/* LOGO */
 
 .logo {
     display: flex;
     align-items: center;
     gap: 11px;
-
     font-size: 20px;
     font-weight: 800;
-
     margin-bottom: 30px;
 }
 
 .logo-icon {
     width: 44px;
     height: 44px;
-
     position: relative;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 13px;
-
     background:
         linear-gradient(
             135deg,
             #071b24,
             #17102e
         );
-
     border: 1px solid rgba(0,229,255,.75);
-
     color: white;
-
     font-size: 17px;
     font-weight: 900;
-
     letter-spacing: -2px;
-
     overflow: hidden;
-
     box-shadow:
         0 0 10px rgba(0,229,255,.5),
         0 0 28px rgba(124,60,255,.25);
@@ -141,24 +119,17 @@ body {
 
 .logo-icon::before {
     content: "";
-
     position: absolute;
-
     inset: 4px;
-
     border-radius: 10px;
-
     border: 1px solid rgba(255,255,255,.16);
 }
 
 .logo-icon::after {
     content: "";
-
     position: absolute;
-
     width: 75px;
     height: 2px;
-
     background:
         linear-gradient(
             90deg,
@@ -167,11 +138,8 @@ body {
             #9b5cff,
             transparent
         );
-
     transform: rotate(-45deg);
-
-    animation:
-        scan 2.5s linear infinite;
+    animation: scan 2.5s linear infinite;
 }
 
 @keyframes scan {
@@ -191,23 +159,16 @@ body {
 }
 
 
-/* ================= NEW CHAT ================= */
+/* NEW CHAT */
 
 .new-chat {
     width: 100%;
-
     padding: 13px;
-
     border: 1px solid var(--border);
-
     border-radius: 11px;
-
     background: var(--surface);
-
     color: var(--text);
-
     font-size: 15px;
-
     cursor: pointer;
 }
 
@@ -216,52 +177,39 @@ body {
 }
 
 
-/* ================= MAIN ================= */
+/* MAIN */
 
 .main {
     width: 100%;
     height: 100vh;
-
     display: flex;
     flex-direction: column;
 }
 
 
-/* ================= TOP BAR ================= */
+/* TOP BAR */
 
 .topbar {
     height: 64px;
-
     display: flex;
     align-items: center;
-
     gap: 12px;
-
     padding: 0 18px;
-
-    border-bottom:
-        1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
 
-/* ================= MENU ================= */
+/* MENU */
 
 .menu-button {
     width: 43px;
     height: 43px;
-
     border: none;
-
     border-radius: 10px;
-
     background: transparent;
-
     color: var(--text);
-
     font-size: 23px;
-
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -272,7 +220,7 @@ body {
 }
 
 
-/* ================= NAME ================= */
+/* NAME */
 
 .model {
     font-size: 16px;
@@ -284,48 +232,36 @@ body {
 }
 
 
-/* ================= STATUS ================= */
+/* STATUS */
 
 .status {
     display: flex;
     align-items: center;
     gap: 6px;
-
     color: var(--secondary);
-
     font-size: 12px;
 }
 
 .status-dot {
     width: 7px;
     height: 7px;
-
     border-radius: 50%;
-
     background: #42d392;
-
     box-shadow: 0 0 8px #42d392;
 }
 
 
-/* ================= THEME ================= */
+/* THEME */
 
 .theme-button {
     width: 42px;
     height: 42px;
-
     margin-left: auto;
-
     border: none;
-
     border-radius: 10px;
-
     background: transparent;
-
     color: var(--text);
-
     font-size: 19px;
-
     cursor: pointer;
 }
 
@@ -334,15 +270,12 @@ body {
 }
 
 
-/* ================= CHAT ================= */
+/* CHAT */
 
 .chat {
     flex: 1;
-
     overflow-y: auto;
-
-    padding:
-        40px 20px 145px;
+    padding: 40px 20px 145px;
 }
 
 .messages {
@@ -351,19 +284,16 @@ body {
 }
 
 
-/* ================= WELCOME ================= */
+/* WELCOME */
 
 .welcome {
     text-align: center;
-
     margin-top: 15vh;
 }
 
 .welcome h1 {
     font-size: 43px;
-
     margin-bottom: 13px;
-
     background:
         linear-gradient(
             90deg,
@@ -371,9 +301,7 @@ body {
             var(--cyan),
             var(--purple)
         );
-
     -webkit-background-clip: text;
-
     color: transparent;
 }
 
@@ -382,17 +310,13 @@ body {
 }
 
 
-/* ================= MESSAGES ================= */
+/* MESSAGES */
 
 .message {
     display: flex;
-
     gap: 13px;
-
     margin: 25px 0;
-
-    animation:
-        appear .25s ease;
+    animation: appear .25s ease;
 }
 
 @keyframes appear {
@@ -420,44 +344,32 @@ body {
 .msg-avatar {
     min-width: 35px;
     height: 35px;
-
     border-radius: 10px;
-
     background:
         linear-gradient(
             135deg,
             var(--cyan),
             var(--purple)
         );
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     color: white;
-
     font-size: 12px;
-
     font-weight: bold;
 }
 
 .bubble {
     max-width: 75%;
-
     padding: 12px 15px;
-
     border-radius: 14px;
-
     line-height: 1.6;
-
     color: var(--text);
-
     overflow-wrap: anywhere;
 }
 
 
-/* ================= MARKDOWN ================= */
+/* MARKDOWN */
 
 .bubble strong {
     font-weight: 700;
@@ -468,15 +380,12 @@ body {
 }
 
 
-/* ================= BOLD HEADINGS ================= */
+/* BOLD HEADINGS */
 
 .bubble .markdown-heading {
     display: block;
-
     font-weight: 700;
-
     margin: 16px 0 8px;
-
     line-height: 1.4;
 }
 
@@ -485,20 +394,19 @@ body {
 }
 
 
-/* ================= PARAGRAPHS ================= */
+/* PARAGRAPHS */
 
 .bubble p {
     margin: 6px 0;
 }
 
 
-/* ================= LISTS ================= */
+/* LISTS */
 
 .bubble ul,
 .bubble ol {
     margin-top: 8px;
     margin-bottom: 10px;
-
     padding-left: 25px;
 }
 
@@ -512,7 +420,6 @@ body {
 
 .bubble li {
     margin: 5px 0;
-
     padding-left: 3px;
 }
 
@@ -528,140 +435,95 @@ body {
 }
 
 
-/* ================= INLINE CODE ================= */
+/* INLINE CODE */
 
 .bubble code.inline-code {
     background: var(--code);
-
     border: 1px solid var(--border);
-
     border-radius: 5px;
-
     padding: 2px 5px;
-
     font-family:
         Consolas,
         "Courier New",
         monospace;
-
     font-size: 13px;
 }
 
 
-/* ================= CODE BLOCK ================= */
+/* CODE BLOCK */
 
 .code-block {
     margin: 14px 0;
-
     background: var(--code);
-
     border: 1px solid var(--border);
-
     border-radius: 11px;
-
     overflow: hidden;
-
     width: 100%;
 }
 
 .code-header {
     height: 38px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     padding: 0 10px 0 13px;
-
-    background:
-        rgba(255,255,255,.035);
-
-    border-bottom:
-        1px solid var(--border);
+    background: rgba(255,255,255,.035);
+    border-bottom: 1px solid var(--border);
 }
 
 .code-language {
     color: var(--secondary);
-
     font-size: 11px;
-
     font-weight: bold;
-
     text-transform: uppercase;
-
     letter-spacing: .5px;
 }
 
 .copy-button {
     border: 1px solid var(--border);
-
     background: var(--surface);
-
     color: var(--secondary);
-
     border-radius: 7px;
-
     padding: 5px 10px;
-
     font-size: 11px;
-
     cursor: pointer;
-
     transition: .15s;
 }
 
 .copy-button:hover {
     background: var(--hover);
-
     color: var(--text);
 }
 
 .copy-button.copied {
     color: var(--cyan);
-
-    border-color:
-        rgba(0,229,255,.4);
+    border-color: rgba(0,229,255,.4);
 }
 
 .code-content {
     display: block;
-
     padding: 14px;
-
     overflow-x: auto;
-
     white-space: pre;
-
     font-family:
         Consolas,
         "Courier New",
         monospace;
-
     font-size: 13px;
-
     line-height: 1.55;
-
     color: var(--text);
-
     tab-size: 4;
 }
 
 
-/* ================= INPUT ================= */
+/* INPUT */
 
 .input-area {
     position: fixed;
-
     bottom: 0;
-
     left: 0;
     right: 0;
-
-    padding:
-        18px 20px 20px;
-
+    padding: 18px 20px 20px;
     background:
         linear-gradient(
             transparent,
@@ -671,42 +533,25 @@ body {
 
 .input-box {
     max-width: 850px;
-
     margin: auto;
-
     background: var(--surface);
-
-    border:
-        1px solid var(--border);
-
+    border: 1px solid var(--border);
     border-radius: 17px;
-
     display: flex;
-
     align-items: flex-end;
-
     padding: 9px;
 }
 
 textarea {
     flex: 1;
-
     resize: none;
-
     background: transparent;
-
     border: none;
-
     outline: none;
-
     color: var(--text);
-
     font-size: 15px;
-
     padding: 10px;
-
     font-family: inherit;
-
     max-height: 180px;
 }
 
@@ -715,29 +560,22 @@ textarea::placeholder {
 }
 
 
-/* ================= SEND ================= */
+/* SEND */
 
 .send {
     width: 43px;
     height: 43px;
-
     border: none;
-
     border-radius: 12px;
-
     background:
         linear-gradient(
             135deg,
             var(--cyan),
             var(--purple)
         );
-
     color: white;
-
     cursor: pointer;
-
     font-size: 18px;
-
     transition: .2s;
 }
 
@@ -752,49 +590,39 @@ textarea::placeholder {
 }
 
 
-/* ================= STOP ================= */
+/* STOP */
 
 .stop {
     display: none;
-
     width: 43px;
     height: 43px;
-
     border: none;
-
     border-radius: 12px;
-
     background: #333842;
-
     color: white;
-
     cursor: pointer;
-
     font-size: 16px;
 }
 
 
-/* ================= ERROR ================= */
+/* ERROR */
 
 .error {
     color: #ff6b6b;
 }
 
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 
 .footer {
     text-align: center;
-
     color: var(--muted);
-
     font-size: 11px;
-
     margin-top: 8px;
 }
 
 
-/* ================= MOBILE ================= */
+/* MOBILE */
 
 @media (max-width: 700px) {
 
@@ -828,8 +656,6 @@ textarea::placeholder {
 <body>
 
 
-<!-- ================= SIDEBAR ================= -->
-
 <aside
     class="sidebar"
     id="sidebar">
@@ -858,12 +684,8 @@ textarea::placeholder {
 </aside>
 
 
-<!-- ================= MAIN ================= -->
-
 <main class="main">
 
-
-    <!-- ================= TOP BAR ================= -->
 
     <header class="topbar">
 
@@ -907,8 +729,6 @@ textarea::placeholder {
     </header>
 
 
-    <!-- ================= CHAT ================= -->
-
     <section
         class="chat"
         id="chat">
@@ -936,8 +756,6 @@ textarea::placeholder {
 
     </section>
 
-
-    <!-- ================= MESSAGE BOX ================= -->
 
     <div class="input-area">
 
@@ -1334,8 +1152,7 @@ async function sendMessage() {
 
             '<span class="error">' +
             '⚠️ Server is down.<br><br>' +
-            'Please make sure llama.cpp and ' +
-            'Tailscale Funnel are running.' +
+            'Contact arfankn5@gmail.com' +
             '</span>';
 
     }
@@ -1481,10 +1298,6 @@ function formatResponse(text) {
         return "";
 
 
-    /*
-       Protect fenced code blocks first.
-    */
-
     const codeBlocks = [];
 
     let working =
@@ -1544,17 +1357,11 @@ function formatResponse(text) {
         );
 
 
-    /*
-       Escape normal text.
-    */
-
     let safe =
         escapeHTML(working);
 
 
-    /* =====================================================
-       HEADINGS → BOLD
-       ===================================================== */
+    /* HEADINGS → BOLD */
 
     safe =
         safe.replace(
@@ -1584,9 +1391,7 @@ function formatResponse(text) {
         );
 
 
-    /* =====================================================
-       BOLD
-       ===================================================== */
+    /* BOLD */
 
     safe =
         safe.replace(
@@ -1595,9 +1400,7 @@ function formatResponse(text) {
         );
 
 
-    /* =====================================================
-       ITALIC
-       ===================================================== */
+    /* ITALIC */
 
     safe =
         safe.replace(
@@ -1606,9 +1409,7 @@ function formatResponse(text) {
         );
 
 
-    /* =====================================================
-       INLINE CODE
-       ===================================================== */
+    /* INLINE CODE */
 
     safe =
         safe.replace(
@@ -1617,9 +1418,7 @@ function formatResponse(text) {
         );
 
 
-    /* =====================================================
-       UNORDERED BULLET LISTS
-       ===================================================== */
+    /* BULLET LISTS */
 
     safe =
         safe.replace(
@@ -1667,13 +1466,11 @@ function formatResponse(text) {
         );
 
 
-    /* =====================================================
-       ORDERED NUMBERED LISTS
-       ===================================================== */
+    /* NUMBERED LISTS */
 
     safe =
         safe.replace(
-            /^(?:[ \t]*\d+\.[ \t]+.+(?:\r?\n|$))+/gm,
+            /^(?:[ \t]*\d+[.)][ \t]+.+(?:\r?\n|$))+/gm,
 
             function(block) {
 
@@ -1688,7 +1485,7 @@ function formatResponse(text) {
                     .map(function(line) {
 
                         return line.replace(
-                            /^[ \t]*\d+\.[ \t]+/,
+                            /^[ \t]*\d+[.)][ \t]+/,
                             ""
                         );
 
@@ -1717,9 +1514,7 @@ function formatResponse(text) {
         );
 
 
-    /*
-       Convert remaining newlines.
-    */
+    /* NEWLINES */
 
     safe =
         safe.replace(
@@ -1728,9 +1523,7 @@ function formatResponse(text) {
         );
 
 
-    /* =====================================================
-       RESTORE CODE BLOCKS
-       ===================================================== */
+    /* RESTORE CODE */
 
     codeBlocks.forEach(
         function(block, index) {
@@ -1762,15 +1555,10 @@ function formatResponse(text) {
                         '</span>' +
 
                         '<button ' +
-
                             'class="copy-button" ' +
-
                             'type="button" ' +
-
                             'onclick="copyCode(this)">' +
-
                             'Copy' +
-
                         '</button>' +
 
                     '</div>' +
@@ -2091,7 +1879,7 @@ function newChat() {
 
 
 /* =========================================================
-   CLOSE SIDEBAR ON OUTSIDE CLICK
+   CLOSE SIDEBAR
    ========================================================= */
 
 document.addEventListener(
