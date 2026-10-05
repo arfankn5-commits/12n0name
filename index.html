@@ -10,6 +10,10 @@
 
 <style>
 
+/* =========================================================
+   THEME
+   ========================================================= */
+
 :root {
     --bg: #0b0d10;
     --sidebar: #111318;
@@ -40,6 +44,11 @@ body.light {
     --code: #f0f1f4;
 }
 
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -53,18 +62,29 @@ body {
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background: var(--bg);
     color: var(--text);
+
     overflow: hidden;
-    transition: background .25s, color .25s;
+
+    transition:
+        background .25s,
+        color .25s;
 }
 
 
-/* ================= SIDEBAR ================= */
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
 
 .sidebar {
     position: fixed;
+
     left: 0;
     top: 0;
     bottom: 0;
@@ -72,7 +92,9 @@ body {
     width: 270px;
 
     background: var(--sidebar);
-    border-right: 1px solid var(--border);
+
+    border-right:
+        1px solid var(--border);
 
     padding: 18px;
 
@@ -86,17 +108,62 @@ body {
 }
 
 
-/* ================= LOGO ================= */
+/* =========================================================
+   SIDEBAR CLOSE BUTTON
+   ========================================================= */
+
+.sidebar-close {
+    position: absolute;
+
+    top: 17px;
+    right: 14px;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: var(--secondary);
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-close:hover {
+    background: var(--hover);
+    color: var(--text);
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
 
 .logo {
     display: flex;
+
     align-items: center;
+
     gap: 11px;
 
     font-size: 20px;
+
     font-weight: 800;
 
     margin-bottom: 30px;
+
+    padding-right: 40px;
 }
 
 .logo-icon {
@@ -106,6 +173,7 @@ body {
     position: relative;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -118,11 +186,13 @@ body {
             #17102e
         );
 
-    border: 1px solid rgba(0,229,255,.75);
+    border:
+        1px solid rgba(0,229,255,.75);
 
     color: white;
 
     font-size: 17px;
+
     font-weight: 900;
 
     letter-spacing: -2px;
@@ -143,7 +213,8 @@ body {
 
     border-radius: 10px;
 
-    border: 1px solid rgba(255,255,255,.16);
+    border:
+        1px solid rgba(255,255,255,.16);
 }
 
 .logo-icon::after {
@@ -186,14 +257,17 @@ body {
 }
 
 
-/* ================= NEW CHAT ================= */
+/* =========================================================
+   NEW CHAT
+   ========================================================= */
 
 .new-chat {
     width: 100%;
 
     padding: 13px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
     border-radius: 11px;
 
@@ -211,23 +285,29 @@ body {
 }
 
 
-/* ================= MAIN ================= */
+/* =========================================================
+   MAIN
+   ========================================================= */
 
 .main {
     width: 100%;
     height: 100vh;
 
     display: flex;
+
     flex-direction: column;
 }
 
 
-/* ================= TOP BAR ================= */
+/* =========================================================
+   TOP BAR
+   ========================================================= */
 
 .topbar {
     height: 64px;
 
     display: flex;
+
     align-items: center;
 
     gap: 12px;
@@ -236,10 +316,14 @@ body {
 
     border-bottom:
         1px solid var(--border);
+
+    flex-shrink: 0;
 }
 
 
-/* ================= MENU ================= */
+/* =========================================================
+   MENU
+   ========================================================= */
 
 .menu-button {
     width: 43px;
@@ -258,6 +342,7 @@ body {
     cursor: pointer;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 }
@@ -267,10 +352,13 @@ body {
 }
 
 
-/* ================= NAME ================= */
+/* =========================================================
+   MODEL
+   ========================================================= */
 
 .model {
     font-size: 16px;
+
     font-weight: bold;
 }
 
@@ -279,11 +367,15 @@ body {
 }
 
 
-/* ================= STATUS ================= */
+/* =========================================================
+   STATUS
+   ========================================================= */
 
 .status {
     display: flex;
+
     align-items: center;
+
     gap: 6px;
 
     color: var(--secondary);
@@ -299,11 +391,14 @@ body {
 
     background: #42d392;
 
-    box-shadow: 0 0 8px #42d392;
+    box-shadow:
+        0 0 8px #42d392;
 }
 
 
-/* ================= THEME ================= */
+/* =========================================================
+   THEME BUTTON
+   ========================================================= */
 
 .theme-button {
     width: 42px;
@@ -329,7 +424,9 @@ body {
 }
 
 
-/* ================= CHAT ================= */
+/* =========================================================
+   CHAT
+   ========================================================= */
 
 .chat {
     flex: 1;
@@ -342,11 +439,14 @@ body {
 
 .messages {
     max-width: 850px;
+
     margin: auto;
 }
 
 
-/* ================= WELCOME ================= */
+/* =========================================================
+   WELCOME
+   ========================================================= */
 
 .welcome {
     text-align: center;
@@ -369,6 +469,8 @@ body {
 
     -webkit-background-clip: text;
 
+    background-clip: text;
+
     color: transparent;
 }
 
@@ -377,7 +479,9 @@ body {
 }
 
 
-/* ================= MESSAGES ================= */
+/* =========================================================
+   MESSAGES
+   ========================================================= */
 
 .message {
     display: flex;
@@ -394,12 +498,16 @@ body {
 
     from {
         opacity: 0;
-        transform: translateY(8px);
+
+        transform:
+            translateY(8px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
     }
 
 }
@@ -452,7 +560,9 @@ body {
 }
 
 
-/* ================= MARKDOWN ================= */
+/* =========================================================
+   MARKDOWN
+   ========================================================= */
 
 .bubble strong {
     font-weight: 700;
@@ -463,44 +573,60 @@ body {
 }
 
 
-/* ================= MARKDOWN HEADINGS ================= */
+/* =========================================================
+   MARKDOWN HEADINGS
+   ========================================================= */
 
 .bubble .md-heading {
     display: block;
 
-    margin: 18px 0 9px;
-
     color: var(--text);
 
     line-height: 1.25;
+
+    margin:
+        20px 0 10px;
+}
+
+.bubble h1.md-heading {
+    font-size: 25px;
+
+    font-weight: 800;
 }
 
 .bubble h2.md-heading {
-    font-size: 21px;
+    font-size: 22px;
+
     font-weight: 800;
 }
 
 .bubble h3.md-heading {
-    font-size: 18px;
+    font-size: 19px;
+
     font-weight: 750;
 }
 
 .bubble h4.md-heading {
-    font-size: 16px;
+    font-size: 17px;
+
     font-weight: 700;
 }
 
 
-/* ================= INLINE CODE ================= */
+/* =========================================================
+   INLINE CODE
+   ========================================================= */
 
 .bubble code.inline-code {
     background: var(--code);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
     border-radius: 5px;
 
-    padding: 2px 5px;
+    padding:
+        2px 5px;
 
     font-family:
         Consolas,
@@ -511,14 +637,17 @@ body {
 }
 
 
-/* ================= CODE BLOCK ================= */
+/* =========================================================
+   CODE BLOCK
+   ========================================================= */
 
 .code-block {
     margin: 14px 0;
 
     background: var(--code);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
     border-radius: 11px;
 
@@ -536,7 +665,8 @@ body {
 
     justify-content: space-between;
 
-    padding: 0 10px 0 13px;
+    padding:
+        0 10px 0 13px;
 
     background:
         rgba(255,255,255,.035);
@@ -558,7 +688,8 @@ body {
 }
 
 .copy-button {
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
     background: var(--surface);
 
@@ -566,7 +697,8 @@ body {
 
     border-radius: 7px;
 
-    padding: 5px 10px;
+    padding:
+        5px 10px;
 
     font-size: 11px;
 
@@ -612,7 +744,9 @@ body {
 }
 
 
-/* ================= INPUT ================= */
+/* =========================================================
+   INPUT AREA
+   ========================================================= */
 
 .input-area {
     position: fixed;
@@ -678,7 +812,9 @@ textarea::placeholder {
 }
 
 
-/* ================= SEND ================= */
+/* =========================================================
+   SEND
+   ========================================================= */
 
 .send {
     width: 43px;
@@ -710,12 +846,16 @@ textarea::placeholder {
 
 .send:disabled {
     opacity: .5;
+
     cursor: not-allowed;
+
     transform: none;
 }
 
 
-/* ================= STOP ================= */
+/* =========================================================
+   STOP
+   ========================================================= */
 
 .stop {
     display: none;
@@ -737,14 +877,18 @@ textarea::placeholder {
 }
 
 
-/* ================= ERROR ================= */
+/* =========================================================
+   ERROR
+   ========================================================= */
 
 .error {
     color: #ff6b6b;
 }
 
 
-/* ================= FOOTER ================= */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 .footer {
     text-align: center;
@@ -757,7 +901,9 @@ textarea::placeholder {
 }
 
 
-/* ================= MOBILE ================= */
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 700px) {
 
@@ -781,6 +927,34 @@ textarea::placeholder {
         font-size: 12px;
     }
 
+    .chat {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.chat::-webkit-scrollbar {
+    width: 7px;
+}
+
+.chat::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat::-webkit-scrollbar-thumb {
+    background: var(--border);
+
+    border-radius: 10px;
+}
+
+.chat::-webkit-scrollbar-thumb:hover {
+    background: var(--muted);
 }
 
 </style>
@@ -791,11 +965,29 @@ textarea::placeholder {
 <body>
 
 
-<!-- ================= SIDEBAR ================= -->
+<!-- =======================================================
+     SIDEBAR
+     ======================================================= -->
 
 <aside
     class="sidebar"
     id="sidebar">
+
+
+    <!-- CLOSE BUTTON -->
+
+    <button
+        class="sidebar-close"
+        type="button"
+        onclick="closeSidebar()"
+        aria-label="Close sidebar">
+
+        ×
+
+    </button>
+
+
+    <!-- LOGO -->
 
     <div class="logo">
 
@@ -810,30 +1002,40 @@ textarea::placeholder {
     </div>
 
 
+    <!-- NEW CHAT -->
+
     <button
         class="new-chat"
+        type="button"
         onclick="newChat()">
 
         ＋ New chat
 
     </button>
 
+
 </aside>
 
 
-<!-- ================= MAIN ================= -->
+<!-- =======================================================
+     MAIN
+     ======================================================= -->
 
 <main class="main">
 
 
-    <!-- ================= TOP BAR ================= -->
+    <!-- ===================================================
+         TOP BAR
+         =================================================== -->
 
     <header class="topbar">
+
 
         <button
             class="menu-button"
             type="button"
-            onclick="toggleSidebar()">
+            onclick="toggleSidebar()"
+            aria-label="Open sidebar">
 
             ☰
 
@@ -861,24 +1063,30 @@ textarea::placeholder {
             class="theme-button"
             id="themeButton"
             type="button"
-            onclick="toggleTheme()">
+            onclick="toggleTheme()"
+            aria-label="Toggle theme">
 
             🌙
 
         </button>
 
+
     </header>
 
 
-    <!-- ================= CHAT ================= -->
+    <!-- ===================================================
+         CHAT
+         =================================================== -->
 
     <section
         class="chat"
         id="chat">
 
+
         <div
             class="messages"
             id="messages">
+
 
             <div
                 class="welcome"
@@ -895,28 +1103,36 @@ textarea::placeholder {
 
             </div>
 
+
         </div>
+
 
     </section>
 
 
-    <!-- ================= MESSAGE BOX ================= -->
+    <!-- ===================================================
+         INPUT
+         =================================================== -->
 
     <div class="input-area">
 
+
         <div class="input-box">
+
 
             <textarea
                 id="input"
                 rows="1"
-                placeholder="Ask 12n0name..."></textarea>
+                placeholder="Ask 12n0name..."
+                aria-label="Message"></textarea>
 
 
             <button
                 class="send"
                 id="sendButton"
                 type="button"
-                onclick="sendMessage()">
+                onclick="sendMessage()"
+                aria-label="Send message">
 
                 ➤
 
@@ -927,11 +1143,13 @@ textarea::placeholder {
                 class="stop"
                 id="stopButton"
                 type="button"
-                onclick="stopGeneration()">
+                onclick="stopGeneration()"
+                aria-label="Stop generation">
 
                 ■
 
             </button>
+
 
         </div>
 
@@ -943,7 +1161,9 @@ textarea::placeholder {
 
         </div>
 
+
     </div>
+
 
 </main>
 
@@ -985,6 +1205,9 @@ const sendButton =
 const stopButton =
     document.getElementById("stopButton");
 
+const sidebar =
+    document.getElementById("sidebar");
+
 
 /* =========================================================
    SIDEBAR
@@ -992,10 +1215,14 @@ const stopButton =
 
 function toggleSidebar() {
 
-    const sidebar =
-        document.getElementById("sidebar");
-
     sidebar.classList.toggle("open");
+
+}
+
+
+function closeSidebar() {
+
+    sidebar.classList.remove("open");
 
 }
 
@@ -1013,6 +1240,7 @@ function toggleTheme() {
 
     const themeButton =
         document.getElementById("themeButton");
+
 
     if (isLight) {
 
@@ -1042,8 +1270,7 @@ function toggleTheme() {
    ========================================================= */
 
 if (
-    localStorage.getItem("theme")
-    === "light"
+    localStorage.getItem("theme") === "light"
 ) {
 
     document.body.classList.add("light");
@@ -1111,12 +1338,14 @@ async function sendMessage() {
     const text =
         input.value.trim();
 
+
     if (!text)
         return;
 
 
     const welcome =
         document.getElementById("welcome");
+
 
     if (welcome)
         welcome.remove();
@@ -1129,8 +1358,11 @@ async function sendMessage() {
 
 
     conversation.push({
+
         role: "user",
+
         content: text
+
     });
 
 
@@ -1156,28 +1388,32 @@ async function sendMessage() {
             await fetch(
                 API_URL,
                 {
+
                     method: "POST",
 
                     headers: {
+
                         "Content-Type":
                             "application/json"
+
                     },
 
-                    body: JSON.stringify({
+                    body:
+                        JSON.stringify({
 
-                        messages:
-                            conversation,
+                            messages:
+                                conversation,
 
-                        temperature:
-                            0.7,
+                            temperature:
+                                0.7,
 
-                        max_tokens:
-                            1024,
+                            max_tokens:
+                                1024,
 
-                        stream:
-                            false
+                            stream:
+                                false
 
-                    }),
+                        }),
 
                     signal:
                         controller.signal
@@ -1203,6 +1439,7 @@ async function sendMessage() {
         const choice =
             data?.choices?.[0];
 
+
         let reply =
             choice?.message?.content ??
             choice?.text ??
@@ -1216,8 +1453,7 @@ async function sendMessage() {
                 .map(function(item) {
 
                     if (
-                        typeof item ===
-                        "string"
+                        typeof item === "string"
                     ) {
 
                         return item;
@@ -1236,8 +1472,7 @@ async function sendMessage() {
 
 
         if (
-            typeof reply !==
-            "string"
+            typeof reply !== "string"
         ) {
 
             reply =
@@ -1262,8 +1497,11 @@ async function sendMessage() {
 
 
         conversation.push({
+
             role: "assistant",
+
             content: reply
+
         });
 
 
@@ -1271,11 +1509,11 @@ async function sendMessage() {
 
     }
 
+
     catch (error) {
 
         if (
-            error.name ===
-            "AbortError"
+            error.name === "AbortError"
         ) {
 
             aiMessage.remove();
@@ -1296,12 +1534,15 @@ async function sendMessage() {
         ).innerHTML =
 
             '<span class="error">' +
+
             '⚠️ Server is down.<br><br>' +
-            'Please make sure llama.cpp and ' +
-            'Tailscale Funnel are running.' +
+
+            'Contact on arfankn@gmail.com' +
+
             '</span>';
 
     }
+
 
     finally {
 
@@ -1322,11 +1563,14 @@ function setGenerating(state) {
 
     generating = state;
 
+
     sendButton.style.display =
         state ? "none" : "block";
 
+
     stopButton.style.display =
         state ? "block" : "none";
+
 
     input.disabled = state;
 
@@ -1356,6 +1600,7 @@ function createAIMessage() {
 
     const message =
         document.createElement("div");
+
 
     message.className =
         "message ai";
@@ -1395,6 +1640,7 @@ function addMessage(
 
     const message =
         document.createElement("div");
+
 
     message.className =
         "message " + type;
@@ -1445,7 +1691,7 @@ function formatResponse(text) {
 
 
     /*
-       Escape normal HTML first.
+       Escape HTML first.
     */
 
     let safe =
@@ -1453,7 +1699,13 @@ function formatResponse(text) {
 
 
     /*
-       Find fenced code blocks.
+       Store fenced code blocks first.
+
+       Example:
+
+       ```python
+       print("Hello")
+       ```
     */
 
     const codeBlocks = [];
@@ -1474,9 +1726,7 @@ function formatResponse(text) {
 
 
                 const decodedCode =
-                    decodeHTMLEntities(
-                        code
-                    );
+                    decodeHTMLEntities(code);
 
 
                 codeBlocks.push({
@@ -1509,34 +1759,48 @@ function formatResponse(text) {
 
 
     /*
-       MARKDOWN HEADINGS
+       =====================================================
+       HEADINGS
+       =====================================================
 
-       This fixes:
+       # Heading
+       ## Heading
+       ### Heading
+       #### Heading
 
-       ## Analysis of the Python Code
-
-       and converts it into a real
-       HTML heading.
+       The # symbols are removed.
     */
+
 
     safe =
         safe.replace(
-            /^####[ \t]+(.+)$/gm,
+            /^####[ \t]+(.+?)[ \t]*$/gm,
+
             '<h4 class="md-heading">$1</h4>'
         );
 
 
     safe =
         safe.replace(
-            /^###[ \t]+(.+)$/gm,
+            /^###[ \t]+(.+?)[ \t]*$/gm,
+
             '<h3 class="md-heading">$1</h3>'
         );
 
 
     safe =
         safe.replace(
-            /^##[ \t]+(.+)$/gm,
+            /^##[ \t]+(.+?)[ \t]*$/gm,
+
             '<h2 class="md-heading">$1</h2>'
+        );
+
+
+    safe =
+        safe.replace(
+            /^#[ \t]+(.+?)[ \t]*$/gm,
+
+            '<h1 class="md-heading">$1</h1>'
         );
 
 
@@ -1547,6 +1811,7 @@ function formatResponse(text) {
     safe =
         safe.replace(
             /\*\*(.*?)\*\*/g,
+
             "<strong>$1</strong>"
         );
 
@@ -1558,6 +1823,7 @@ function formatResponse(text) {
     safe =
         safe.replace(
             /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
+
             "<em>$1</em>"
         );
 
@@ -1569,17 +1835,22 @@ function formatResponse(text) {
     safe =
         safe.replace(
             /`([^`\n]+)`/g,
+
             '<code class="inline-code">$1</code>'
         );
 
 
     /*
        Line breaks.
+
+       Do this AFTER headings so the
+       generated heading HTML isn't damaged.
     */
 
     safe =
         safe.replace(
             /\r?\n/g,
+
             "<br>"
         );
 
@@ -1610,22 +1881,31 @@ function formatResponse(text) {
                     '<div class="code-header">' +
 
                         '<span class="code-language">' +
+
                             escapeHTML(
                                 block.language
                             ) +
+
                         '</span>' +
 
                         '<button ' +
+
                             'class="copy-button" ' +
+
                             'type="button" ' +
+
                             'onclick="copyCode(this)">' +
+
                             'Copy' +
+
                         '</button>' +
 
                     '</div>' +
 
                     '<code class="code-content">' +
+
                         safeCode +
+
                     '</code>' +
 
                 '</div>';
@@ -1707,6 +1987,7 @@ async function copyCode(button) {
         button.textContent =
             "Copied!";
 
+
         button.classList.add(
             "copied"
         );
@@ -1718,6 +1999,7 @@ async function copyCode(button) {
                 button.textContent =
                     "Copy";
 
+
                 button.classList.remove(
                     "copied"
                 );
@@ -1727,6 +2009,7 @@ async function copyCode(button) {
         );
 
     }
+
 
     catch (error) {
 
@@ -1745,8 +2028,10 @@ async function copyCode(button) {
         textarea.value =
             text;
 
+
         textarea.style.position =
             "fixed";
+
 
         textarea.style.left =
             "-9999px";
@@ -1770,6 +2055,7 @@ async function copyCode(button) {
             button.textContent =
                 "Copied!";
 
+
             button.classList.add(
                 "copied"
             );
@@ -1781,6 +2067,7 @@ async function copyCode(button) {
                     button.textContent =
                         "Copy";
 
+
                     button.classList.remove(
                         "copied"
                     );
@@ -1790,6 +2077,7 @@ async function copyCode(button) {
             );
 
         }
+
 
         catch (fallbackError) {
 
@@ -1887,26 +2175,18 @@ function newChat() {
         "auto";
 
 
-    document
-        .getElementById("sidebar")
-        .classList.remove("open");
+    closeSidebar();
 
 }
 
 
 /* =========================================================
-   CLOSE SIDEBAR ON OUTSIDE CLICK
+   CLOSE SIDEBAR WHEN CLICKING OUTSIDE
    ========================================================= */
 
 document.addEventListener(
     "click",
     function(event) {
-
-        const sidebar =
-            document.getElementById(
-                "sidebar"
-            );
-
 
         const menu =
             document.querySelector(
@@ -1920,9 +2200,7 @@ document.addEventListener(
             !menu.contains(event.target)
         ) {
 
-            sidebar.classList.remove(
-                "open"
-            );
+            closeSidebar();
 
         }
 
@@ -1932,4 +2210,5 @@ document.addEventListener(
 </script>
 
 </body>
+
 </html>
