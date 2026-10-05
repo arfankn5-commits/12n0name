@@ -31,12 +31,10 @@
 
     --danger: #ff6b6b;
     --success: #52d273;
-    --code-bg: #0a0c0f;
-}
 
-/* =========================================================
-   LIGHT THEME
-========================================================= */
+    --code-bg: #090b0e;
+    --table-header: #20242c;
+}
 
 body.light {
     --bg: #f5f6f8;
@@ -54,6 +52,7 @@ body.light {
     --accent-text: #ffffff;
 
     --code-bg: #f0f1f3;
+    --table-header: #e5e7eb;
 }
 
 /* =========================================================
@@ -87,6 +86,11 @@ body {
     overflow: hidden;
 }
 
+button,
+textarea {
+    font-family: inherit;
+}
+
 /* =========================================================
    APP
 ========================================================= */
@@ -94,6 +98,7 @@ body {
 .app {
     width: 100%;
     height: 100vh;
+
     display: flex;
     flex-direction: column;
 }
@@ -127,8 +132,6 @@ body {
     display: block;
 }
 
-/* Sidebar top row */
-
 .sidebar-header {
     width: 100%;
 
@@ -140,8 +143,6 @@ body {
 
     margin-bottom: 24px;
 }
-
-/* Logo */
 
 .logo {
     display: flex;
@@ -156,6 +157,8 @@ body {
     width: 38px;
     height: 38px;
 
+    flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,16 +168,13 @@ body {
     background: var(--accent);
     color: var(--accent-text);
 
-    font-weight: 800;
     font-size: 14px;
-
-    flex-shrink: 0;
+    font-weight: 800;
 }
 
 .logo span {
     font-size: 17px;
     font-weight: 700;
-
     white-space: nowrap;
 }
 
@@ -188,7 +188,7 @@ body {
 
     flex-shrink: 0;
 
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
 
@@ -196,7 +196,6 @@ body {
     border-radius: 10px;
 
     background: var(--surface);
-
     color: var(--text);
 
     font-size: 28px;
@@ -208,14 +207,8 @@ body {
 
     padding: 0;
 
-    opacity: 1;
-    visibility: visible;
-
-    transition:
-        background 0.15s ease,
-        border-color 0.15s ease,
-        color 0.15s ease,
-        transform 0.15s ease;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .sidebar-close:hover {
@@ -240,19 +233,35 @@ body {
     border-radius: 10px;
 
     background: var(--surface);
-
     color: var(--text);
 
     font-size: 14px;
     font-weight: 600;
 
     cursor: pointer;
-
-    transition: background 0.15s ease;
 }
 
 .new-chat:hover {
     background: var(--hover);
+}
+
+/* =========================================================
+   SIDEBAR OVERLAY
+========================================================= */
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    z-index: 2500;
+
+    display: none;
+}
+
+.sidebar-overlay.show {
+    display: block;
 }
 
 /* =========================================================
@@ -276,8 +285,6 @@ body {
     background: var(--bg);
 }
 
-/* Menu */
-
 .menu-button,
 .theme-button {
     width: 40px;
@@ -287,7 +294,6 @@ body {
     border-radius: 10px;
 
     background: var(--surface);
-
     color: var(--text);
 
     cursor: pointer;
@@ -304,8 +310,6 @@ body {
     background: var(--hover);
 }
 
-/* Model */
-
 .model {
     font-size: 16px;
     font-weight: 700;
@@ -315,8 +319,6 @@ body {
     opacity: 0.55;
     font-weight: 500;
 }
-
-/* Status */
 
 .status {
     margin-left: auto;
@@ -346,7 +348,6 @@ body {
 
 .chat {
     flex: 1;
-
     min-height: 0;
 
     display: flex;
@@ -400,12 +401,11 @@ body {
 }
 
 /* =========================================================
-   MESSAGE
+   MESSAGES
 ========================================================= */
 
 .message {
     display: flex;
-
     margin-bottom: 24px;
 }
 
@@ -418,11 +418,7 @@ body {
 }
 
 .bubble {
-    max-width: 85%;
-
-    padding: 13px 16px;
-
-    border-radius: 15px;
+    max-width: 90%;
 
     font-size: 15px;
     line-height: 1.65;
@@ -431,15 +427,20 @@ body {
 }
 
 .user .bubble {
+    max-width: 85%;
+
+    padding: 13px 16px;
+
+    border-radius: 15px;
+
     background: var(--surface-2);
     border: 1px solid var(--border);
+
+    white-space: pre-wrap;
 }
 
 .ai .bubble {
-    background: transparent;
-
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
 }
 
 /* =========================================================
@@ -447,58 +448,58 @@ body {
 ========================================================= */
 
 .md-heading {
-    margin-top: 24px;
-    margin-bottom: 10px;
+    margin: 25px 0 10px;
 
     line-height: 1.3;
 
-    letter-spacing: -0.3px;
+    letter-spacing: -0.4px;
 }
 
 .md-heading:first-child {
     margin-top: 0;
 }
 
-.md-heading.h1 {
+.md-h1 {
     font-size: 28px;
 }
 
-.md-heading.h2 {
+.md-h2 {
     font-size: 24px;
 }
 
-.md-heading.h3 {
+.md-h3 {
     font-size: 20px;
 }
 
-.md-heading.h4 {
+.md-h4 {
     font-size: 17px;
 }
 
 /* =========================================================
-   MARKDOWN TEXT
+   PARAGRAPHS
 ========================================================= */
 
 .md-paragraph {
-    margin: 0 0 12px;
+    margin: 0 0 14px;
 }
 
-.md-bold {
-    font-weight: 700;
+.md-paragraph:last-child {
+    margin-bottom: 0;
 }
 
-.md-italic {
-    font-style: italic;
-}
+/* =========================================================
+   INLINE
+========================================================= */
 
 .md-inline-code {
-    background: var(--code-bg);
-
-    border: 1px solid var(--border);
-
-    border-radius: 6px;
+    display: inline;
 
     padding: 2px 6px;
+
+    border: 1px solid var(--border);
+    border-radius: 6px;
+
+    background: var(--code-bg);
 
     font-family:
         Consolas,
@@ -508,21 +509,73 @@ body {
     font-size: 0.9em;
 }
 
+.md-link {
+    color: #62a8ff;
+
+    text-decoration: underline;
+
+    text-underline-offset: 2px;
+}
+
+.md-link:hover {
+    opacity: 0.8;
+}
+
+/* =========================================================
+   LISTS
+========================================================= */
+
+.md-list {
+    margin: 8px 0 16px;
+
+    padding-left: 28px;
+}
+
+.md-list li {
+    margin: 5px 0;
+}
+
+/* =========================================================
+   BLOCKQUOTE
+========================================================= */
+
+.md-blockquote {
+    margin: 14px 0;
+
+    padding: 9px 14px;
+
+    border-left: 3px solid var(--secondary);
+
+    background: var(--surface);
+
+    color: var(--secondary);
+}
+
+/* =========================================================
+   HORIZONTAL RULE
+========================================================= */
+
+.md-hr {
+    margin: 22px 0;
+
+    border: 0;
+
+    border-top: 1px solid var(--border);
+}
+
 /* =========================================================
    CODE BLOCK
 ========================================================= */
 
 .code-wrapper {
-    position: relative;
-
-    margin: 15px 0;
+    margin: 16px 0;
 
     border: 1px solid var(--border);
     border-radius: 12px;
 
-    background: var(--code-bg);
-
     overflow: hidden;
+
+    background: var(--code-bg);
 }
 
 .code-header {
@@ -549,14 +602,13 @@ body {
 }
 
 .copy-code {
+    padding: 5px 10px;
+
     border: 1px solid var(--border);
     border-radius: 7px;
 
     background: var(--surface);
-
     color: var(--text);
-
-    padding: 5px 9px;
 
     font-size: 12px;
 
@@ -591,69 +643,55 @@ body {
 }
 
 /* =========================================================
-   LISTS
+   TABLE
 ========================================================= */
 
-.md-list {
-    margin: 8px 0 14px;
+.table-wrapper {
+    width: 100%;
 
-    padding-left: 25px;
+    margin: 16px 0;
+
+    overflow-x: auto;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
 }
 
-.md-list li {
-    margin: 5px 0;
+.md-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 500px;
+
+    font-size: 14px;
 }
 
-/* =========================================================
-   LINKS
-========================================================= */
+.md-table th,
+.md-table td {
+    padding: 9px 12px;
 
-.md-link {
-    color: #62a8ff;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
 
-    text-decoration: underline;
+    text-align: left;
 
-    text-underline-offset: 2px;
+    vertical-align: top;
 }
 
-.md-link:hover {
-    opacity: 0.8;
+.md-table th {
+    background: var(--table-header);
+
+    font-weight: 700;
 }
 
-/* =========================================================
-   BLOCKQUOTE
-========================================================= */
-
-.md-quote {
-    margin: 14px 0;
-
-    padding: 8px 14px;
-
-    border-left: 3px solid var(--secondary);
-
-    color: var(--secondary);
-
-    background: var(--surface);
+.md-table tr:last-child td {
+    border-bottom: 0;
 }
 
-/* =========================================================
-   HORIZONTAL RULE
-========================================================= */
-
-.md-hr {
-    border: 0;
-
-    border-top: 1px solid var(--border);
-
-    margin: 20px 0;
-}
-
-/* =========================================================
-   ERROR
-========================================================= */
-
-.error {
-    color: var(--danger);
+.md-table th:last-child,
+.md-table td:last-child {
+    border-right: 0;
 }
 
 /* =========================================================
@@ -663,9 +701,9 @@ body {
 .generating {
     display: inline-flex;
 
-    gap: 5px;
-
     align-items: center;
+
+    gap: 5px;
 }
 
 .generating span {
@@ -703,7 +741,15 @@ body {
 }
 
 /* =========================================================
-   INPUT AREA
+   ERROR
+========================================================= */
+
+.error {
+    color: var(--danger);
+}
+
+/* =========================================================
+   INPUT
 ========================================================= */
 
 .input-area {
@@ -746,7 +792,8 @@ body {
 
     background: var(--surface);
 
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.2);
 }
 
 #prompt {
@@ -764,9 +811,7 @@ body {
 
     color: var(--text);
 
-    font-family: inherit;
     font-size: 15px;
-
     line-height: 1.5;
 
     padding: 10px 8px;
@@ -775,10 +820,6 @@ body {
 #prompt::placeholder {
     color: var(--muted);
 }
-
-/* =========================================================
-   SEND / STOP
-========================================================= */
 
 .send-button,
 .stop-button {
@@ -818,10 +859,6 @@ body {
 .stop-button.show {
     display: flex;
 }
-
-/* =========================================================
-   FOOTER
-========================================================= */
 
 .footer {
     position: absolute;
@@ -871,7 +908,7 @@ body {
     }
 
     .bubble {
-        max-width: 94%;
+        max-width: 96%;
     }
 
     .messages {
@@ -893,26 +930,6 @@ body {
 
 }
 
-/* =========================================================
-   OVERLAY
-========================================================= */
-
-.sidebar-overlay {
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0, 0, 0, 0.45);
-
-    z-index: 2500;
-
-    display: none;
-}
-
-.sidebar-overlay.show {
-    display: block;
-}
-
 </style>
 
 </head>
@@ -921,159 +938,161 @@ body {
 
 <div class="app">
 
-    <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
+<!-- =======================================================
+     SIDEBAR
+======================================================== -->
 
-    <aside class="sidebar" id="sidebar">
+<aside
+    class="sidebar"
+    id="sidebar">
 
-        <div class="sidebar-header">
+    <div class="sidebar-header">
 
-            <div class="logo">
+        <div class="logo">
 
-                <div class="logo-icon">
-                    12
-                </div>
-
-                <span>
-                    12n0name
-                </span>
-
+            <div class="logo-icon">
+                12
             </div>
 
-            <!-- CLEARLY VISIBLE CLOSE BUTTON -->
-
-            <button
-                class="sidebar-close"
-                id="sidebarClose"
-                type="button"
-                onclick="closeSidebar()"
-                aria-label="Close sidebar"
-                title="Close sidebar">
-                ×
-            </button>
+            <span>
+                12n0name
+            </span>
 
         </div>
 
         <button
-            class="new-chat"
+            class="sidebar-close"
+            id="sidebarClose"
             type="button"
-            onclick="newChat()">
-            ＋ New chat
-        </button>
+            onclick="closeSidebar()"
+            aria-label="Close sidebar"
+            title="Close sidebar">×</button>
 
-    </aside>
-
-    <div
-        class="sidebar-overlay"
-        id="sidebarOverlay"
-        onclick="closeSidebar()">
     </div>
 
-    <!-- =====================================================
-         TOP BAR
-    ====================================================== -->
+    <button
+        class="new-chat"
+        type="button"
+        onclick="newChat()">
+        ＋ New chat
+    </button>
 
-    <header class="topbar">
+</aside>
 
-        <button
-            class="menu-button"
-            type="button"
-            onclick="toggleSidebar()"
-            aria-label="Open menu">
-            ☰
-        </button>
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+    onclick="closeSidebar()">
+</div>
 
-        <div class="model">
-            12n0name <span>AI</span>
-        </div>
 
-        <div class="status">
-            <span class="status-dot"></span>
-            Online
-        </div>
+<!-- =======================================================
+     TOP BAR
+======================================================== -->
 
-        <button
-            class="theme-button"
-            id="themeButton"
-            type="button"
-            onclick="toggleTheme()"
-            aria-label="Toggle theme">
-            🌙
-        </button>
+<header class="topbar">
 
-    </header>
+    <button
+        class="menu-button"
+        type="button"
+        onclick="toggleSidebar()"
+        aria-label="Open sidebar">
+        ☰
+    </button>
 
-    <!-- =====================================================
-         CHAT
-    ====================================================== -->
+    <div class="model">
+        12n0name <span>AI</span>
+    </div>
 
-    <section class="chat">
+    <div class="status">
+        <span class="status-dot"></span>
+        Online
+    </div>
+
+    <button
+        class="theme-button"
+        id="themeButton"
+        type="button"
+        onclick="toggleTheme()"
+        aria-label="Toggle theme">
+        🌙
+    </button>
+
+</header>
+
+
+<!-- =======================================================
+     CHAT
+======================================================== -->
+
+<section class="chat">
+
+    <div
+        class="messages"
+        id="messages">
 
         <div
-            class="messages"
-            id="messages">
+            class="welcome"
+            id="welcome">
 
-            <div
-                class="welcome"
-                id="welcome">
+            <h1>
+                What can I help with?
+            </h1>
 
-                <h1>
-                    What can I help with?
-                </h1>
-
-                <p>
-                    Ask anything. Build anything. Explore anything.
-                </p>
-
-            </div>
+            <p>
+                Ask anything. Build anything. Explore anything.
+            </p>
 
         </div>
 
-    </section>
+    </div>
 
-    <!-- =====================================================
-         INPUT
-    ====================================================== -->
+</section>
 
-    <div class="input-area">
 
-        <div class="input-container">
+<!-- =======================================================
+     INPUT
+======================================================== -->
 
-            <textarea
-                id="prompt"
-                rows="1"
-                placeholder="Message 12n0name AI..."
-                autocomplete="off"
-                spellcheck="true"></textarea>
+<div class="input-area">
 
-            <button
-                class="send-button"
-                id="sendButton"
-                type="button"
-                onclick="sendMessage()"
-                aria-label="Send">
-                ➤
-            </button>
+    <div class="input-container">
 
-            <button
-                class="stop-button"
-                id="stopButton"
-                type="button"
-                onclick="stopGeneration()"
-                aria-label="Stop">
-                ■
-            </button>
+        <textarea
+            id="prompt"
+            rows="1"
+            placeholder="Message 12n0name AI..."
+            autocomplete="off"
+            spellcheck="true"></textarea>
 
-            <div class="footer">
-                12n0name AI
-            </div>
+        <button
+            class="send-button"
+            id="sendButton"
+            type="button"
+            onclick="sendMessage()"
+            aria-label="Send">
+            ➤
+        </button>
 
+        <button
+            class="stop-button"
+            id="stopButton"
+            type="button"
+            onclick="stopGeneration()"
+            aria-label="Stop">
+            ■
+        </button>
+
+        <div class="footer">
+            12n0name AI
         </div>
 
     </div>
 
 </div>
+
+</div>
+
 
 <script>
 
@@ -1128,15 +1147,14 @@ const themeButton =
 
 function toggleSidebar() {
 
-    const isOpen =
+    const open =
         sidebar.classList.toggle("open");
 
     sidebarOverlay.classList.toggle(
         "show",
-        isOpen
+        open
     );
 }
-
 
 function closeSidebar() {
 
@@ -1166,13 +1184,13 @@ function toggleTheme() {
     );
 }
 
-
 (function loadTheme() {
 
-    const saved =
-        localStorage.getItem("12n0name-theme");
-
-    if (saved === "light") {
+    if (
+        localStorage.getItem(
+            "12n0name-theme"
+        ) === "light"
+    ) {
 
         document.body.classList.add("light");
 
@@ -1223,314 +1241,764 @@ function escapeHTML(text) {
 
 
 /* =========================================================
-   INLINE MARKDOWN
+   UNESCAPE COMMON MARKDOWN ESCAPES
 ========================================================= */
 
-function formatInline(text) {
+function unescapeMarkdown(text) {
 
-    let value = escapeHTML(text);
-
-
-    /* Links */
-
-    value = value.replace(
-        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
-        '<a class="md-link" href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    return text.replace(
+        /\\([\\`*_[\]{}()#+\-.!|>])/g,
+        "$1"
     );
-
-
-    /* Inline code */
-
-    value = value.replace(
-        /`([^`\n]+)`/g,
-        '<code class="md-inline-code">$1</code>'
-    );
-
-
-    /* Bold */
-
-    value = value.replace(
-        /\*\*(.+?)\*\*/g,
-        '<strong class="md-bold">$1</strong>'
-    );
-
-
-    /* Bold using __ */
-
-    value = value.replace(
-        /__(.+?)__/g,
-        '<strong class="md-bold">$1</strong>'
-    );
-
-
-    /* Italic */
-
-    value = value.replace(
-        /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
-        '<em class="md-italic">$1</em>'
-    );
-
-
-    /* Italic using _ */
-
-    value = value.replace(
-        /(?<!\w)_([^_\n]+)_(?!\w)/g,
-        '<em class="md-italic">$1</em>'
-    );
-
-
-    return value;
 }
 
 
 /* =========================================================
-   MARKDOWN FORMATTER
+   INLINE MARKDOWN
 ========================================================= */
 
-function formatResponse(rawText) {
-
-    if (rawText === null || rawText === undefined) {
-        return "";
-    }
-
-    let text = String(rawText)
-        .replace(/\r\n/g, "\n")
-        .replace(/\r/g, "\n");
-
-
-    /* -----------------------------------------------------
-       EXTRACT CODE BLOCKS FIRST
-    ----------------------------------------------------- */
-
-    const codeBlocks = [];
-
-    text = text.replace(
-        /```([^\n`]*)\n?([\s\S]*?)```/g,
-        function (_, language, code) {
-
-            const index =
-                codeBlocks.length;
-
-            const cleanLanguage =
-                language.trim() || "code";
-
-            codeBlocks.push({
-                language: cleanLanguage,
-                code: code.replace(/\n$/, "")
-            });
-
-            return `@@CODEBLOCK_${index}@@`;
-        }
-    );
-
-
-    /* -----------------------------------------------------
-       ESCAPE NORMAL TEXT
-    ----------------------------------------------------- */
-
-    text = escapeHTML(text);
-
-
-    /* -----------------------------------------------------
-       HEADINGS
-    ----------------------------------------------------- */
-
-    text = text.replace(
-        /^####\s+(.+)$/gm,
-        '<h4 class="md-heading h4">$1</h4>'
-    );
-
-    text = text.replace(
-        /^###\s+(.+)$/gm,
-        '<h3 class="md-heading h3">$1</h3>'
-    );
-
-    text = text.replace(
-        /^##\s+(.+)$/gm,
-        '<h2 class="md-heading h2">$1</h2>'
-    );
-
-    text = text.replace(
-        /^#\s+(.+)$/gm,
-        '<h1 class="md-heading h1">$1</h1>'
-    );
-
-
-    /* -----------------------------------------------------
-       HORIZONTAL RULE
-    ----------------------------------------------------- */
-
-    text = text.replace(
-        /^(\*\*\*|---|___)\s*$/gm,
-        '<hr class="md-hr">'
-    );
-
-
-    /* -----------------------------------------------------
-       BLOCKQUOTES
-    ----------------------------------------------------- */
-
-    text = text.replace(
-        /^&gt;\s?(.*)$/gm,
-        '<div class="md-quote">$1</div>'
-    );
-
-
-    /* -----------------------------------------------------
-       BULLET LISTS
-    ----------------------------------------------------- */
-
-    text = text.replace(
-        /(?:^|\n)(?:[-*+]\s+.+(?:\n|$))+/g,
-        function (block) {
-
-            const items =
-                block
-                    .trim()
-                    .split("\n")
-                    .map(line =>
-                        line.replace(
-                            /^[-*+]\s+/,
-                            ""
-                        )
-                    )
-                    .map(item =>
-                        `<li>${item}</li>`
-                    )
-                    .join("");
-
-            return `<ul class="md-list">${items}</ul>`;
-        }
-    );
-
-
-    /* -----------------------------------------------------
-       NUMBERED LISTS
-    ----------------------------------------------------- */
-
-    text = text.replace(
-        /(?:^|\n)(?:\d+\.\s+.+(?:\n|$))+/g,
-        function (block) {
-
-            const items =
-                block
-                    .trim()
-                    .split("\n")
-                    .map(line =>
-                        line.replace(
-                            /^\d+\.\s+/,
-                            ""
-                        )
-                    )
-                    .map(item =>
-                        `<li>${item}</li>`
-                    )
-                    .join("");
-
-            return `<ol class="md-list">${items}</ol>`;
-        }
-    );
-
-
-    /* -----------------------------------------------------
-       INLINE MARKDOWN
-    ----------------------------------------------------- */
+function inlineMarkdown(text) {
 
     /*
-       Don't run inline formatting over HTML tags.
-       Process only text portions outside tags.
+       Protect inline code first.
+    */
+
+    const inlineCodes = [];
+
+    text = text.replace(
+        /`([^`\n]+)`/g,
+        function (_, code) {
+
+            const id =
+                inlineCodes.length;
+
+            inlineCodes.push(
+                `<code class="md-inline-code">${escapeHTML(code)}</code>`
+            );
+
+            return `@@INLINECODE${id}@@`;
+        }
+    );
+
+
+    /*
+       Escape all normal text.
+    */
+
+    text =
+        escapeHTML(
+            unescapeMarkdown(text)
+        );
+
+
+    /*
+       Links.
     */
 
     text = text.replace(
-        /(^|>)([^<]+)(?=<|$)/g,
-        function (_, prefix, content) {
-
-            if (
-                content.includes("@@CODEBLOCK_")
-            ) {
-                return prefix + content;
-            }
-
-            return prefix +
-                formatInline(
-                    content
-                        .replace(/&lt;br&gt;/g, "")
-                );
-        }
-    );
-
-
-    /* -----------------------------------------------------
-       NEW LINES
-    ----------------------------------------------------- */
-
-    text = text.replace(
-        /\n{2,}/g,
-        '</p><p class="md-paragraph">'
-    );
-
-    text = text.replace(
-        /\n/g,
-        "<br>"
-    );
-
-
-    /* -----------------------------------------------------
-       CODE BLOCKS
-    ----------------------------------------------------- */
-
-    text = text.replace(
-        /@@CODEBLOCK_(\d+)@@/g,
-        function (_, index) {
-
-            const block =
-                codeBlocks[Number(index)];
-
-            const language =
-                escapeHTML(block.language);
-
-            const code =
-                escapeHTML(block.code);
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        function (_, label, url) {
 
             return `
-                <div class="code-wrapper">
-
-                    <div class="code-header">
-
-                        <span class="code-language">
-                            ${language}
-                        </span>
-
-                        <button
-                            class="copy-code"
-                            type="button"
-                            onclick="copyCode(this)">
-                            Copy
-                        </button>
-
-                    </div>
-
-                    <pre><code>${code}</code></pre>
-
-                </div>
+                <a
+                    class="md-link"
+                    href="${url}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    ${label}
+                </a>
             `;
         }
     );
 
 
-    /* -----------------------------------------------------
-       CLEAN EMPTY PARAGRAPHS
-    ----------------------------------------------------- */
+    /*
+       Bold.
+    */
 
-    text = text
-        .replace(
-            /<p class="md-paragraph"><\/p>/g,
-            ""
-        )
-        .trim();
+    text = text.replace(
+        /\*\*(.+?)\*\*/g,
+        "<strong>$1</strong>"
+    );
+
+    text = text.replace(
+        /__(.+?)__/g,
+        "<strong>$1</strong>"
+    );
+
+
+    /*
+       Italic.
+    */
+
+    text = text.replace(
+        /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
+        "<em>$1</em>"
+    );
+
+    text = text.replace(
+        /(?<!\w)_([^_\n]+)_(?!\w)/g,
+        "<em>$1</em>"
+    );
+
+
+    /*
+       Restore inline code.
+    */
+
+    text = text.replace(
+        /@@INLINECODE(\d+)@@/g,
+        function (_, id) {
+            return inlineCodes[
+                Number(id)
+            ];
+        }
+    );
 
 
     return text;
+}
+
+
+/* =========================================================
+   TABLE DETECTION
+========================================================= */
+
+function isTableSeparator(line) {
+
+    const cells =
+        line.trim()
+            .replace(/^\|/, "")
+            .replace(/\|$/, "")
+            .split("|");
+
+    if (!cells.length) {
+        return false;
+    }
+
+    return cells.every(cell =>
+        /^ *:?-{3,}:? *$/.test(cell)
+    );
+}
+
+
+/* =========================================================
+   TABLE PARSER
+========================================================= */
+
+function parseTable(lines) {
+
+    if (lines.length < 2) {
+        return null;
+    }
+
+    const headerLine =
+        lines[0];
+
+    const separatorLine =
+        lines[1];
+
+    if (!isTableSeparator(separatorLine)) {
+        return null;
+    }
+
+
+    function splitRow(line) {
+
+        return line
+            .trim()
+            .replace(/^\|/, "")
+            .replace(/\|$/, "")
+            .split("|")
+            .map(cell =>
+                cell.trim()
+            );
+    }
+
+
+    const headers =
+        splitRow(headerLine);
+
+    const alignments =
+        splitRow(separatorLine)
+            .map(cell => {
+
+                const left =
+                    cell.startsWith(":");
+
+                const right =
+                    cell.endsWith(":");
+
+                if (left && right) {
+                    return "center";
+                }
+
+                if (right) {
+                    return "right";
+                }
+
+                return "left";
+            });
+
+
+    let html = `
+        <div class="table-wrapper">
+        <table class="md-table">
+            <thead>
+                <tr>
+    `;
+
+
+    headers.forEach(
+        (header, index) => {
+
+            const align =
+                alignments[index] || "left";
+
+            html += `
+                <th style="text-align:${align}">
+                    ${inlineMarkdown(header)}
+                </th>
+            `;
+        }
+    );
+
+
+    html += `
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+
+    for (
+        let i = 2;
+        i < lines.length;
+        i++
+    ) {
+
+        const cells =
+            splitRow(lines[i]);
+
+        html += "<tr>";
+
+
+        for (
+            let j = 0;
+            j < headers.length;
+            j++
+        ) {
+
+            const value =
+                cells[j] ?? "";
+
+            const align =
+                alignments[j] || "left";
+
+            html += `
+                <td style="text-align:${align}">
+                    ${inlineMarkdown(value)}
+                </td>
+            `;
+        }
+
+
+        html += "</tr>";
+    }
+
+
+    html += `
+            </tbody>
+        </table>
+        </div>
+    `;
+
+
+    return html;
+}
+
+
+/* =========================================================
+   CODE BLOCK
+========================================================= */
+
+function createCodeBlock(
+    language,
+    code
+) {
+
+    const safeLanguage =
+        escapeHTML(
+            language || "code"
+        );
+
+    const safeCode =
+        escapeHTML(code);
+
+
+    return `
+        <div class="code-wrapper">
+
+            <div class="code-header">
+
+                <span class="code-language">
+                    ${safeLanguage}
+                </span>
+
+                <button
+                    class="copy-code"
+                    type="button"
+                    onclick="copyCode(this)">
+                    Copy
+                </button>
+
+            </div>
+
+            <pre><code>${safeCode}</code></pre>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   MAIN MARKDOWN PARSER
+========================================================= */
+
+function formatResponse(rawText) {
+
+    if (
+        rawText === null ||
+        rawText === undefined
+    ) {
+        return "";
+    }
+
+
+    let text =
+        String(rawText)
+            .replace(/\r\n/g, "\n")
+            .replace(/\r/g, "\n");
+
+
+    /*
+       Normalize escaped Markdown characters
+       outside code blocks.
+    */
+
+    text =
+        unescapeMarkdown(text);
+
+
+    /*
+       Split into lines.
+    */
+
+    const lines =
+        text.split("\n");
+
+
+    const output = [];
+
+    let i = 0;
+
+
+    while (i < lines.length) {
+
+        let line =
+            lines[i];
+
+
+        /* -------------------------------------------------
+           EMPTY LINE
+        ------------------------------------------------- */
+
+        if (!line.trim()) {
+
+            i++;
+
+            continue;
+        }
+
+
+        /* -------------------------------------------------
+           FENCED CODE BLOCK
+        ------------------------------------------------- */
+
+        if (
+            line.trim().startsWith("```")
+        ) {
+
+            const language =
+                line.trim()
+                    .slice(3)
+                    .trim() || "code";
+
+            const codeLines = [];
+
+            i++;
+
+
+            while (
+                i < lines.length &&
+                !lines[i].trim().startsWith("```")
+            ) {
+
+                codeLines.push(
+                    lines[i]
+                );
+
+                i++;
+            }
+
+
+            if (
+                i < lines.length &&
+                lines[i].trim().startsWith("```")
+            ) {
+                i++;
+            }
+
+
+            output.push(
+                createCodeBlock(
+                    language,
+                    codeLines.join("\n")
+                )
+            );
+
+            continue;
+        }
+
+
+        /* -------------------------------------------------
+           HEADINGS
+        ------------------------------------------------- */
+
+        const heading =
+            line.match(
+                /^(#{1,6})[ \t]+(.+?)\s*$/
+            );
+
+
+        if (heading) {
+
+            const level =
+                Math.min(
+                    heading[1].length,
+                    4
+                );
+
+            const content =
+                inlineMarkdown(
+                    heading[2]
+                );
+
+
+            output.push(
+                `
+                <h${level}
+                    class="md-heading md-h${level}">
+                    ${content}
+                </h${level}>
+                `
+            );
+
+
+            i++;
+
+            continue;
+        }
+
+
+        /* -------------------------------------------------
+           HORIZONTAL RULE
+        ------------------------------------------------- */
+
+        if (
+            /^ {0,3}([-*_])(?:\s*\1){2,}\s*$/.test(
+                line
+            )
+        ) {
+
+            output.push(
+                '<hr class="md-hr">'
+            );
+
+            i++;
+
+            continue;
+        }
+
+
+        /* -------------------------------------------------
+           BLOCKQUOTE
+        ------------------------------------------------- */
+
+        if (
+            /^>\s?/.test(line)
+        ) {
+
+            const quoteLines = [];
+
+
+            while (
+                i < lines.length &&
+                /^>\s?/.test(lines[i])
+            ) {
+
+                quoteLines.push(
+                    lines[i]
+                        .replace(
+                            /^>\s?/,
+                            ""
+                        )
+                );
+
+                i++;
+            }
+
+
+            output.push(
+                `
+                <blockquote
+                    class="md-blockquote">
+                    ${quoteLines
+                        .map(inlineMarkdown)
+                        .join("<br>")}
+                </blockquote>
+                `
+            );
+
+            continue;
+        }
+
+
+        /* -------------------------------------------------
+           TABLE
+        ------------------------------------------------- */
+
+        if (
+            i + 1 < lines.length &&
+            lines[i].includes("|") &&
+            isTableSeparator(
+                lines[i + 1]
+            )
+        ) {
+
+            const tableLines = [
+                lines[i],
+                lines[i + 1]
+            ];
+
+            i += 2;
+
+
+            while (
+                i < lines.length &&
+                lines[i].trim() &&
+                lines[i].includes("|")
+            ) {
+
+                tableLines.push(
+                    lines[i]
+                );
+
+                i++;
+            }
+
+
+            const tableHTML =
+                parseTable(tableLines);
+
+
+            if (tableHTML) {
+
+                output.push(tableHTML);
+
+                continue;
+            }
+
+            /*
+               If parsing failed, continue normally.
+            */
+
+            i -= tableLines.length - 2;
+        }
+
+
+        /* -------------------------------------------------
+           UNORDERED LIST
+        ------------------------------------------------- */
+
+        if (
+            /^(\s*)[-*+]\s+/.test(line)
+        ) {
+
+            const items = [];
+
+
+            while (
+                i < lines.length &&
+                /^(\s*)[-*+]\s+/.test(
+                    lines[i]
+                )
+            ) {
+
+                items.push(
+                    lines[i]
+                        .replace(
+                            /^\s*[-*+]\s+/,
+                            ""
+                        )
+                );
+
+                i++;
+            }
+
+
+            output.push(
+                `
+                <ul class="md-list">
+                    ${items
+                        .map(item =>
+                            `<li>${inlineMarkdown(item)}</li>`
+                        )
+                        .join("")}
+                </ul>
+                `
+            );
+
+            continue;
+        }
+
+
+        /* -------------------------------------------------
+           ORDERED LIST
+        ------------------------------------------------- */
+
+        if (
+            /^\s*\d+[.)]\s+/.test(line)
+        ) {
+
+            const items = [];
+
+
+            while (
+                i < lines.length &&
+                /^\s*\d+[.)]\s+/.test(
+                    lines[i]
+                )
+            ) {
+
+                items.push(
+                    lines[i]
+                        .replace(
+                            /^\s*\d+[.)]\s+/,
+                            ""
+                        )
+                );
+
+                i++;
+            }
+
+
+            output.push(
+                `
+                <ol class="md-list">
+                    ${items
+                        .map(item =>
+                            `<li>${inlineMarkdown(item)}</li>`
+                        )
+                        .join("")}
+                </ol>
+                `
+            );
+
+            continue;
+        }
+
+
+        /* -------------------------------------------------
+           NORMAL PARAGRAPH
+        ------------------------------------------------- */
+
+        const paragraphLines = [
+            line
+        ];
+
+        i++;
+
+
+        while (i < lines.length) {
+
+            const next =
+                lines[i];
+
+
+            if (!next.trim()) {
+                break;
+            }
+
+
+            if (
+                /^```/.test(
+                    next.trim()
+                )
+            ) {
+                break;
+            }
+
+
+            if (
+                /^(#{1,6})[ \t]+/.test(next)
+            ) {
+                break;
+            }
+
+
+            if (
+                /^>\s?/.test(next)
+            ) {
+                break;
+            }
+
+
+            if (
+                /^(\s*)[-*+]\s+/.test(next)
+            ) {
+                break;
+            }
+
+
+            if (
+                /^\s*\d+[.)]\s+/.test(next)
+            ) {
+                break;
+            }
+
+
+            paragraphLines.push(
+                next
+            );
+
+            i++;
+        }
+
+
+        output.push(
+            `
+            <p class="md-paragraph">
+                ${paragraphLines
+                    .map(inlineMarkdown)
+                    .join("<br>")}
+            </p>
+            `
+        );
+    }
+
+
+    return output.join("");
 }
 
 
@@ -1541,14 +2009,20 @@ function formatResponse(rawText) {
 async function copyCode(button) {
 
     const wrapper =
-        button.closest(".code-wrapper");
+        button.closest(
+            ".code-wrapper"
+        );
 
     const code =
-        wrapper.querySelector("code");
+        wrapper?.querySelector(
+            "code"
+        );
+
 
     if (!code) {
         return;
     }
+
 
     try {
 
@@ -1556,26 +2030,35 @@ async function copyCode(button) {
             code.textContent
         );
 
+
         const oldText =
             button.textContent;
 
         button.textContent =
             "Copied!";
 
-        setTimeout(() => {
-            button.textContent =
-                oldText;
-        }, 1200);
+
+        setTimeout(
+            () => {
+                button.textContent =
+                    oldText;
+            },
+            1200
+        );
+
 
     } catch (error) {
 
         button.textContent =
             "Failed";
 
-        setTimeout(() => {
-            button.textContent =
-                "Copy";
-        }, 1200);
+        setTimeout(
+            () => {
+                button.textContent =
+                    "Copy";
+            },
+            1200
+        );
     }
 }
 
@@ -1584,10 +2067,16 @@ async function copyCode(button) {
    ADD MESSAGE
 ========================================================= */
 
-function addMessage(role, content) {
+function addMessage(
+    role,
+    content
+) {
 
     const welcome =
-        document.getElementById("welcome");
+        document.getElementById(
+            "welcome"
+        );
+
 
     if (welcome) {
         welcome.remove();
@@ -1595,14 +2084,18 @@ function addMessage(role, content) {
 
 
     const message =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     message.className =
         `message ${role}`;
 
 
     const bubble =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     bubble.className =
         "bubble";
@@ -1620,9 +2113,14 @@ function addMessage(role, content) {
     }
 
 
-    message.appendChild(bubble);
+    message.appendChild(
+        bubble
+    );
 
-    messages.appendChild(message);
+    messages.appendChild(
+        message
+    );
+
 
     scrollToBottom();
 
@@ -1637,17 +2135,19 @@ function addMessage(role, content) {
 
 function scrollToBottom() {
 
-    requestAnimationFrame(() => {
+    requestAnimationFrame(
+        () => {
 
-        messages.scrollTop =
-            messages.scrollHeight;
+            messages.scrollTop =
+                messages.scrollHeight;
 
-    });
+        }
+    );
 }
 
 
 /* =========================================================
-   GENERATING MESSAGE
+   GENERATING
 ========================================================= */
 
 function createGeneratingMessage() {
@@ -1666,7 +2166,7 @@ function createGeneratingMessage() {
 
 
 /* =========================================================
-   SEND MESSAGE
+   SEND
 ========================================================= */
 
 async function sendMessage() {
@@ -1715,7 +2215,9 @@ async function sendMessage() {
     sendButton.style.display =
         "none";
 
-    stopButton.classList.add("show");
+    stopButton.classList.add(
+        "show"
+    );
 
 
     try {
@@ -1775,8 +2277,6 @@ async function sendMessage() {
             "";
 
 
-        /* Handle array content */
-
         if (Array.isArray(reply)) {
 
             reply =
@@ -1790,8 +2290,9 @@ async function sendMessage() {
                             return item;
                         }
 
-                        return item?.text ?? "";
-
+                        return (
+                            item?.text ?? ""
+                        );
                     })
                     .join("");
         }
@@ -1810,9 +2311,13 @@ async function sendMessage() {
 
 
         aiMessage
-            .querySelector(".bubble")
+            .querySelector(
+                ".bubble"
+            )
             .innerHTML =
-            formatResponse(reply);
+            formatResponse(
+                reply
+            );
 
 
         conversation.push({
@@ -1836,7 +2341,9 @@ async function sendMessage() {
         } else {
 
             aiMessage
-                .querySelector(".bubble")
+                .querySelector(
+                    ".bubble"
+                )
                 .innerHTML =
 
                 `
@@ -1868,7 +2375,7 @@ async function sendMessage() {
 
 
 /* =========================================================
-   STOP GENERATION
+   STOP
 ========================================================= */
 
 function stopGeneration() {
@@ -1880,7 +2387,9 @@ function stopGeneration() {
         controller = null;
     }
 
+
     generating = false;
+
 
     sendButton.style.display =
         "flex";
@@ -1892,13 +2401,14 @@ function stopGeneration() {
 
 
 /* =========================================================
-   TEXTAREA AUTO RESIZE
+   TEXTAREA RESIZE
 ========================================================= */
 
 function autoResize() {
 
     prompt.style.height =
         "auto";
+
 
     prompt.style.height =
         Math.min(
@@ -1920,7 +2430,7 @@ prompt.addEventListener(
 
 prompt.addEventListener(
     "keydown",
-    function (event) {
+    function(event) {
 
         if (
             event.key === "Enter" &&
@@ -1936,15 +2446,16 @@ prompt.addEventListener(
 
 
 /* =========================================================
-   ESC CLOSES SIDEBAR
+   ESC
 ========================================================= */
 
 document.addEventListener(
     "keydown",
-    function (event) {
+    function(event) {
 
-        if (event.key === "Escape") {
-
+        if (
+            event.key === "Escape"
+        ) {
             closeSidebar();
         }
     }
@@ -1952,7 +2463,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   INITIAL FOCUS
+   START
 ========================================================= */
 
 prompt.focus();
