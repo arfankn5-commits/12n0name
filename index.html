@@ -892,6 +892,16 @@ function createCodeBlockHTML(code) {
 }
 
 
+/* ================= FORMAT INLINE STYLES ================= */
+
+function applyInlineStyles(str) {
+    return str
+        .replace(/`([^`]+)`/g, "<code>$1</code>")
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.*?)\*/g, "<em>$1</em>");
+}
+
+
 /* ================= FORMAT RESPONSE ================= */
 
 function formatResponse(text) {
@@ -1021,11 +1031,9 @@ function formatResponse(text) {
 
             let safe = escapeHTML(line.replace(/^[\*\-\+]\s+/, ""));
 
-            safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>")
-                       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                       .replace(/\*(.*?)\*/g, "<em>$1</em>");
+            safe = applyInlineStyles(safe);
 
-            html += "<div style='margin-left: 20px;'>• " + safe + "</div>";
+            html += "<div style='margin-left: 20px; padding: 2px 0;'>• " + safe + "</div>";
 
             continue;
         }
@@ -1041,11 +1049,9 @@ function formatResponse(text) {
 
                 let safe = escapeHTML(match[2]);
 
-                safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>")
-                           .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                           .replace(/\*(.*?)\*/g, "<em>$1</em>");
+                safe = applyInlineStyles(safe);
 
-                html += "<div style='margin-left: 20px;'>" + escapeHTML(match[1]) + " " + safe + "</div>";
+                html += "<div style='margin-left: 20px; padding: 2px 0;'>" + escapeHTML(match[1]) + " " + safe + "</div>";
 
                 continue;
             }
@@ -1058,9 +1064,7 @@ function formatResponse(text) {
 
             let safe = escapeHTML(line.replace(/^>\s+/, ""));
 
-            safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>")
-                       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                       .replace(/\*(.*?)\*/g, "<em>$1</em>");
+            safe = applyInlineStyles(safe);
 
             html += "<blockquote style='border-left: 3px solid var(--accent); padding-left: 10px; margin: 6px 0; color: var(--muted);'>" + safe + "</blockquote>";
 
@@ -1083,32 +1087,8 @@ function formatResponse(text) {
         let safe =
             escapeHTML(line);
 
-
-        /* INLINE CODE */
-
         safe =
-            safe.replace(
-                /`([^`]+)`/g,
-                "<code>$1</code>"
-            );
-
-
-        /* BOLD */
-
-        safe =
-            safe.replace(
-                /\*\*(.*?)\*\*/g,
-                "<strong>$1</strong>"
-            );
-
-
-        /* ITALIC */
-
-        safe =
-            safe.replace(
-                /\*(.*?)\*/g,
-                "<em>$1</em>"
-            );
+            applyInlineStyles(safe);
 
 
         html +=
